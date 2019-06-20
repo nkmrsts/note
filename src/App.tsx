@@ -1,25 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Fragment,useState } from 'react'
 import './App.css';
 
 const App: React.FC = () => {
+  const [text,setText] = useState('')
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>{
+    setText(e.target.value)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <div className="container">
+      <textarea value={text} onChange={handleChange} />
+      <p>{text}</p>
+      </div>
+    </Fragment>
   );
 }
 
