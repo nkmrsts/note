@@ -1,5 +1,9 @@
 import React, { Fragment,useState } from 'react'
+import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField'
 import './App.css';
+
+
 
 const App: React.FC = () => {
   const [text,setText] = useState('')
@@ -9,10 +13,10 @@ const App: React.FC = () => {
   }
   return (
     <Fragment>
-      <div className="container">
-      <textarea value={text} onChange={handleChange} />
-      <p>{text}</p>
-      </div>
+      <Container maxWidth="md">
+        <TextField value={text} onChange={handleChange} fullWidth multiline rows="10" variant="outlined" />
+        <p>{text}</p>
+      </Container>
     </Fragment>
   );
 }
