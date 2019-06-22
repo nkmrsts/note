@@ -12,49 +12,38 @@ import {
 import DeleteIcon from '@material-ui/icons/Delete'
 import './App.css';
 
-interface Note {
-  text: string,
-  id: number
-}
-
 const App: React.FC = () => {
   const [text, setText] = useState('')
-  const [currentNote, setCurrentNote] = useState(1)
-  const [count, setcount] = useState(1)
-  const [items, setItems] = useState([{
-    text: '',
-    id: count
-  }])
+  const [currentNote, setCurrentNote] = useState(0)
+  const [items, setItems] = useState<Array<string>>([])
 
   const handleChange = (text: string) =>{
     setText(text)
     onUpDate(text,currentNote)
   }
-  const onUpDate = (text:string,id:number) => {
-    const index = items.findIndex(item => item.id === id)
+  const onUpDate = (text:string,index:number) => {
     const _items = [...items]
-    _items[index] = {..._items[index], text}
+    _items[index] = text
     setItems(_items)
   }
   const onAdd = () => {
-    setCurrentNote(count + 1)
-    setItems([...items, { text:'', id: count + 1 }])
+    setCurrentNote(items.length)
+    setItems([...items, ''])
     setText('')
-    setcount(count + 1)
   }
-  const onDelete = (id:number) => {
-    const _items = items.filter(item => item.id !== id)
+  const onDelete = (index:number) => {
+    const _items = [...items]
+    _items.splice(index, 1)
     setItems(_items)
-    if(currentNote === id) {
-      setCurrentNote(1)
-      setText('')
+    if(currentNote === index) {
+      setCurrentNote(0)
+      setText(_items[0])
     }
   }
-  const onSelect = (id:number) => {
-    if(currentNote === id) return
-    setCurrentNote(id)
-    const index = items.findIndex(item => item.id === id)
-    setText(items[index].text)
+  const onSelect = (index:number) => {
+    if(currentNote === index) return
+    setCurrentNote(index)
+    setText(items[index])
   }
 
   return (
@@ -64,12 +53,12 @@ const App: React.FC = () => {
           <Box flex="0 1 50%">
             <p>リスト</p>
             <List>
-              {items.map(item=> (
-              <ListItem style={{ cursor: 'pointer'}} key={item.id} divider onClick={()=>onSelect(item.id)}>
-                <ListItemText style={{ flex: '0 0 auto', marginRight: '10px' }} primary={`No.${item.id}`}/>
-                <ListItemText primary={item.text} secondary="日付" />
+              {items.map((value,index)=> (
+              <ListItem style={{ cursor: 'pointer'}} key={index} divider onClick={()=>onSelect(index)}>
+                <ListItemText style={{ flex: '0 0 auto', marginRight: '10px' }} primary={`No.${index}`}/>
+                <ListItemText primary={value} secondary="日付" />
                 <ListItemSecondaryAction>
-                  <IconButton edge="end" aria-label="Delete" onClick={()=>onDelete(item.id)}>
+                  <IconButton edge="end" aria-label="Delete" onClick={()=>onDelete(index)}>
                     <DeleteIcon />
                   </IconButton>
                 </ListItemSecondaryAction>
