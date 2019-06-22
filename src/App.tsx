@@ -55,8 +55,8 @@ const App: React.FC = () => {
             <p>リスト</p>
             <List>
               {items.map((value,index)=> (
-              <ListItem style={{ cursor: 'pointer'}} key={index} divider onClick={()=>onSelect(index)}>
-                <ListItemText style={{ flex: '0 0 auto', marginRight: '10px' }} primary={`No.${index}`}/>
+              <ListItem button selected={currentNote === index} key={index} divider onClick={()=>onSelect(index)}>
+                <ListItemText style={{ flex: '0 0 auto', marginRight: '10px'}} primary={`No.${index}`}/>
                 <ListItemText primary={value} secondary="日付" />
                 <ListItemSecondaryAction>
                   <IconButton edge="end" aria-label="Delete" onClick={()=>onDelete(index)}>
@@ -69,12 +69,11 @@ const App: React.FC = () => {
           </Box>
           <Box flex="0 1 50%">
             <Box display="flex">
-              <p>表示してるノート No.{currentNote}</p>
               <IconButton edge="end" aria-label="Add" onClick={onAdd}>
                 <AddBoxIcon />
               </IconButton>
             </Box>
-            <TextField value={text} onChange={e=>handleChange(e.target.value)} fullWidth multiline rows="10" variant="outlined" />
+            <TextField label={'No.'+currentNote} value={text} onChange={e=>handleChange(e.target.value)} fullWidth multiline rows="10" variant="outlined" />
           </Box>
         </Box>
       </Container>
