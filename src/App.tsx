@@ -10,6 +10,7 @@ import {
   IconButton
 } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
+import AddBoxIcon from '@material-ui/icons/AddBox'
 import './App.css';
 
 const App: React.FC = () => {
@@ -67,8 +68,12 @@ const App: React.FC = () => {
             </List>
           </Box>
           <Box flex="0 1 50%">
-            <p>表示してるノート No.{currentNote}</p>
-            <button onClick={onAdd}>plus</button>
+            <Box display="flex">
+              <p>表示してるノート No.{currentNote}</p>
+              <IconButton edge="end" aria-label="Add" onClick={onAdd}>
+                <AddBoxIcon />
+              </IconButton>
+            </Box>
             <TextField value={text} onChange={e=>handleChange(e.target.value)} fullWidth multiline rows="10" variant="outlined" />
           </Box>
         </Box>
