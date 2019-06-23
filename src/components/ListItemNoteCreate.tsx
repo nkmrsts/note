@@ -1,11 +1,24 @@
 import { ListItem, ListItemText } from '@material-ui/core'
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
+import { createNote } from '../firestore/createNote'
 
-type Props = { onCreateNote: () => void }
+type Props = { onCreateNote: (noteId: string) => void }
 
 const ListItemNoteCreate: FunctionComponent<Props> = ({ onCreateNote }) => {
+  const [inProgress, setInProgress] = useState(false)
+
+  // create note
+  useEffect(() => {
+    if (!inProgress) return
+    const subscription = createNote({}).subscribe(next => {
+      setInProgress(false)
+      onCreateNote(next.noteId)
+    })
+    return () => subscription.unsubscribe()
+  }, [inProgress, onCreateNote])
+
   return (
-    <ListItem button divider onClick={onCreateNote}>
+    <ListItem button divider onClick={() => setInProgress(true)}>
       <ListItemText
         primary={'新しいノート'}
         secondary={'新しいノートを作成します。'}

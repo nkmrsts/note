@@ -1,51 +1,51 @@
 import { Container, makeStyles, Theme } from '@material-ui/core'
-import React, { FunctionComponent, useState } from 'react'
-import { createNoteData } from '../helpers/createNoteData'
-import { useStateCurrentNoteId } from '../hooks/useStateCurrentNoteId'
-import { Note } from '../types/note'
+import React, {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useState
+} from 'react'
+import { Note } from '../firestore/types/note'
+import { watchNote } from '../firestore/watchNote'
 import PaperNote from './PaperNote'
 import PaperNotes from './PaperNotes'
 
 const RouteHome: FunctionComponent = () => {
-  const [notes, setNotes] = useState<Note[]>([createNoteData()])
+  const [currentNoteId, setCurrentNoteId] = useState<string | null>(null)
 
-  const [currentNoteId, setCurrentNoteId] = useStateCurrentNoteId(notes)
+  const [currentNote, setCurrentNote] = useState<Note | null>(null)
 
   const classes = useStyles()
 
-  const currentNote =
-    currentNoteId === null
-      ? null
-      : notes.find(note => note.id === currentNoteId)
-
-  const onUpdateNote = (note: Note) => {
-    if (currentNoteId === null) return
-    const _notes = [...notes]
-    const index = _notes.findIndex(_note => _note.id === note.id)
-    _notes[index] = note
-    setNotes(_notes)
-  }
-
-  const onCreateNote = () => {
-    const newNote = createNoteData()
-    setNotes([newNote, ...notes])
-    setCurrentNoteId(newNote.id)
-  }
-
-  const onDeleteNote = (noteId: string) => {
-    const _notes = [...notes]
-    const index = _notes.findIndex(_note => _note.id === noteId)
-    _notes.splice(index, 1)
-    setNotes(_notes)
-    if (currentNoteId === noteId) {
-      setCurrentNoteId(null)
-    }
-  }
-
-  const onUpdateNoteIndex = (noteId: string) => {
-    if (currentNoteId === noteId) return
+  const onCreateNote = useCallback((noteId: string) => {
     setCurrentNoteId(noteId)
-  }
+  }, [])
+
+  const onDeleteNote = useCallback(
+    (noteId: string) => {
+      setCurrentNoteId(null)
+      if (currentNoteId === noteId) {
+        setCurrentNote(null)
+      }
+    },
+    [currentNoteId]
+  )
+
+  const onUpdateNoteId = useCallback((noteId: string | null) => {
+    if (noteId === null) {
+      setCurrentNote(null)
+    }
+    setCurrentNoteId(noteId)
+  }, [])
+
+  // watch note
+  useEffect(() => {
+    if (currentNoteId === null) return
+    const subscription = watchNote(currentNoteId).subscribe(_note => {
+      setCurrentNote(_note)
+    })
+    return () => subscription.unsubscribe()
+  }, [currentNoteId])
 
   return (
     <Container className={classes.root} maxWidth={'lg'}>
@@ -54,20 +54,13 @@ const RouteHome: FunctionComponent = () => {
         <nav>
           <PaperNotes
             noteId={currentNoteId}
-            notes={notes}
             onCreateNote={onCreateNote}
             onDeleteNote={onDeleteNote}
-            onUpdateNoteIndex={onUpdateNoteIndex}
+            onUpdateNote={onUpdateNoteId}
           />
         </nav>
         <main className={classes.main}>
-          {currentNote && (
-            <PaperNote
-              key={currentNote.id}
-              note={currentNote}
-              onUpdateNote={onUpdateNote}
-            />
-          )}
+          {currentNote && <PaperNote key={currentNote.id} note={currentNote} />}
         </main>
       </div>
     </Container>

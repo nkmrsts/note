@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Note } from '../types/note'
+import { Note } from '../firestore/types/note'
 
 export const useStateCurrentNoteId = (notes: Note[]) => {
   const _note = notes.length ? notes[0] : null
