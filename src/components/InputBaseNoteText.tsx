@@ -1,7 +1,6 @@
 import { InputBase } from '@material-ui/core'
 import React, { FunctionComponent, useState } from 'react'
 import { Note } from '../firestore/types/note'
-import { createMarkup } from '../helpers/createMarkup'
 
 type Change = {
   text: string
@@ -14,7 +13,7 @@ type Props = {
   onUpdateNote: (change: Change) => void
 }
 
-const DivNoteEditor: FunctionComponent<Props> = ({
+const InputBaseNoteText: FunctionComponent<Props> = ({
   inProgress,
   note,
   onUpdateNote
@@ -33,9 +32,8 @@ const DivNoteEditor: FunctionComponent<Props> = ({
           onUpdateNote({ text: text, title: note.title })
         }}
       />
-      <div dangerouslySetInnerHTML={createMarkup(text)} />
     </div>
   )
 }
 
-export default DivNoteEditor
+export default InputBaseNoteText
