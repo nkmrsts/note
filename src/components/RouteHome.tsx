@@ -1,19 +1,10 @@
 import { Container, makeStyles, Theme } from '@material-ui/core'
-import React, {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useState
-} from 'react'
-import { Note } from '../firestore/types/note'
-import { watchNote } from '../firestore/watchNote'
+import React, { FunctionComponent, useCallback, useState } from 'react'
 import PaperNote from './PaperNote'
 import PaperNotes from './PaperNotes'
 
 const RouteHome: FunctionComponent = () => {
   const [currentNoteId, setCurrentNoteId] = useState<string | null>(null)
-
-  const [currentNote, setCurrentNote] = useState<Note | null>(null)
 
   const classes = useStyles()
 
@@ -21,31 +12,13 @@ const RouteHome: FunctionComponent = () => {
     setCurrentNoteId(noteId)
   }, [])
 
-  const onDeleteNote = useCallback(
-    (noteId: string) => {
-      setCurrentNoteId(null)
-      if (currentNoteId === noteId) {
-        setCurrentNote(null)
-      }
-    },
-    [currentNoteId]
-  )
-
-  const onUpdateNoteId = useCallback((noteId: string | null) => {
-    if (noteId === null) {
-      setCurrentNote(null)
-    }
-    setCurrentNoteId(noteId)
+  const onDeleteNote = useCallback((noteId: string) => {
+    setCurrentNoteId(null)
   }, [])
 
-  // watch note
-  useEffect(() => {
-    if (currentNoteId === null) return
-    const subscription = watchNote(currentNoteId).subscribe(_note => {
-      setCurrentNote(_note)
-    })
-    return () => subscription.unsubscribe()
-  }, [currentNoteId])
+  const onUpdateNoteId = useCallback((noteId: string | null) => {
+    setCurrentNoteId(noteId)
+  }, [])
 
   return (
     <Container className={classes.root} maxWidth={'lg'}>
@@ -60,7 +33,9 @@ const RouteHome: FunctionComponent = () => {
           />
         </nav>
         <main className={classes.main}>
-          {currentNote && <PaperNote key={currentNote.id} note={currentNote} />}
+          {currentNoteId !== null && (
+            <PaperNote key={currentNoteId} currentNoteId={currentNoteId} />
+          )}
         </main>
       </div>
     </Container>

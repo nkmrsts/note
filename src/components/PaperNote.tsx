@@ -1,31 +1,33 @@
-import {
-  InputBase,
-  makeStyles,
-  Paper,
-  TextField,
-  Theme
-} from '@material-ui/core'
+import { makeStyles, Paper, Theme } from '@material-ui/core'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { Note } from '../firestore/types/note'
 import { UpdateNoteData } from '../firestore/types/updateNoteData'
 import { updateNote } from '../firestore/updateNote'
-import { createMarkup } from '../helpers/createMarkup'
+import { watchNote } from '../firestore/watchNote'
+import DivNoteEditor from './DivNoteEditor'
+import TextFieldTitle from './TextFieldTitle'
 
-type Props = { note: Note }
+type Props = { currentNoteId: string }
 
-const PaperNote: FunctionComponent<Props> = ({ note }) => {
-  const [title, setTitle] = useState(note.title)
+type Change = {
+  text: string
+  title: string
+}
 
-  const [text, setText] = useState(note.text)
-
+const PaperNote: FunctionComponent<Props> = ({ currentNoteId }) => {
   const [noteChange, setNoteChange] = useState<UpdateNoteData | null>(null)
+
+  const [currentNote, setCurrentNote] = useState<Note | null>(null)
 
   const classes = useStyles()
 
-  const inProgress = noteChange !== null
-
-  const onBlur = () => {
-    setNoteChange({ noteId: note.id, text: text, title: title })
+  const onUpdateNote = ({ text, title }: Change) => {
+    if (currentNote === null) return
+    setNoteChange({
+      noteId: currentNote.id,
+      text: text || currentNote.text,
+      title: title || currentNote.title
+    })
   }
 
   // update note
@@ -37,26 +39,31 @@ const PaperNote: FunctionComponent<Props> = ({ note }) => {
     return () => subscription.unsubscribe()
   }, [noteChange])
 
+  // watch note
+  useEffect(() => {
+    if (currentNoteId === null) return
+    const subscription = watchNote(currentNoteId).subscribe(_note => {
+      setCurrentNote(_note)
+    })
+    return () => subscription.unsubscribe()
+  }, [currentNoteId])
+
   return (
     <Paper className={classes.root}>
-      <TextField
-        disabled={inProgress}
-        value={title}
-        onChange={e => setTitle(e.target.value)}
-        fullWidth
-        label={'タイトル'}
-        multiline
-        onBlur={onBlur}
-      />
-      <InputBase
-        disabled={inProgress}
-        value={text}
-        onChange={e => setText(e.target.value)}
-        fullWidth
-        multiline
-        onBlur={onBlur}
-      />
-      <div dangerouslySetInnerHTML={createMarkup(text)} />
+      {currentNote && (
+        <TextFieldTitle
+          inProgress={noteChange !== null}
+          note={currentNote}
+          onUpdateNote={onUpdateNote}
+        />
+      )}
+      {currentNote && (
+        <DivNoteEditor
+          inProgress={noteChange !== null}
+          note={currentNote}
+          onUpdateNote={onUpdateNote}
+        />
+      )}
     </Paper>
   )
 }
