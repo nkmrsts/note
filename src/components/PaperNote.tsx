@@ -9,6 +9,7 @@ import React, { FunctionComponent, useEffect, useState } from 'react'
 import { Note } from '../firestore/types/note'
 import { UpdateNoteData } from '../firestore/types/updateNoteData'
 import { updateNote } from '../firestore/updateNote'
+import { createMarkup } from '../helpers/createMarkup'
 
 type Props = { note: Note }
 
@@ -55,6 +56,7 @@ const PaperNote: FunctionComponent<Props> = ({ note }) => {
         multiline
         onBlur={onBlur}
       />
+      <div dangerouslySetInnerHTML={createMarkup(text)} />
     </Paper>
   )
 }
