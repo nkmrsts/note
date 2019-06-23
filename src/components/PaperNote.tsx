@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core'
 import React, { FunctionComponent, useState } from 'react'
 import { Note } from '../types/note'
+import { createMarkup } from '../helpers/createMarkup'
 
 type Props = {
   onUpdateNote: (note: Note) => void
@@ -41,6 +42,7 @@ const PaperNote: FunctionComponent<Props> = ({ onUpdateNote, note }) => {
         multiline
         onBlur={onBlur}
       />
+      <div dangerouslySetInnerHTML={createMarkup(text)} />
     </Paper>
   )
 }
