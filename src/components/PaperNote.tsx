@@ -1,48 +1,73 @@
-import {
-  InputBase,
-  makeStyles,
-  Paper,
-  TextField,
-  Theme
-} from '@material-ui/core'
-import React, { FunctionComponent, useState } from 'react'
-import { Note } from '../types/note'
-import { createMarkup } from '../helpers/createMarkup'
+import { makeStyles, Paper, Theme } from '@material-ui/core'
+import React, { FunctionComponent, useEffect, useState } from 'react'
+import { Note } from '../firestore/types/note'
+import { UpdateNoteData } from '../firestore/types/updateNoteData'
+import { updateNote } from '../firestore/updateNote'
+import { watchNote } from '../firestore/watchNote'
+import DivNotePreview from './DivNotePreview'
+import InputBaseNoteText from './InputBaseNoteText'
+import TextFieldTitle from './TextFieldTitle'
 
-type Props = {
-  onUpdateNote: (note: Note) => void
-  note: Note
+type Props = { currentNoteId: string }
+
+type Change = {
+  text: string
+  title: string
 }
 
-const PaperNote: FunctionComponent<Props> = ({ onUpdateNote, note }) => {
-  const [title, setTitle] = useState(note.title)
+const PaperNote: FunctionComponent<Props> = ({ currentNoteId }) => {
+  const [noteChange, setNoteChange] = useState<UpdateNoteData | null>(null)
 
-  const [text, setText] = useState(note.text)
+  const [note, setNote] = useState<Note | null>(null)
 
   const classes = useStyles()
 
-  const onBlur = () => {
-    onUpdateNote({ ...note, title, text, updatedAt: new Date() })
+  const onUpdateNote = ({ text, title }: Change) => {
+    if (note === null) return
+    setNoteChange({
+      noteId: note.id,
+      text: text || note.text,
+      title: title || note.title
+    })
   }
+
+  // update note
+  useEffect(() => {
+    if (!noteChange) return
+    const subscription = updateNote(noteChange).subscribe(() => {
+      setNoteChange(null)
+    })
+    return () => subscription.unsubscribe()
+  }, [noteChange])
+
+  // watch note
+  useEffect(() => {
+    if (currentNoteId === null) return
+    const subscription = watchNote(currentNoteId).subscribe(_note => {
+      setNote(_note)
+    })
+    return () => subscription.unsubscribe()
+  }, [currentNoteId])
 
   return (
     <Paper className={classes.root}>
-      <TextField
-        value={title}
-        onChange={e => setTitle(e.target.value)}
-        fullWidth
-        label={'タイトル'}
-        multiline
-        onBlur={onBlur}
-      />
-      <InputBase
-        value={text}
-        onChange={e => setText(e.target.value)}
-        fullWidth
-        multiline
-        onBlur={onBlur}
-      />
-      <div dangerouslySetInnerHTML={createMarkup(text)} />
+      {note && (
+        <TextFieldTitle
+          inProgress={noteChange !== null}
+          note={note}
+          onUpdateNote={onUpdateNote}
+        />
+      )}
+      {note && (
+        <div>
+          <InputBaseNoteText
+            inProgress={noteChange !== null}
+            note={note}
+            onUpdateNote={onUpdateNote}
+          />
+          <DivNotePreview note={note} />
+        </div>
+      )}
     </Paper>
   )
 }

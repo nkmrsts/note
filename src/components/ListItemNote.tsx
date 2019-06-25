@@ -6,29 +6,37 @@ import {
 } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import React, { FunctionComponent } from 'react'
-import { Note } from '../types/note'
+import { deleteNote } from '../firestore/deleteNote'
+import { Note } from '../firestore/types/note'
 
 type Props = {
   note: Note
   onDeleteNote: () => void
-  onUpdateNoteIndex: () => void
+  onUpdateNote: () => void
   selected: boolean
 }
 
 const ListItemNote: FunctionComponent<Props> = ({
   note,
   onDeleteNote,
-  onUpdateNoteIndex,
+  onUpdateNote,
   selected
 }) => {
   return (
-    <ListItem button divider onClick={onUpdateNoteIndex} selected={selected}>
+    <ListItem button divider onClick={onUpdateNote} selected={selected}>
       <ListItemText
         primary={note.title || '名称未設定'}
-        secondary={note.updatedAt.toLocaleString()}
+        secondary={note.updatedAt.toDate().toLocaleString()}
       />
       <ListItemSecondaryAction>
-        <IconButton aria-label={'Delete'} edge={'end'} onClick={onDeleteNote}>
+        <IconButton
+          aria-label={'Delete'}
+          edge={'end'}
+          onClick={() => {
+            deleteNote({ noteId: note.id }).subscribe()
+            onDeleteNote()
+          }}
+        >
           <DeleteIcon />
         </IconButton>
       </ListItemSecondaryAction>

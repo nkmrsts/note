@@ -1,5 +1,7 @@
+import { firestore } from 'firebase/app'
+
 export const createId = () => {
-  return Math.random()
-    .toString(36)
-    .slice(-8)
+  return firestore()
+    .collection('path')
+    .doc().id
 }
