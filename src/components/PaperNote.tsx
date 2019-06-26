@@ -20,6 +20,8 @@ const PaperNote: FunctionComponent<Props> = ({ currentNoteId }) => {
 
   const [note, setNote] = useState<Note | null>(null)
 
+  const [previewHide, setPreviewHide] = useState(false)
+
   const classes = useStyles()
 
   const onUpdateNote = ({ text, title }: Change) => {
@@ -50,7 +52,7 @@ const PaperNote: FunctionComponent<Props> = ({ currentNoteId }) => {
   }, [currentNoteId])
 
   return (
-    <Paper className={classes.root}>
+    <Paper elevation={1} className={classes.root}>
       {note && (
         <TextFieldTitle
           inProgress={noteChange !== null}
@@ -60,12 +62,16 @@ const PaperNote: FunctionComponent<Props> = ({ currentNoteId }) => {
       )}
       {note && (
         <div>
-          <InputBaseNoteText
-            inProgress={noteChange !== null}
-            note={note}
-            onUpdateNote={onUpdateNote}
-          />
-          <DivNotePreview note={note} />
+          {previewHide ? (
+            <InputBaseNoteText
+              inProgress={noteChange !== null}
+              note={note}
+              onUpdateNote={onUpdateNote}
+              handlePreviewHide={setPreviewHide}
+            />
+          ) : (
+            <DivNotePreview note={note} handlePreviewHide={setPreviewHide} />
+          )}
         </div>
       )}
     </Paper>
@@ -76,7 +82,7 @@ const useStyles = makeStyles<Theme>(({ spacing }) => {
   return {
     root: {
       display: 'grid',
-      gridAutoRows: 'min-content',
+      gridAutoRows: 'min-content auto',
       gridGap: spacing(2),
       padding: spacing(2)
     }
