@@ -3,18 +3,12 @@ import React, { FunctionComponent } from 'react'
 import { Note } from '../firestore/types/note'
 import { createMarkup } from '../helpers/createMarkup'
 
-type Props = {
-  note: Note
-  handlePreviewHide: (boolean: boolean) => void
-}
+type Props = { note: Note }
 
-const DivNotePreview: FunctionComponent<Props> = ({
-  note,
-  handlePreviewHide
-}) => {
+const DivNotePreview: FunctionComponent<Props> = ({ note }) => {
   const classes = useStyles()
   return (
-    <div onClick={() => handlePreviewHide(true)}>
+    <div>
       <Typography variant={'h4'}>{note.title}</Typography>
       <div
         className={classes.root}

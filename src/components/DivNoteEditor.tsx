@@ -1,15 +1,12 @@
-import { makeStyles, Theme } from '@material-ui/core'
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 import { Note } from '../firestore/types/note'
-import { UpdateNoteData } from '../firestore/types/updateNoteData'
-import { updateNote } from '../firestore/updateNote'
 import InputBaseNoteText from './InputBaseNoteText'
 import TextFieldTitle from './TextFieldTitle'
 
 type Props = {
+  inProgress: boolean
   note: Note
-  previewHide: boolean
-  setPreviewHide: (hide: boolean) => void
+  onUpdateNote: (change: Change) => void
 }
 
 type Change = {
@@ -18,53 +15,33 @@ type Change = {
 }
 
 const DivNoteEditor: FunctionComponent<Props> = ({
+  inProgress,
   note,
-  previewHide,
-  setPreviewHide
+  onUpdateNote
 }) => {
-  const [noteChange, setNoteChange] = useState<UpdateNoteData | null>(null)
+  const [title, setTitle] = useState(note.title)
 
-  const classes = useStyles()
+  const [text, setText] = useState(note.text)
 
-  const onUpdateNote = ({ text, title }: Change) => {
-    if (note === null) return
-    setNoteChange({
-      noteId: note.id,
-      text: text || note.text,
-      title: title || note.title
-    })
+  const onClick = () => {
+    onUpdateNote({ title, text })
   }
 
-  // update note
-  useEffect(() => {
-    if (!noteChange) return
-    const subscription = updateNote(noteChange).subscribe(() => {
-      setNoteChange(null)
-    })
-    return () => subscription.unsubscribe()
-  }, [noteChange])
-
   return (
-    <div className={classes.root}>
+    <div>
+      <button onClick={onClick}>{'update'}</button>
       <TextFieldTitle
-        inProgress={noteChange !== null}
-        note={note}
-        onUpdateNote={onUpdateNote}
+        inProgress={inProgress}
+        setTitle={setTitle}
+        title={title}
       />
       <InputBaseNoteText
-        inProgress={noteChange !== null}
-        note={note}
-        onUpdateNote={onUpdateNote}
-        handlePreviewHide={setPreviewHide}
+        inProgress={inProgress}
+        setText={setText}
+        text={text}
       />
     </div>
   )
 }
-
-const useStyles = makeStyles<Theme>(({ spacing }) => {
-  return {
-    root: {}
-  }
-})
 
 export default DivNoteEditor

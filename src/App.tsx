@@ -13,7 +13,8 @@ const App: FunctionComponent = () => {
         <CssBaseline />
         <BrowserRouter>
           <Switch>
-            <Route component={RouteHome} path={'*'} />
+            <Route component={RouteHome} exact path={'/'} />
+            <Route component={RouteHome} path={'/:noteId'} />
           </Switch>
         </BrowserRouter>
       </ThemeProvider>

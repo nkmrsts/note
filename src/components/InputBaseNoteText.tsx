@@ -1,6 +1,5 @@
 import { InputBase } from '@material-ui/core'
-import React, { FunctionComponent, useState } from 'react'
-import { Note } from '../firestore/types/note'
+import React, { FunctionComponent } from 'react'
 
 type Change = {
   text: string
@@ -9,32 +8,24 @@ type Change = {
 
 type Props = {
   inProgress: boolean
-  note: Note
-  onUpdateNote: (change: Change) => void
-  handlePreviewHide: (boolean: boolean) => void
+  setText: (text: string) => void
+  text: string
 }
 
 const InputBaseNoteText: FunctionComponent<Props> = ({
   inProgress,
-  note,
-  onUpdateNote,
-  handlePreviewHide
+  setText,
+  text
 }) => {
-  const [text, setText] = useState(note.text)
-
   return (
     <div>
       <InputBase
+        autoFocus
         disabled={inProgress}
-        value={text}
-        onChange={e => setText(e.target.value)}
         fullWidth
         multiline
-        autoFocus
-        onBlur={() => {
-          onUpdateNote({ text: text, title: note.title })
-          handlePreviewHide(false)
-        }}
+        onChange={e => setText(e.target.value)}
+        value={text}
       />
     </div>
   )

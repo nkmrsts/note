@@ -1,5 +1,5 @@
 import { List, ListItem, ListItemText } from '@material-ui/core'
-import { auth } from 'firebase'
+import { auth } from 'firebase/app'
 import React, { FunctionComponent } from 'react'
 import { useAuthLoading } from '../firebase/useAuthLoading'
 import { useAuthUser } from '../firebase/useAuthUser'
