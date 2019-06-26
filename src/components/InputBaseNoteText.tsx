@@ -11,12 +11,14 @@ type Props = {
   inProgress: boolean
   note: Note
   onUpdateNote: (change: Change) => void
+  handlePreviewHide: (boolean: boolean) => void
 }
 
 const InputBaseNoteText: FunctionComponent<Props> = ({
   inProgress,
   note,
-  onUpdateNote
+  onUpdateNote,
+  handlePreviewHide
 }) => {
   const [text, setText] = useState(note.text)
 
@@ -28,12 +30,13 @@ const InputBaseNoteText: FunctionComponent<Props> = ({
         onChange={e => setText(e.target.value)}
         fullWidth
         multiline
+        autoFocus
         onBlur={() => {
           onUpdateNote({ text: text, title: note.title })
+          handlePreviewHide(false)
         }}
       />
     </div>
   )
 }
-
 export default InputBaseNoteText
