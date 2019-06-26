@@ -1,4 +1,4 @@
-import { List, Paper } from '@material-ui/core'
+import { List } from '@material-ui/core'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { Note } from '../firestore/types/note'
 import { watchNotes } from '../firestore/watchNotes'
@@ -12,7 +12,7 @@ type Props = {
   onUpdateNote: (noteId: string) => void
 }
 
-const PaperNotes: FunctionComponent<Props> = ({
+const ListNotes: FunctionComponent<Props> = ({
   noteId,
   onCreateNote,
   onDeleteNote,
@@ -32,21 +32,19 @@ const PaperNotes: FunctionComponent<Props> = ({
   }, [])
 
   return (
-    <Paper>
-      <List>
-        <ListItemNoteCreate onCreateNote={onCreateNote} />
-        {notes.map(note => (
-          <ListItemNote
-            key={note.id}
-            note={note}
-            onDeleteNote={() => onDeleteNote(note.id)}
-            onUpdateNote={() => onUpdateNote(note.id)}
-            selected={noteId === note.id}
-          />
-        ))}
-      </List>
-    </Paper>
+    <List>
+      <ListItemNoteCreate onCreateNote={onCreateNote} />
+      {notes.map(note => (
+        <ListItemNote
+          key={note.id}
+          note={note}
+          onDeleteNote={() => onDeleteNote(note.id)}
+          onUpdateNote={() => onUpdateNote(note.id)}
+          selected={noteId === note.id}
+        />
+      ))}
+    </List>
   )
 }
 
-export default PaperNotes
+export default ListNotes
