@@ -3,6 +3,11 @@
   touchaction: 'manipulation';
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
 a {
   text-decoration: none;
   color: inherit;
