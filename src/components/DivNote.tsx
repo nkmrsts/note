@@ -31,6 +31,9 @@ const DivNote: FunctionComponent<Props> = ({ currentNoteId }) => {
     const subscription = watchNote(currentNoteId).subscribe(
       _note => {
         setNote(_note)
+        if (!_note.title && !_note.text) {
+          setPreviewHide(true)
+        }
         setLoading(false)
       },
       () => {
