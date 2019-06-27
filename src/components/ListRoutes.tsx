@@ -1,4 +1,4 @@
-import { List, ListItem, ListItemText } from '@material-ui/core'
+import { List, ListItem, ListItemText, Typography } from '@material-ui/core'
 import { auth } from 'firebase/app'
 import React, { FunctionComponent } from 'react'
 import { useAuthLoading } from '../firebase/useAuthLoading'
@@ -28,7 +28,11 @@ const ListRoutes: FunctionComponent = () => {
           />
         ) : (
           <ListItemText
-            primary={authUser ? authUser.displayName : 'ログイン'}
+            primary={
+              <Typography style={{ fontWeight: 'bold' }}>
+                {authUser ? authUser.displayName : 'ログイン'}
+              </Typography>
+            }
             secondary={
               authUser
                 ? 'タップしてログアウト'
