@@ -18,7 +18,12 @@ const ListItemNoteCreate: FunctionComponent<Props> = ({ onCreateNote }) => {
   }, [inProgress, onCreateNote])
 
   return (
-    <ListItem button divider onClick={() => setInProgress(true)}>
+    <ListItem
+      component={'li'}
+      button
+      divider
+      onClick={() => setInProgress(true)}
+    >
       <ListItemText
         primary={'新しいノート'}
         secondary={'新しいノートを作成します。'}
