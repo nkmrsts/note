@@ -4,6 +4,7 @@ import { NOTES } from './constants/collection'
 import { UpdateNoteData } from './types/updateNoteData'
 
 export const updateNote = (data: UpdateNoteData) => {
+  console.log('data', data)
   return from(_updateNote(data))
 }
 

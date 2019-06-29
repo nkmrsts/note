@@ -1,61 +1,50 @@
 import { Container, makeStyles, Theme } from '@material-ui/core'
-import React, { FunctionComponent, useCallback, useState } from 'react'
-import PaperNote from './PaperNote'
-import PaperNotes from './PaperNotes'
+import React, { FunctionComponent } from 'react'
+import { RouteComponentProps } from 'react-router'
+import DivHello from './DivHello'
+import DivNote from './DivNote'
+import DrawerDefault from './DrawerDefault'
+import ListNotes from './ListNotes'
+import ListRoutes from './ListRoutes'
 
-const RouteHome: FunctionComponent = () => {
-  const [currentNoteId, setCurrentNoteId] = useState<string | null>(null)
+type Props = RouteComponentProps<{ noteId: string }>
 
+const RouteHome: FunctionComponent<Props> = ({
+  history,
+  match: {
+    params: { noteId }
+  }
+}) => {
   const classes = useStyles()
 
-  const onCreateNote = useCallback((noteId: string) => {
-    setCurrentNoteId(noteId)
-  }, [])
-
-  const onDeleteNote = useCallback((noteId: string) => {
-    setCurrentNoteId(null)
-  }, [])
-
-  const onUpdateNoteId = useCallback((noteId: string | null) => {
-    setCurrentNoteId(noteId)
-  }, [])
-
   return (
-    <Container className={classes.root} maxWidth={'lg'}>
-      <header />
-      <div className={classes.content}>
-        <nav>
-          <PaperNotes
-            noteId={currentNoteId}
-            onCreateNote={onCreateNote}
-            onDeleteNote={onDeleteNote}
-            onUpdateNote={onUpdateNoteId}
-          />
-        </nav>
-        <main className={classes.main}>
-          {currentNoteId !== null && (
-            <PaperNote key={currentNoteId} currentNoteId={currentNoteId} />
+    <div className={classes.root}>
+      <DrawerDefault>
+        <ListRoutes />
+        <ListNotes noteId={noteId || null} />
+      </DrawerDefault>
+      <main className={classes.main}>
+        <Container maxWidth={'lg'}>
+          {noteId ? (
+            <DivNote key={noteId || '_'} currentNoteId={noteId} />
+          ) : (
+            <DivHello />
           )}
-        </main>
-      </div>
-    </Container>
+        </Container>
+      </main>
+    </div>
   )
 }
 
 const useStyles = makeStyles<Theme>(({ breakpoints, spacing }) => {
   return {
-    content: {
-      display: 'grid',
-      gridGap: spacing(2),
-      gridTemplateColumns: '2fr 3fr',
-      [breakpoints.down('xs')]: { gridTemplateColumns: '1fr' }
-    },
-    main: { display: 'grid', gridGap: spacing(2) },
     root: {
       display: 'grid',
       gridGap: spacing(2),
-      padding: spacing(2)
-    }
+      gridTemplateColumns: 'auto 1fr',
+      [breakpoints.down('xs')]: { gridTemplateColumns: '1fr' }
+    },
+    main: { display: 'grid', gridGap: spacing(2) }
   }
 })
 

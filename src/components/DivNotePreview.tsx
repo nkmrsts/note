@@ -1,24 +1,20 @@
+import { makeStyles, Theme, Typography } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
 import { Note } from '../firestore/types/note'
 import { createMarkup } from '../helpers/createMarkup'
-import { makeStyles, Theme } from '@material-ui/core'
 
-type Props = {
-  note: Note
-  handlePreviewHide: (boolean: boolean) => void
-}
+type Props = { note: Note }
 
-const DivNotePreview: FunctionComponent<Props> = ({
-  note,
-  handlePreviewHide
-}) => {
+const DivNotePreview: FunctionComponent<Props> = ({ note }) => {
   const classes = useStyles()
   return (
-    <div
-      className={classes.root}
-      dangerouslySetInnerHTML={createMarkup(note.text)}
-      onClick={() => handlePreviewHide(true)}
-    />
+    <div>
+      <Typography variant={'h4'}>{note.title}</Typography>
+      <div
+        className={classes.root}
+        dangerouslySetInnerHTML={createMarkup(note.text)}
+      />
+    </div>
   )
 }
 

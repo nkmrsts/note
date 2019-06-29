@@ -1,36 +1,25 @@
 import { TextField } from '@material-ui/core'
-import React, { FunctionComponent, useState } from 'react'
-import { Note } from '../firestore/types/note'
-
-type Change = {
-  text: string
-  title: string
-}
+import React, { FunctionComponent } from 'react'
 
 type Props = {
   inProgress: boolean
-  note: Note
-  onUpdateNote: (change: Change) => void
+  setTitle: (title: string) => void
+  title: string
 }
 
 const TextFieldTitle: FunctionComponent<Props> = ({
   inProgress,
-  note,
-  onUpdateNote
+  setTitle,
+  title
 }) => {
-  const [title, setTitle] = useState(note.title)
-
   return (
     <TextField
       disabled={inProgress}
-      value={title}
-      onChange={e => setTitle(e.target.value)}
       fullWidth
       label={'タイトル'}
       multiline
-      onBlur={() => {
-        onUpdateNote({ text: note.text, title })
-      }}
+      onChange={e => setTitle(e.target.value)}
+      value={title}
     />
   )
 }
