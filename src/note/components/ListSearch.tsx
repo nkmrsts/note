@@ -4,7 +4,7 @@ import React, { FunctionComponent, useState } from 'react'
 
 const ListSearch: FunctionComponent = () => {
   const classes = useStyles()
-  const [text, setText] = useState('')
+  const [, setText] = useState('')
 
   return (
     <ListItem divider className={classes.listItem}>
