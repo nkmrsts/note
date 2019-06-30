@@ -1,9 +1,9 @@
 import { makeStyles, Theme } from '@material-ui/core'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { Note } from '../firestore/types/note'
-import { UpdateNoteData } from '../firestore/types/updateNoteData'
-import { updateNote } from '../firestore/updateNote'
 import { watchNote } from '../firestore/watchNote'
+import { UpdateNoteData } from '../shared/functions/types/updateNoteData'
+import { updateNote } from '../shared/functions/updateNote'
 import DivNoteEditor from './DivNoteEditor'
 import DivNotePreview from './DivNotePreview'
 
@@ -46,7 +46,7 @@ const DivNote: FunctionComponent<Props> = ({ currentNoteId }) => {
   // update note
   useEffect(() => {
     if (!noteChange) return
-    const subscription = updateNote(noteChange).subscribe(() => {
+    const subscription = updateNote()(noteChange).subscribe(() => {
       setNoteChange(null)
     })
     return () => subscription.unsubscribe()
@@ -63,7 +63,8 @@ const DivNote: FunctionComponent<Props> = ({ currentNoteId }) => {
     setNoteChange({
       noteId: note.id,
       text: text || note.text,
-      title: title || note.title
+      title: title || note.title,
+      isPublic: true
     })
   }
 

@@ -1,6 +1,6 @@
 import { ListItem, ListItemText } from '@material-ui/core'
 import React, { FunctionComponent, useEffect, useState } from 'react'
-import { createNote } from '../firestore/createNote'
+import { createNote } from '../shared/functions/createNote'
 
 type Props = { onCreateNote: (noteId: string) => void }
 
@@ -10,7 +10,7 @@ const ListItemNoteCreate: FunctionComponent<Props> = ({ onCreateNote }) => {
   // create note
   useEffect(() => {
     if (!inProgress) return
-    const subscription = createNote({}).subscribe(next => {
+    const subscription = createNote()({}).subscribe(next => {
       setInProgress(false)
       onCreateNote(next.noteId)
     })

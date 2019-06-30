@@ -33,7 +33,7 @@ const ListItemNote: FunctionComponent<Props> = ({
           aria-label={'Delete'}
           edge={'end'}
           onClick={() => {
-            deleteNote({ noteId: note.id }).subscribe()
+            deleteNote(note.id).subscribe()
             onDeleteNote()
           }}
         >
