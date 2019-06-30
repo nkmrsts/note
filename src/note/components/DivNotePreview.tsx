@@ -1,7 +1,7 @@
 import { makeStyles, Theme, Typography } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
-import { Note } from '../firestore/types/note'
-import { createMarkup } from '../helpers/createMarkup'
+import { Note } from '../../shared/firestore/types/note'
+import { createMarkup } from '../../shared/helpers/createMarkup'
 
 type Props = { note: Note }
 
@@ -20,10 +20,7 @@ const DivNotePreview: FunctionComponent<Props> = ({ note }) => {
 
 const useStyles = makeStyles<Theme>(() => {
   return {
-    root: {
-      width: '100%',
-      height: '100%'
-    }
+    root: { width: '100%', height: '100%' }
   }
 })
 

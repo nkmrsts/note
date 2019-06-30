@@ -6,8 +6,8 @@ import {
 } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import React, { FunctionComponent } from 'react'
-import { deleteNote } from '../firestore/deleteNote'
-import { Note } from '../firestore/types/note'
+import { deleteNote } from '../../shared/firestore/deleteNote'
+import { Note } from '../../shared/firestore/types/note'
 
 type Props = {
   note: Note
@@ -33,7 +33,7 @@ const ListItemNote: FunctionComponent<Props> = ({
           aria-label={'Delete'}
           edge={'end'}
           onClick={() => {
-            deleteNote({ noteId: note.id }).subscribe()
+            deleteNote(note.id).subscribe()
             onDeleteNote()
           }}
         >

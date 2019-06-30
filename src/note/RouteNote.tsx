@@ -1,15 +1,15 @@
 import { Container, makeStyles, Theme } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
 import { RouteComponentProps } from 'react-router'
-import DivHello from './DivHello'
-import DivNote from './DivNote'
-import DrawerDefault from './DrawerDefault'
-import ListNotes from './ListNotes'
-import ListRoutes from './ListRoutes'
+import DivHello from './components/DivHello'
+import DivNote from './components/DivNote'
+import DrawerDefault from './components/DrawerDefault'
+import ListNotes from './components/ListNotes'
+import ListRoutes from './components/ListRoutes'
 
 type Props = RouteComponentProps<{ noteId: string }>
 
-const RouteHome: FunctionComponent<Props> = ({
+const RouteNote: FunctionComponent<Props> = ({
   history,
   match: {
     params: { noteId }
@@ -48,4 +48,4 @@ const useStyles = makeStyles<Theme>(({ breakpoints, spacing }) => {
   }
 })
 
-export default RouteHome
+export default RouteNote

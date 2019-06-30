@@ -1,12 +1,11 @@
 import { firestore } from 'firebase/app'
 import { from } from 'rxjs'
 import { NOTES } from './constants/collection'
-import { DeleteNoteData } from './types/deleteNoteData'
 
-export const deleteNote = (data: DeleteNoteData) => {
+export const deleteNote = (noteId: string) => {
   const noteRef = firestore()
     .collection(NOTES)
-    .doc(data.noteId)
+    .doc(noteId)
 
   return from(noteRef.delete())
 }

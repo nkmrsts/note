@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
-import './helpers/initializeApp'
+import './shared/firebase/initializeApp'
 import './index.css'
 import { unregister } from './serviceWorker'
 
