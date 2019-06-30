@@ -1,4 +1,4 @@
-import { List } from '@material-ui/core'
+import { List, Typography } from '@material-ui/core'
 import React, {
   FunctionComponent,
   useCallback,
@@ -12,11 +12,12 @@ import ListItemNote from './ListItemNote'
 import ListItemNoteCreate from './ListItemNoteCreate'
 
 type Props = RouteComponentProps & {
+  isMine: boolean
   noteId: string | null
 }
 
-const ListNotes: FunctionComponent<Props> = ({ history, noteId }) => {
-  const [, setLoading] = useState(true)
+const ListNotes: FunctionComponent<Props> = ({ isMine, history, noteId }) => {
+  const [loading, setLoading] = useState(true)
 
   const [notes, setNotes] = useState<Note[]>([])
 
@@ -45,16 +46,17 @@ const ListNotes: FunctionComponent<Props> = ({ history, noteId }) => {
 
   // watch notes
   useEffect(() => {
-    const subscription = watchNotes().subscribe(_notes => {
+    const subscription = watchNotes({ isMine }).subscribe(_notes => {
       setNotes(_notes)
       setLoading(false)
     })
     return () => subscription.unsubscribe()
-  }, [])
+  }, [isMine])
 
   return (
     <List>
-      <ListItemNoteCreate onCreateNote={onCreateNote} />
+      {isMine && <ListItemNoteCreate onCreateNote={onCreateNote} />}
+      {loading && <Typography>{'読み込み中...'}</Typography>}
       {notes.map(note => (
         <ListItemNote
           key={note.id}
