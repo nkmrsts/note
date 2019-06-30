@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useState } from 'react'
+import { useAuthUser } from '../../shared/firebase/useAuthUser'
 import { Note } from '../../shared/firestore/types/note'
 import InputBaseNoteText from './InputBaseNoteText'
 import TextFieldTitle from './TextFieldTitle'
@@ -19,6 +20,8 @@ const DivNoteEditor: FunctionComponent<Props> = ({
   note,
   onUpdateNote
 }) => {
+  const [authUser] = useAuthUser()
+
   const [title, setTitle] = useState(note.title)
 
   const [text, setText] = useState(note.text)
@@ -27,9 +30,11 @@ const DivNoteEditor: FunctionComponent<Props> = ({
     onUpdateNote({ title, text })
   }
 
+  const isMine = authUser && authUser.uid === note.ownerId
+
   return (
     <div>
-      <button onClick={onClick}>{'update'}</button>
+      {isMine && <button onClick={onClick}>{'update'}</button>}
       <TextFieldTitle
         inProgress={inProgress}
         setTitle={setTitle}
