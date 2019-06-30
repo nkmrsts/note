@@ -4,7 +4,7 @@ import React, { FunctionComponent } from 'react'
 import { Route, Switch } from 'react-router'
 import { BrowserRouter } from 'react-router-dom'
 import RouteHome from './components/RouteHome'
-import { createTheme } from './helpers/createTheme'
+import { createTheme } from './shared/helpers/createTheme'
 
 const App: FunctionComponent = () => {
   return (

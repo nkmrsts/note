@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react'
-import { Note } from '../firestore/types/note'
+import { Note } from '../shared/firestore/types/note'
 import InputBaseNoteText from './InputBaseNoteText'
 import TextFieldTitle from './TextFieldTitle'
 
