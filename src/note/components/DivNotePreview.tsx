@@ -1,7 +1,7 @@
 import { makeStyles, Theme, Typography } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
-import { Note } from '../shared/firestore/types/note'
-import { createMarkup } from '../shared/helpers/createMarkup'
+import { Note } from '../../shared/firestore/types/note'
+import { createMarkup } from '../../shared/helpers/createMarkup'
 
 type Props = { note: Note }
 

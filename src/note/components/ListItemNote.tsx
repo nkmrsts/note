@@ -6,8 +6,8 @@ import {
 } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import React, { FunctionComponent } from 'react'
-import { deleteNote } from '../shared/firestore/deleteNote'
-import { Note } from '../shared/firestore/types/note'
+import { deleteNote } from '../../shared/firestore/deleteNote'
+import { Note } from '../../shared/firestore/types/note'
 
 type Props = {
   note: Note

@@ -1,9 +1,9 @@
 import { makeStyles, Theme } from '@material-ui/core'
 import React, { FunctionComponent, useEffect, useState } from 'react'
-import { Note } from '../shared/firestore/types/note'
-import { watchNote } from '../shared/firestore/watchNote'
-import { UpdateNoteData } from '../shared/functions/types/updateNoteData'
-import { updateNote } from '../shared/functions/updateNote'
+import { Note } from '../../shared/firestore/types/note'
+import { watchNote } from '../../shared/firestore/watchNote'
+import { UpdateNoteData } from '../../shared/functions/types/updateNoteData'
+import { updateNote } from '../../shared/functions/updateNote'
 import DivNoteEditor from './DivNoteEditor'
 import DivNotePreview from './DivNotePreview'
 

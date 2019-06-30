@@ -11,8 +11,8 @@ import {
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import { auth } from 'firebase/app'
 import React, { FunctionComponent } from 'react'
-import { useAuthLoading } from '../shared/firebase/useAuthLoading'
-import { useAuthUser } from '../shared/firebase/useAuthUser'
+import { useAuthLoading } from '../../shared/firebase/useAuthLoading'
+import { useAuthUser } from '../../shared/firebase/useAuthUser'
 
 const ListRoutes: FunctionComponent = () => {
   const classes = useStyles()

@@ -1,6 +1,6 @@
 import { ListItem, ListItemText } from '@material-ui/core'
 import React, { FunctionComponent, useEffect, useState } from 'react'
-import { createNote } from '../shared/functions/createNote'
+import { createNote } from '../../shared/functions/createNote'
 
 type Props = { onCreateNote: (noteId: string) => void }
 

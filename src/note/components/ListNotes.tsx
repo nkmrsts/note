@@ -6,8 +6,8 @@ import React, {
   useState
 } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
-import { Note } from '../shared/firestore/types/note'
-import { watchNotes } from '../shared/firestore/watchNotes'
+import { Note } from '../../shared/firestore/types/note'
+import { watchNotes } from '../../shared/firestore/watchNotes'
 import ListItemNote from './ListItemNote'
 import ListItemNoteCreate from './ListItemNoteCreate'
 
