@@ -6,6 +6,7 @@ import DivNote from './components/DivNote'
 import DrawerDefault from './components/DrawerDefault'
 import ListNotes from './components/ListNotes'
 import ListRoutes from './components/ListRoutes'
+import ListSearch from './components/ListSearch'
 
 type Props = RouteComponentProps<{ noteId: string }>
 
@@ -21,6 +22,7 @@ const RouteNote: FunctionComponent<Props> = ({
     <div className={classes.root}>
       <DrawerDefault>
         <ListRoutes />
+        <ListSearch />
         <ListNotes noteId={noteId || null} />
       </DrawerDefault>
       <main className={classes.main}>
