@@ -1,10 +1,22 @@
-import { List, ListItem, ListItemText, Typography } from '@material-ui/core'
+import {
+  List,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
+  IconButton,
+  Typography,
+  makeStyles,
+  Theme
+} from '@material-ui/core'
+import AccountCircle from '@material-ui/icons/AccountCircle'
 import { auth } from 'firebase/app'
 import React, { FunctionComponent } from 'react'
 import { useAuthLoading } from '../firebase/useAuthLoading'
 import { useAuthUser } from '../firebase/useAuthUser'
 
 const ListRoutes: FunctionComponent = () => {
+  const classes = useStyles()
+
   const [authUser] = useAuthUser()
 
   const [authLoading] = useAuthLoading()
@@ -29,7 +41,7 @@ const ListRoutes: FunctionComponent = () => {
         ) : (
           <ListItemText
             primary={
-              <Typography style={{ fontWeight: 'bold' }}>
+              <Typography className={classes.root}>
                 {authUser ? authUser.displayName : 'ログイン'}
               </Typography>
             }
@@ -40,9 +52,26 @@ const ListRoutes: FunctionComponent = () => {
             }
           />
         )}
+        {!authLoading && authUser && (
+          <ListItemSecondaryAction>
+            <IconButton aria-label={'Account'} edge={'end'}>
+              <AccountCircle />
+            </IconButton>
+          </ListItemSecondaryAction>
+        )}
       </ListItem>
     </List>
   )
 }
+
+const useStyles = makeStyles<Theme>(() => {
+  return {
+    root: {
+      fontWeight: 'bold',
+      oveflow: 'hidden',
+      wordBreak: 'break-word'
+    }
+  }
+})
 
 export default ListRoutes
