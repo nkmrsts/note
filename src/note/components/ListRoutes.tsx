@@ -68,7 +68,6 @@ const useStyles = makeStyles<Theme>(() => {
   return {
     root: {
       fontWeight: 'bold',
-      oveflow: 'hidden',
       wordBreak: 'break-word'
     }
   }
