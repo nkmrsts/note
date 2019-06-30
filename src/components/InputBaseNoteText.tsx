@@ -1,11 +1,6 @@
 import { InputBase } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
 
-type Change = {
-  text: string
-  title: string
-}
-
 type Props = {
   inProgress: boolean
   setText: (text: string) => void
@@ -26,6 +21,7 @@ const InputBaseNoteText: FunctionComponent<Props> = ({
         multiline
         onChange={e => setText(e.target.value)}
         value={text}
+        placeholder={'テキスト'}
       />
     </div>
   )

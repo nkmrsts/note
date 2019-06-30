@@ -4,10 +4,14 @@ import { deepPurple } from '@material-ui/core/colors'
 export const createTheme = () => {
   return createMuiTheme({
     palette: {
-      background: { default: '#fff' },
+      background: { default: '#fafafa' },
       primary: { main: deepPurple.A400 }
     },
     props: { MuiList: { style: { padding: 0 } } },
-    typography: { fontFamily: ['Helvetica', 'sans-serif'].join(',') }
+    typography: {
+      fontFamily: ['Noto Sans JP', 'Roboto', 'Helvetica', 'sans-serif'].join(
+        ','
+      )
+    }
   })
 }
