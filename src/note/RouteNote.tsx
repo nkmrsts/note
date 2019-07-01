@@ -1,8 +1,9 @@
 import { Container, makeStyles, Theme } from '@material-ui/core'
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 import { RouteComponentProps } from 'react-router'
 import DivHello from './components/DivHello'
 import DivNote from './components/DivNote'
+import DivNoteFilter from './components/DivNoteFilter'
 import DrawerDefault from './components/DrawerDefault'
 import ListNotes from './components/ListNotes'
 import ListRoutes from './components/ListRoutes'
@@ -16,6 +17,8 @@ const RouteNote: FunctionComponent<Props> = ({
     params: { noteId }
   }
 }) => {
+  const [isMine, setMine] = useState(true)
+
   const classes = useStyles()
 
   return (
@@ -23,7 +26,8 @@ const RouteNote: FunctionComponent<Props> = ({
       <DrawerDefault>
         <ListRoutes />
         <ListSearch />
-        <ListNotes noteId={noteId || null} />
+        <DivNoteFilter isMine={isMine} setMine={setMine} />
+        <ListNotes isMine={isMine} noteId={noteId || null} />
       </DrawerDefault>
       <main className={classes.main}>
         <Container maxWidth={'lg'}>
