@@ -2,6 +2,7 @@ import { makeStyles, Theme, Typography } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
 import { Note } from '../../shared/firestore/types/note'
 import { createMarkup } from '../../shared/helpers/createMarkup'
+import DivNoteToolbar from './DivNoteToolbar'
 
 type Props = { note: Note }
 
@@ -10,6 +11,7 @@ const DivNotePreview: FunctionComponent<Props> = ({ note }) => {
   return (
     <div>
       <Typography variant={'h4'}>{note.title}</Typography>
+      <DivNoteToolbar />
       <div
         className={classes.root}
         dangerouslySetInnerHTML={createMarkup(note.text)}

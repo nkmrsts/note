@@ -74,9 +74,6 @@ const DivNote: FunctionComponent<Props> = ({ currentNoteId }) => {
 
   return (
     <div className={classes.root}>
-      <div>
-        <button onClick={onClick}>{previewHide ? 'preview' : 'edit'}</button>
-      </div>
       {previewHide ? (
         <DivNoteEditor
           inProgress={noteChange !== null}
@@ -86,6 +83,9 @@ const DivNote: FunctionComponent<Props> = ({ currentNoteId }) => {
       ) : (
         <DivNotePreview note={note} />
       )}
+      <div>
+        <button onClick={onClick}>{previewHide ? 'preview' : 'edit'}</button>
+      </div>
     </div>
   )
 }
@@ -99,7 +99,7 @@ const useStyles = makeStyles<Theme>(({ spacing }) => {
       paddingBottom: spacing(4),
       paddingLeft: spacing(2),
       paddingRight: spacing(2),
-      paddingTop: spacing(8)
+      paddingTop: spacing(6)
     }
   }
 })
