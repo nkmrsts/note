@@ -1,13 +1,13 @@
 import {
-  Toolbar,
-  Select,
-  MenuItem,
   Button,
   makeStyles,
-  Theme
+  MenuItem,
+  Select,
+  Theme,
+  Toolbar
 } from '@material-ui/core'
-import SaveIcon from '@material-ui/icons/Save'
 import EditIcon from '@material-ui/icons/Edit'
+import SaveIcon from '@material-ui/icons/Save'
 import React, { FunctionComponent, useState } from 'react'
 
 const selectItems = [
@@ -23,14 +23,11 @@ const selectItems = [
 
 const DivNoteToolbar: FunctionComponent = () => {
   const classes = useStyles()
-  const [values, setValues] = useState(selectItems[0])
 
-  const handleChange = (event: any, key: any) => {
-    setValues({
-      label: key,
-      value: event.target.value
-    })
-  }
+  const [value, setValue] = useState(selectItems[0].value)
+
+  // for debug
+  console.log(value) // public or private
 
   return (
     <div>
@@ -43,9 +40,12 @@ const DivNoteToolbar: FunctionComponent = () => {
           Save
           <SaveIcon className={classes.buttonIcon} />
         </Button>
-        <Select value={values.value} onChange={handleChange}>
+        <Select
+          value={value}
+          onChange={event => setValue(event.target.value as string)}
+        >
           {selectItems.map(item => (
-            <MenuItem key={item.label} value={item.value}>
+            <MenuItem key={item.value} value={item.value}>
               {item.label}
             </MenuItem>
           ))}
