@@ -3,11 +3,14 @@ import { useAuthUser } from '../../shared/firebase/useAuthUser'
 import { Note } from '../../shared/firestore/types/note'
 import InputBaseNoteText from './InputBaseNoteText'
 import TextFieldTitle from './TextFieldTitle'
+import DivNoteToolbar from './DivNoteToolbar'
 
 type Props = {
   inProgress: boolean
   note: Note
   onUpdateNote: (change: Change) => void
+  previewHide: boolean
+  setPreviewHide: (previewHide: boolean) => void
 }
 
 type Change = {
@@ -18,7 +21,9 @@ type Change = {
 const DivNoteEditor: FunctionComponent<Props> = ({
   inProgress,
   note,
-  onUpdateNote
+  onUpdateNote,
+  previewHide,
+  setPreviewHide
 }) => {
   const [authUser] = useAuthUser()
 
@@ -34,11 +39,16 @@ const DivNoteEditor: FunctionComponent<Props> = ({
 
   return (
     <div>
-      {isMine && <button onClick={onClick}>{'update'}</button>}
       <TextFieldTitle
         inProgress={inProgress}
         setTitle={setTitle}
         title={title}
+      />
+      <DivNoteToolbar
+        isMine={isMine}
+        previewHide={previewHide}
+        setPreviewHide={setPreviewHide}
+        onUpdateNote={onClick}
       />
       <InputBaseNoteText
         inProgress={inProgress}

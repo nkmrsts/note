@@ -68,24 +68,19 @@ const DivNote: FunctionComponent<Props> = ({ currentNoteId }) => {
     })
   }
 
-  const onClick = () => {
-    setPreviewHide(!previewHide)
-  }
-
   return (
     <div className={classes.root}>
       {previewHide ? (
         <DivNoteEditor
           inProgress={noteChange !== null}
           note={note}
+          previewHide={previewHide}
           onUpdateNote={onUpdateNote}
+          setPreviewHide={setPreviewHide}
         />
       ) : (
-        <DivNotePreview note={note} />
+        <DivNotePreview note={note} setPreviewHide={setPreviewHide} />
       )}
-      <div>
-        <button onClick={onClick}>{previewHide ? 'preview' : 'edit'}</button>
-      </div>
     </div>
   )
 }
