@@ -88,9 +88,9 @@ const DivNote: FunctionComponent<Props> = ({ currentNoteId }) => {
 const useStyles = makeStyles<Theme>(({ spacing }) => {
   return {
     root: {
-      display: 'grid',
-      gridAutoRows: 'min-content auto',
-      gridGap: spacing(2),
+      //display: 'grid',
+      //gridAutoRows: 'min-content auto',
+      //gridGap: spacing(2),
       paddingBottom: spacing(4),
       paddingLeft: spacing(2),
       paddingRight: spacing(2),
