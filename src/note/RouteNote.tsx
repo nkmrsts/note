@@ -24,8 +24,8 @@ const RouteNote: FunctionComponent<Props> = ({
   return (
     <div className={classes.root}>
       <DrawerDefault>
-        <ListRoutes />
         <ListSearch />
+        <ListRoutes />
         <DivNoteFilter isMine={isMine} setMine={setMine} />
         <ListNotes isMine={isMine} noteId={noteId || null} />
       </DrawerDefault>
