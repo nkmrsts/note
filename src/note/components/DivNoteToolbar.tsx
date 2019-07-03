@@ -6,9 +6,8 @@ import {
   Theme,
   Toolbar
 } from '@material-ui/core'
-import EditIcon from '@material-ui/icons/Edit'
-import SaveIcon from '@material-ui/icons/Save'
 import DoneIcon from '@material-ui/icons/Done'
+import EditIcon from '@material-ui/icons/Edit'
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft'
 import React, { FunctionComponent, useState } from 'react'
 
