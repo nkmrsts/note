@@ -6,6 +6,7 @@ import { UpdateNoteData } from '../../shared/functions/types/updateNoteData'
 import { updateNote } from '../../shared/functions/updateNote'
 import DivNoteEditor from './DivNoteEditor'
 import DivNotePreview from './DivNotePreview'
+import DivNoteToolbar from './DivNoteToolbar'
 
 type Props = { currentNoteId: string }
 
@@ -70,16 +71,16 @@ const DivNote: FunctionComponent<Props> = ({ currentNoteId }) => {
 
   return (
     <div className={classes.root}>
+      <DivNoteToolbar
+        note={note}
+        previewHide={previewHide}
+        setPreviewHide={setPreviewHide}
+        onUpdateNote={onUpdateNote}
+      />
       {previewHide ? (
-        <DivNoteEditor
-          inProgress={noteChange !== null}
-          note={note}
-          previewHide={previewHide}
-          onUpdateNote={onUpdateNote}
-          setPreviewHide={setPreviewHide}
-        />
+        <DivNoteEditor inProgress={noteChange !== null} note={note} />
       ) : (
-        <DivNotePreview note={note} setPreviewHide={setPreviewHide} />
+        <DivNotePreview note={note} />
       )}
     </div>
   )
@@ -88,6 +89,8 @@ const DivNote: FunctionComponent<Props> = ({ currentNoteId }) => {
 const useStyles = makeStyles<Theme>(({ spacing }) => {
   return {
     root: {
+      display: 'grid',
+      gridAutoRows: 'min-content auto',
       paddingBottom: spacing(4),
       paddingLeft: spacing(2),
       paddingRight: spacing(2)

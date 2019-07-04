@@ -2,18 +2,15 @@ import { makeStyles, Theme, Typography } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
 import { Note } from '../../shared/firestore/types/note'
 import { createMarkup } from '../../shared/helpers/createMarkup'
-import DivNoteToolbar from './DivNoteToolbar'
 
 type Props = {
   note: Note
-  setPreviewHide: (previewHide: boolean) => void
 }
 
-const DivNotePreview: FunctionComponent<Props> = ({ note, setPreviewHide }) => {
+const DivNotePreview: FunctionComponent<Props> = ({ note }) => {
   const classes = useStyles()
   return (
     <div className={classes.root}>
-      <DivNoteToolbar setPreviewHide={setPreviewHide} />
       <Typography className={classes.title} variant={'h4'}>
         {note.title}
       </Typography>
@@ -29,7 +26,7 @@ const useStyles = makeStyles<Theme>(({ spacing }) => {
   return {
     root: {
       display: 'grid',
-      gridAutoRows: 'min-content min-content auto',
+      gridAutoRows: 'min-content auto',
       gridGap: spacing(1)
     },
     title: {

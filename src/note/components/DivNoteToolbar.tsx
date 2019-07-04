@@ -10,6 +10,8 @@ import DoneIcon from '@material-ui/icons/Done'
 import EditIcon from '@material-ui/icons/Edit'
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft'
 import React, { FunctionComponent, useState } from 'react'
+import { useAuthUser } from '../../shared/firebase/useAuthUser'
+import { Note } from '../../shared/firestore/types/note'
 
 const selectItems = [
   {
@@ -22,21 +24,30 @@ const selectItems = [
   }
 ]
 type Props = {
-  previewHide?: boolean | null
+  previewHide: boolean | null
   setPreviewHide: (previewHide: boolean) => void
-  onUpdateNote?: () => void
-  isMine?: boolean | null
+  onUpdateNote: (change: Change) => void
+  note: Note
+}
+
+type Change = {
+  text: string
+  title: string
 }
 
 const DivNoteToolbar: FunctionComponent<Props> = ({
   previewHide,
   setPreviewHide,
   onUpdateNote,
-  isMine
+  note
 }) => {
   const classes = useStyles()
 
   const [value, setValue] = useState(selectItems[0].value)
+
+  const [authUser] = useAuthUser()
+
+  const isMine = authUser && authUser.uid === note.ownerId
 
   const togglePreviewHide = () => {
     setPreviewHide(!previewHide)
@@ -64,10 +75,10 @@ const DivNoteToolbar: FunctionComponent<Props> = ({
             )}
           </Button>
         </div>
-        {isMine && (
+        {previewHide && isMine && (
           <div className={classes.toolbarItem}>
             <Button
-              onClick={onUpdateNote}
+              onClick={() => onUpdateNote}
               color="inherit"
               className={classes.button}
             >
