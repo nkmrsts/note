@@ -98,10 +98,11 @@ const useStyles = makeStyles<Theme>(({ spacing }) => {
     root: {
       padding: 0,
       minHeight: 'auto',
+      paddingTop: spacing(2),
+      paddingBottom: spacing(2),
       borderBottom: '1px solid rgba(0,0,0,0.12)'
     },
     toolbarItem: {
-      paddingBottom: spacing(0.5),
       paddingLeft: spacing(2),
       paddingRight: spacing(2),
       borderRight: '1px solid rgba(0,0,0,0.12)',
