@@ -27,7 +27,7 @@ const useStyles = makeStyles<Theme>(({ spacing }) => {
     root: {
       display: 'grid',
       gridAutoRows: 'min-content auto',
-      gridGap: spacing(1)
+      gridGap: spacing(2)
     },
     title: {
       padding: '6px 0 11px'
