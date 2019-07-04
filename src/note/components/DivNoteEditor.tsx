@@ -42,16 +42,16 @@ const DivNoteEditor: FunctionComponent<Props> = ({
 
   return (
     <div className={classes.root}>
-      <TextFieldTitle
-        inProgress={inProgress}
-        setTitle={setTitle}
-        title={title}
-      />
       <DivNoteToolbar
         isMine={isMine}
         previewHide={previewHide}
         setPreviewHide={setPreviewHide}
         onUpdateNote={onClick}
+      />
+      <TextFieldTitle
+        inProgress={inProgress}
+        setTitle={setTitle}
+        title={title}
       />
       <InputBaseNoteText
         inProgress={inProgress}

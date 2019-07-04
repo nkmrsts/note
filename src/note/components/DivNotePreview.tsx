@@ -13,10 +13,10 @@ const DivNotePreview: FunctionComponent<Props> = ({ note, setPreviewHide }) => {
   const classes = useStyles()
   return (
     <div className={classes.root}>
+      <DivNoteToolbar setPreviewHide={setPreviewHide} />
       <Typography className={classes.title} variant={'h4'}>
         {note.title}
       </Typography>
-      <DivNoteToolbar setPreviewHide={setPreviewHide} />
       <div
         className={classes.textArea}
         dangerouslySetInnerHTML={createMarkup(note.text)}
