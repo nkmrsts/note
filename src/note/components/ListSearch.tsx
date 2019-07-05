@@ -26,15 +26,17 @@ const ListSearch: FunctionComponent = () => {
   )
 }
 
-const useStyles = makeStyles<Theme>(theme => {
+const useStyles = makeStyles<Theme>(({ shape, spacing }) => {
   return {
     listItem: {
-      paddingLeft: '8px',
-      paddingRight: '8px'
+      paddingTop: spacing(2),
+      paddingBottom: spacing(2),
+      paddingLeft: spacing(1),
+      paddingRight: spacing(1)
     },
     search: {
       position: 'relative',
-      borderRadius: theme.shape.borderRadius,
+      borderRadius: shape.borderRadius,
       width: '100%',
       '&:hover': {
         backgroundColor: 'rgba(0, 0, 0, 0.08)'

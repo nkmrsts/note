@@ -18,7 +18,7 @@ const TextFieldTitle: FunctionComponent<Props> = ({
       className={classes.root}
       disabled={inProgress}
       fullWidth
-      //label={'タイトル'}
+      label={'タイトル'}
       multiline
       onChange={e => setTitle(e.target.value)}
       value={title}
