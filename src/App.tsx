@@ -1,4 +1,10 @@
-import { CssBaseline, makeStyles, Theme } from '@material-ui/core'
+import {
+  CssBaseline,
+  makeStyles,
+  Theme,
+  useMediaQuery,
+  useTheme
+} from '@material-ui/core'
 import { StylesProvider, ThemeProvider } from '@material-ui/styles'
 import React, { FunctionComponent } from 'react'
 import { Route, Switch } from 'react-router'
@@ -10,16 +16,22 @@ import { createTheme } from './shared/helpers/createTheme'
 const App: FunctionComponent = () => {
   const classes = useStyles()
 
+  const theme = useTheme<Theme>()
+
+  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'))
+
   return (
     <StylesProvider>
       <ThemeProvider theme={createTheme()}>
         <CssBaseline />
         <BrowserRouter>
           <div className={classes.root}>
-            <Switch>
-              <Route component={RouteListNote} exact path={'/'} />
-              <Route component={RouteListNote} path={'/:noteId'} />
-            </Switch>
+            {isDesktop && (
+              <Switch>
+                <Route component={RouteListNote} exact path={'/'} />
+                <Route component={RouteListNote} path={'/:noteId'} />
+              </Switch>
+            )}
             <Switch>
               <Route component={RouteNote} exact path={'/'} />
               <Route component={RouteNote} path={'/:noteId'} />
