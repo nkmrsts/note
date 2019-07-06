@@ -11,12 +11,11 @@ import { watchNotes } from '../../shared/firestore/watchNotes'
 import ListItemNote from './ListItemNote'
 import ListItemNoteCreate from './ListItemNoteCreate'
 
-type Props = RouteComponentProps & {
-  isMine: boolean
-  noteId: string | null
-}
+type Props = RouteComponentProps & { noteId: string | null }
 
-const ListNotes: FunctionComponent<Props> = ({ isMine, history, noteId }) => {
+const ListNotes: FunctionComponent<Props> = ({ history, noteId }) => {
+  const [isMine, setIsMine] = useState(true)
+
   const [loading, setLoading] = useState(true)
 
   const [notes, setNotes] = useState<Note[]>([])
@@ -26,15 +25,6 @@ const ListNotes: FunctionComponent<Props> = ({ isMine, history, noteId }) => {
       history.push(`/${_noteId}`)
     },
     [history]
-  )
-
-  const onDeleteNote = useCallback(
-    (_noteId: string) => {
-      if (noteId === _noteId) {
-        history.push('/')
-      }
-    },
-    [history, noteId]
   )
 
   const onUpdateNote = useCallback(
@@ -61,7 +51,6 @@ const ListNotes: FunctionComponent<Props> = ({ isMine, history, noteId }) => {
         <ListItemNote
           key={note.id}
           note={note}
-          onDeleteNote={() => onDeleteNote(note.id)}
           onUpdateNote={() => onUpdateNote(note.id)}
           selected={noteId === note.id}
         />

@@ -14,7 +14,7 @@ import ListItemNoteCreate from './components/ListItemNoteCreate'
 
 type Props = RouteComponentProps<{ noteId: string }>
 
-const ListNotes: FunctionComponent<Props> = ({
+const RouteListNote: FunctionComponent<Props> = ({
   history,
   match: {
     params: { noteId }
@@ -31,15 +31,6 @@ const ListNotes: FunctionComponent<Props> = ({
       history.push(`/${_noteId}`)
     },
     [history]
-  )
-
-  const onDeleteNote = useCallback(
-    (_noteId: string) => {
-      if (noteId === _noteId) {
-        history.push('/')
-      }
-    },
-    [history, noteId]
   )
 
   const onUpdateNote = useCallback(
@@ -68,7 +59,6 @@ const ListNotes: FunctionComponent<Props> = ({
           <ListItemNote
             key={note.id}
             note={note}
-            onDeleteNote={() => onDeleteNote(note.id)}
             onUpdateNote={() => onUpdateNote(note.id)}
             selected={noteId === note.id}
           />
@@ -78,4 +68,4 @@ const ListNotes: FunctionComponent<Props> = ({
   )
 }
 
-export default withRouter(ListNotes)
+export default withRouter(RouteListNote)

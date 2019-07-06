@@ -6,14 +6,12 @@ import { Note } from '../../shared/firestore/types/note'
 
 type Props = {
   note: Note
-  onDeleteNote: () => void
   onUpdateNote: () => void
   selected: boolean
 }
 
 const ListItemNote: FunctionComponent<Props> = ({
   note,
-  onDeleteNote,
   onUpdateNote,
   selected
 }) => {
