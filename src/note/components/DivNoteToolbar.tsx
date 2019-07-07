@@ -8,9 +8,12 @@ import {
 } from '@material-ui/core'
 import DoneIcon from '@material-ui/icons/Done'
 import EditIcon from '@material-ui/icons/Edit'
+import DeleteIcon from '@material-ui/icons/Delete'
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft'
 import React, { FunctionComponent, useState } from 'react'
+import { RouteComponentProps, withRouter } from 'react-router'
 import { useAuthUser } from '../../shared/firebase/useAuthUser'
+import { deleteNote } from '../../shared/firestore/deleteNote'
 import { Note } from '../../shared/firestore/types/note'
 
 const selectItems = [
@@ -23,7 +26,7 @@ const selectItems = [
     value: 'private'
   }
 ]
-type Props = {
+type Props = RouteComponentProps & {
   previewHide: boolean | null
   setPreviewHide: (previewHide: boolean) => void
   onUpdateNote: (change: Change) => void
@@ -36,6 +39,7 @@ type Change = {
 }
 
 const DivNoteToolbar: FunctionComponent<Props> = ({
+  history,
   previewHide,
   setPreviewHide,
   onUpdateNote,
@@ -56,49 +60,68 @@ const DivNoteToolbar: FunctionComponent<Props> = ({
   return (
     <div>
       <Toolbar className={classes.root}>
-        <div className={classes.toolbarItem}>
-          <Button
-            onClick={togglePreviewHide}
-            color="inherit"
-            className={classes.button}
-          >
-            {previewHide ? (
-              <React.Fragment>
-                <KeyboardArrowLeftIcon className={classes.buttonIcon} />
-                Preview
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                <EditIcon className={classes.buttonIcon} />
-                Edit
-              </React.Fragment>
-            )}
-          </Button>
-        </div>
-        {previewHide && isMine && (
-          <div className={classes.toolbarItem}>
-            <Button
-              onClick={() => onUpdateNote}
-              color="inherit"
-              className={classes.button}
-            >
-              <DoneIcon className={classes.buttonIcon} />
-              Update
-            </Button>
-          </div>
+        {isMine && (
+          <React.Fragment>
+            <div className={classes.toolbarItem}>
+              <Button
+                onClick={togglePreviewHide}
+                color="inherit"
+                className={classes.button}
+              >
+                {previewHide ? (
+                  <React.Fragment>
+                    <KeyboardArrowLeftIcon className={classes.buttonIcon} />
+                    Preview
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>
+                    <EditIcon className={classes.buttonIcon} />
+                    Edit
+                  </React.Fragment>
+                )}
+              </Button>
+            </div>
+            <div className={classes.toolbarItem}>
+              <Button
+                onClick={() => {
+                  onUpdateNote({
+                    text: note.text,
+                    title: note.title
+                  })
+                }}
+                color="inherit"
+                className={classes.button}
+              >
+                <DoneIcon className={classes.buttonIcon} />
+                Update
+              </Button>
+            </div>
+            <div className={classes.toolbarItem}>
+              <Select
+                value={value}
+                onChange={event => setValue(event.target.value as string)}
+              >
+                {selectItems.map(item => (
+                  <MenuItem key={item.value} value={item.value}>
+                    {item.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </div>
+            <div className={classes.toolbarItem}>
+              <Button
+                onClick={() => {
+                  deleteNote(note.id).subscribe()
+                  history.push('/')
+                }}
+                color="inherit"
+                className={classes.button}
+              >
+                <DeleteIcon />
+              </Button>
+            </div>
+          </React.Fragment>
         )}
-        <div className={classes.toolbarItem}>
-          <Select
-            value={value}
-            onChange={event => setValue(event.target.value as string)}
-          >
-            {selectItems.map(item => (
-              <MenuItem key={item.value} value={item.value}>
-                {item.label}
-              </MenuItem>
-            ))}
-          </Select>
-        </div>
       </Toolbar>
     </div>
   )
@@ -134,4 +157,4 @@ const useStyles = makeStyles<Theme>(({ spacing }) => {
   }
 })
 
-export default DivNoteToolbar
+export default withRouter(DivNoteToolbar)

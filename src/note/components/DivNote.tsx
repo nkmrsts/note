@@ -78,7 +78,11 @@ const DivNote: FunctionComponent<Props> = ({ currentNoteId }) => {
         onUpdateNote={onUpdateNote}
       />
       {previewHide ? (
-        <DivNoteEditor inProgress={noteChange !== null} note={note} />
+        <DivNoteEditor
+          setNote={setNote}
+          inProgress={noteChange !== null}
+          note={note}
+        />
       ) : (
         <DivNotePreview note={note} />
       )}
