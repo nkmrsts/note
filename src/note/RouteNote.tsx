@@ -1,13 +1,15 @@
-import { Container, makeStyles, Theme } from '@material-ui/core'
-import React, { FunctionComponent, useState } from 'react'
+import {
+  Container,
+  makeStyles,
+  Theme,
+  useMediaQuery,
+  useTheme
+} from '@material-ui/core'
+import React, { FunctionComponent } from 'react'
 import { RouteComponentProps } from 'react-router'
 import DivHello from './components/DivHello'
 import DivNote from './components/DivNote'
-import DivNoteFilter from './components/DivNoteFilter'
-import DrawerDefault from './components/DrawerDefault'
 import ListNotes from './components/ListNotes'
-import ListRoutes from './components/ListRoutes'
-import ListSearch from './components/ListSearch'
 
 type Props = RouteComponentProps<{ noteId: string }>
 
@@ -17,18 +19,14 @@ const RouteNote: FunctionComponent<Props> = ({
     params: { noteId }
   }
 }) => {
-  const [isMine, setMine] = useState(true)
-
   const classes = useStyles()
 
-  return (
-    <div className={classes.root}>
-      <DrawerDefault>
-        <ListSearch />
-        <ListRoutes />
-        <DivNoteFilter isMine={isMine} setMine={setMine} />
-        <ListNotes isMine={isMine} noteId={noteId || null} />
-      </DrawerDefault>
+  const theme = useTheme<Theme>()
+
+  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'))
+
+  if (isDesktop) {
+    return (
       <main className={classes.main}>
         <Container maxWidth={'lg'}>
           {noteId ? (
@@ -38,20 +36,22 @@ const RouteNote: FunctionComponent<Props> = ({
           )}
         </Container>
       </main>
-    </div>
+    )
+  }
+
+  return (
+    <main className={classes.main}>
+      {noteId ? (
+        <DivNote key={noteId || '_'} currentNoteId={noteId} />
+      ) : (
+        <ListNotes noteId={noteId} />
+      )}
+    </main>
   )
 }
 
 const useStyles = makeStyles<Theme>(({ breakpoints, spacing }) => {
-  return {
-    root: {
-      display: 'grid',
-      gridGap: spacing(2),
-      gridTemplateColumns: 'auto 1fr',
-      [breakpoints.down('xs')]: { gridTemplateColumns: '1fr' }
-    },
-    main: { display: 'grid', gridGap: spacing(2) }
-  }
+  return { main: { display: 'grid', gridGap: spacing(2) } }
 })
 
 export default RouteNote
