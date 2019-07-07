@@ -1,4 +1,4 @@
-import { TextField, makeStyles, Theme } from '@material-ui/core'
+import { makeStyles, TextField, Theme } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
 
 type Props = {
@@ -13,6 +13,7 @@ const TextFieldTitle: FunctionComponent<Props> = ({
   title
 }) => {
   const classes = useStyles()
+
   return (
     <TextField
       className={classes.root}

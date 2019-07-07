@@ -1,28 +1,22 @@
 import { makeStyles, Theme } from '@material-ui/core'
 import React, { FunctionComponent, useEffect, useState } from 'react'
+import { useAuthLoading } from '../../shared/firebase/useAuthLoading'
+import { useAuthUser } from '../../shared/firebase/useAuthUser'
 import { Note } from '../../shared/firestore/types/note'
 import { watchNote } from '../../shared/firestore/watchNote'
-import { UpdateNoteData } from '../../shared/functions/types/updateNoteData'
-import { updateNote } from '../../shared/functions/updateNote'
 import DivNoteEditor from './DivNoteEditor'
 import DivNotePreview from './DivNotePreview'
-import DivNoteToolbar from './DivNoteToolbar'
 
 type Props = { currentNoteId: string }
 
-type Change = {
-  text: string
-  title: string
-}
-
 const DivNote: FunctionComponent<Props> = ({ currentNoteId }) => {
+  const [authUser] = useAuthUser()
+
+  const [authLoading] = useAuthLoading()
+
   const [note, setNote] = useState<Note | null>(null)
 
   const [loading, setLoading] = useState(true)
-
-  const [previewHide, setPreviewHide] = useState(false)
-
-  const [noteChange, setNoteChange] = useState<UpdateNoteData | null>(null)
 
   const classes = useStyles()
 
@@ -32,26 +26,19 @@ const DivNote: FunctionComponent<Props> = ({ currentNoteId }) => {
     const subscription = watchNote(currentNoteId).subscribe(
       _note => {
         setNote(_note)
-        if (!_note.title && !_note.text) {
-          setPreviewHide(true)
-        }
         setLoading(false)
+        if (authUser && authUser.uid === _note.ownerId) {
+          subscription.unsubscribe()
+        }
       },
       () => {
         setLoading(false)
       }
     )
     return () => subscription.unsubscribe()
-  }, [currentNoteId])
+  }, [authUser, currentNoteId])
 
-  // update note
-  useEffect(() => {
-    if (!noteChange) return
-    const subscription = updateNote()(noteChange).subscribe(() => {
-      setNoteChange(null)
-    })
-    return () => subscription.unsubscribe()
-  }, [noteChange])
+  if (authLoading) return null
 
   if (loading) return null
 
@@ -59,35 +46,17 @@ const DivNote: FunctionComponent<Props> = ({ currentNoteId }) => {
     return <div>{'Data Not Found'}</div>
   }
 
-  const onUpdateNote = ({ text, title }: Change) => {
-    if (note === null) return
-    setNoteChange({
-      noteId: note.id,
-      text: text || note.text,
-      title: title || note.title,
-      isPublic: true
-    })
+  const isMine = authUser && authUser.uid === note.ownerId
+
+  if (!isMine) {
+    return (
+      <div className={classes.root}>
+        <DivNotePreview note={note} />
+      </div>
+    )
   }
 
-  return (
-    <div className={classes.root}>
-      <DivNoteToolbar
-        note={note}
-        previewHide={previewHide}
-        setPreviewHide={setPreviewHide}
-        onUpdateNote={onUpdateNote}
-      />
-      {previewHide ? (
-        <DivNoteEditor
-          setNote={setNote}
-          inProgress={noteChange !== null}
-          note={note}
-        />
-      ) : (
-        <DivNotePreview note={note} />
-      )}
-    </div>
-  )
+  return <DivNoteEditor note={note} />
 }
 
 const useStyles = makeStyles<Theme>(({ spacing }) => {
