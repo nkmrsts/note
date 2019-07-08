@@ -5,6 +5,7 @@ import { updateNote } from '../../shared/functions/updateNote'
 import ButtonPreview from './ButtonPreview'
 import ButtonStatus from './ButtonStatus'
 import ButtonUpdate from './ButtonUpdate'
+import ButtonDelete from './ButtonDelete'
 import DivNoteEditorLayout from './DivNoteEditorLayout'
 import DivNotePreview from './DivNotePreview'
 import DivToolbarItem from './DivToolbarItem'
@@ -61,6 +62,9 @@ const DivNoteEditor: FunctionComponent<Props> = ({ note: _note }) => {
             isPublic={note.isPublic}
           />
         </DivToolbarItem>
+        <DivToolbarItem>
+          <ButtonDelete noteId={note.id} />
+        </DivToolbarItem>
       </ToolbarNote>
       {preview ? (
         <DivNotePreview note={note} />
@@ -87,7 +91,7 @@ const useStyles = makeStyles<Theme>(({ spacing }) => {
     root: {
       display: 'grid',
       gridAutoRows: 'min-content auto',
-      gridGap: spacing(4),
+      gridGap: spacing(2),
       paddingBottom: spacing(4),
       paddingLeft: spacing(2),
       paddingRight: spacing(2)
