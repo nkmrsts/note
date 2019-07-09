@@ -30,14 +30,14 @@ const useStyles = makeStyles<Theme>(({ spacing }) => {
       gridGap: spacing(2)
     },
     title: {
-      padding: '6px 0 11px'
+      padding: '8px 0 8px'
     },
     textArea: {
       width: '100%',
       height: '100%',
       fontSize: '1rem',
-      '& p': {
-        margin: '6px 0 7px'
+      '& *:first-of-type': {
+        marginTop: '0'
       }
     }
   }

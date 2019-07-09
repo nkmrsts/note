@@ -14,7 +14,7 @@ import ListItemNoteCreate from './ListItemNoteCreate'
 type Props = RouteComponentProps & { noteId: string | null }
 
 const ListNotes: FunctionComponent<Props> = ({ history, noteId }) => {
-  const [isMine, setIsMine] = useState(true)
+  const [isMine] = useState(true)
 
   const [loading, setLoading] = useState(true)
 
