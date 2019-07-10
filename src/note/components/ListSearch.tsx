@@ -1,22 +1,26 @@
-import { ListItem, InputBase, makeStyles, Theme } from '@material-ui/core'
+import { InputBase, ListItem, makeStyles, Theme } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search'
-import React, { FunctionComponent, useState } from 'react'
+import React, { Dispatch, FunctionComponent, SetStateAction } from 'react'
 
-const ListSearch: FunctionComponent = () => {
+type Props = { searchState: [string, Dispatch<SetStateAction<string>>] }
+
+const ListSearch: FunctionComponent<Props> = ({
+  searchState: [search, setSearch]
+}) => {
   const classes = useStyles()
-  const [, setText] = useState('')
 
   return (
     <ListItem divider className={classes.listItem}>
       <div className={classes.search}>
         <InputBase
-          placeholder="検索"
           classes={{
-            root: classes.inputRoot,
-            input: classes.inputInput
+            input: classes.inputInput,
+            root: classes.inputRoot
           }}
           inputProps={{ 'aria-label': 'Search' }}
-          onChange={e => setText(e.target.value)}
+          onChange={e => setSearch(e.target.value)}
+          placeholder={'検索'}
+          value={search}
         />
         <div className={classes.searchIcon}>
           <SearchIcon />
