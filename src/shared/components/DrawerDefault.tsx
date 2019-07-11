@@ -1,20 +1,7 @@
-import { Divider, Drawer, makeStyles, Theme } from '@material-ui/core'
+import { Drawer, makeStyles, Theme } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
-import ListSearch from '../../note/components/ListSearch'
-import DrawerHeader from './DrawerHeader'
 
-type Props = {
-  isMine: boolean
-  noteId: string
-  setIsMine: (isMine: boolean) => void
-}
-
-const DrawerDefault: FunctionComponent<Props> = ({
-  isMine,
-  setIsMine,
-  children,
-  noteId
-}) => {
+const DrawerDefault: FunctionComponent = ({ children }) => {
   const classes = useStyles()
 
   return (
@@ -24,9 +11,6 @@ const DrawerDefault: FunctionComponent<Props> = ({
       open={true}
       variant={'permanent'}
     >
-      <DrawerHeader isMine={isMine} setIsMine={setIsMine} noteId={noteId} />
-      <Divider />
-      <ListSearch />
       {children}
     </Drawer>
   )

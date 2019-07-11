@@ -1,4 +1,4 @@
-import { List, Typography } from '@material-ui/core'
+import { Divider, List } from '@material-ui/core'
 import React, {
   FunctionComponent,
   useCallback,
@@ -6,11 +6,14 @@ import React, {
   useState
 } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
+import DivProgress from '../shared/components/DivProgress'
 import DrawerDefault from '../shared/components/DrawerDefault'
+import DrawerHeader from '../shared/components/DrawerHeader'
 import { Note } from '../shared/firestore/types/note'
 import { watchNotes } from '../shared/firestore/watchNotes'
 import ListItemNote from './components/ListItemNote'
 import ListItemNoteCreate from './components/ListItemNoteCreate'
+import ListSearch from './components/ListSearch'
 
 type Props = RouteComponentProps<{ noteId: string }>
 
@@ -25,6 +28,8 @@ const RouteListNote: FunctionComponent<Props> = ({
   const [loading, setLoading] = useState(true)
 
   const [notes, setNotes] = useState<Note[]>([])
+
+  const [search, setSearch] = useState('')
 
   const onCreateNote = useCallback(
     (_noteId: string) => {
@@ -42,7 +47,6 @@ const RouteListNote: FunctionComponent<Props> = ({
 
   // watch notes
   useEffect(() => {
-    setNotes([])
     const subscription = watchNotes({ isMine }).subscribe(_notes => {
       setNotes(_notes)
       setLoading(false)
@@ -50,12 +54,17 @@ const RouteListNote: FunctionComponent<Props> = ({
     return () => subscription.unsubscribe()
   }, [isMine])
 
+  const _notes = notes.filter(note => note.title.includes(search))
+
   return (
-    <DrawerDefault isMine={isMine} setIsMine={setIsMine} noteId={noteId}>
+    <DrawerDefault>
+      <DrawerHeader isMine={isMine} setIsMine={setIsMine} noteId={noteId} />
+      <Divider />
+      {isMine && <ListSearch searchState={[search, setSearch]} />}
       <List>
         {isMine && <ListItemNoteCreate onCreateNote={onCreateNote} />}
-        {loading && <Typography>{'読み込み中...'}</Typography>}
-        {notes.map(note => (
+        {loading && <DivProgress />}
+        {_notes.map(note => (
           <ListItemNote
             key={note.id}
             note={note}
