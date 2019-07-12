@@ -12,6 +12,7 @@ import DivToolbarItem from './DivToolbarItem'
 import InputBaseNoteText from './InputBaseNoteText'
 import TextFieldTitle from './TextFieldTitle'
 import ToolbarNote from './ToolbarNote'
+import DivNotePreviewContent from './DivNotePreviewContent'
 
 type Props = { note: Note }
 
@@ -75,11 +76,16 @@ const DivNoteEditor: FunctionComponent<Props> = ({ note: _note }) => {
             setTitle={title => setNote({ ...note, title })}
             title={note.title}
           />
-          <InputBaseNoteText
-            inProgress={inProgress}
-            setText={text => setNote({ ...note, text })}
-            text={note.text}
-          />
+          <div className={classes.inputContainer}>
+            <InputBaseNoteText
+              inProgress={inProgress}
+              setText={text => setNote({ ...note, text })}
+              text={note.text}
+            />
+            <div className={classes.previewContent}>
+              <DivNotePreviewContent text={note.text} />
+            </div>
+          </div>
         </DivNoteEditorLayout>
       )}
     </div>
@@ -95,6 +101,15 @@ const useStyles = makeStyles<Theme>(({ spacing }) => {
       paddingBottom: spacing(4),
       paddingLeft: spacing(2),
       paddingRight: spacing(2)
+    },
+    inputContainer: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gridGap: spacing(2)
+    },
+    previewContent: {
+      borderLeft: '1px solid rgba(0,0,0,0.12)',
+      paddingLeft: spacing(2)
     }
   }
 })
