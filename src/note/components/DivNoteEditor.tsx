@@ -2,18 +2,18 @@ import { makeStyles, Theme } from '@material-ui/core'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { Note } from '../../shared/firestore/types/note'
 import { updateNote } from '../../shared/functions/updateNote'
-import ButtonPreview from './ButtonPreview'
+import ButtonDelete from './ButtonDelete'
+import ButtonGroupPanel from './ButtonGroupPanel'
 import ButtonStatus from './ButtonStatus'
 import ButtonUpdate from './ButtonUpdate'
-import ButtonDelete from './ButtonDelete'
+import DivMarkdownEditor from './DivMarkdownEditor'
 import DivNoteEditorLayout from './DivNoteEditorLayout'
 import DivNotePreview from './DivNotePreview'
+import DivNotePreviewContent from './DivNotePreviewContent'
 import DivToolbarItem from './DivToolbarItem'
 import InputBaseNoteText from './InputBaseNoteText'
 import TextFieldTitle from './TextFieldTitle'
 import ToolbarNote from './ToolbarNote'
-import DivNotePreviewContent from './DivNotePreviewContent'
-import { FormControlLabel, Switch } from '@material-ui/core/'
 
 type Props = { note: Note }
 
@@ -22,9 +22,9 @@ const DivNoteEditor: FunctionComponent<Props> = ({ note: _note }) => {
 
   const [inProgress, setInProgress] = useState(false)
 
-  const [preview, setPreview] = useState(true)
+  const [editable, setEditable] = useState(false)
 
-  const [markupPreview, setMarkupPreview] = useState(true)
+  const [preview, setPreview] = useState<0 | 1 | 2>(0)
 
   const classes = useStyles()
 
@@ -32,6 +32,7 @@ const DivNoteEditor: FunctionComponent<Props> = ({ note: _note }) => {
   useEffect(() => {
     if (!inProgress) return
     if (!note) return
+    setEditable(false)
     const subscription = updateNote()({
       isPublic: note.isPublic,
       noteId: note.id,
@@ -43,67 +44,56 @@ const DivNoteEditor: FunctionComponent<Props> = ({ note: _note }) => {
     return () => subscription.unsubscribe()
   }, [inProgress, note])
 
+  console.log(preview)
+
   return (
     <div className={classes.root}>
       <ToolbarNote>
         <DivToolbarItem>
-          <ButtonPreview
-            disabled={inProgress}
-            preview={preview}
-            setPreview={setPreview}
-          />
-        </DivToolbarItem>
-        <DivToolbarItem>
           <ButtonUpdate
             disabled={inProgress}
+            editableState={[editable, setEditable]}
             onUpdate={() => setInProgress(true)}
           />
         </DivToolbarItem>
-        <DivToolbarItem>
-          <ButtonStatus
-            disabled={inProgress}
-            setIsPublic={isPublic => setNote({ ...note, isPublic })}
-            isPublic={note.isPublic}
-          />
-        </DivToolbarItem>
-        <DivToolbarItem>
-          <ButtonDelete noteId={note.id} />
-        </DivToolbarItem>
-        {!preview && (
+        {!editable && (
           <DivToolbarItem>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={markupPreview}
-                  onChange={() => setMarkupPreview(!markupPreview)}
-                />
-              }
-              label="プレビュー"
+            <ButtonStatus
+              disabled={inProgress}
+              setIsPublic={isPublic => setNote({ ...note, isPublic })}
+              isPublic={note.isPublic}
             />
           </DivToolbarItem>
         )}
+        {!editable && (
+          <DivToolbarItem>
+            <ButtonDelete noteId={note.id} />
+          </DivToolbarItem>
+        )}
+        {editable && (
+          <DivToolbarItem>
+            <ButtonGroupPanel previewState={[preview, setPreview]} />
+          </DivToolbarItem>
+        )}
       </ToolbarNote>
-      {preview ? (
-        <DivNotePreview note={note} />
-      ) : (
+      {!editable && <DivNotePreview note={note} />}
+      {editable && (
         <DivNoteEditorLayout>
           <TextFieldTitle
             inProgress={inProgress}
             setTitle={title => setNote({ ...note, title })}
             title={note.title}
           />
-          <div className={classes.inputContainer}>
-            <InputBaseNoteText
-              inProgress={inProgress}
-              setText={text => setNote({ ...note, text })}
-              text={note.text}
-            />
-            {markupPreview && (
-              <div className={markupPreview && classes.previewContent}>
-                <DivNotePreviewContent text={note.text} />
-              </div>
+          <DivMarkdownEditor preview={preview}>
+            {preview <= 1 && (
+              <InputBaseNoteText
+                inProgress={inProgress}
+                setText={text => setNote({ ...note, text })}
+                text={note.text}
+              />
             )}
-          </div>
+            {1 <= preview && <DivNotePreviewContent text={note.text} />}
+          </DivMarkdownEditor>
         </DivNoteEditorLayout>
       )}
     </div>
