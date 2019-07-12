@@ -13,6 +13,7 @@ import InputBaseNoteText from './InputBaseNoteText'
 import TextFieldTitle from './TextFieldTitle'
 import ToolbarNote from './ToolbarNote'
 import DivNotePreviewContent from './DivNotePreviewContent'
+import { FormControlLabel, Switch } from '@material-ui/core/'
 
 type Props = { note: Note }
 
@@ -22,6 +23,8 @@ const DivNoteEditor: FunctionComponent<Props> = ({ note: _note }) => {
   const [inProgress, setInProgress] = useState(false)
 
   const [preview, setPreview] = useState(true)
+
+  const [markupPreview, setMarkupPreview] = useState(true)
 
   const classes = useStyles()
 
@@ -66,6 +69,19 @@ const DivNoteEditor: FunctionComponent<Props> = ({ note: _note }) => {
         <DivToolbarItem>
           <ButtonDelete noteId={note.id} />
         </DivToolbarItem>
+        {!preview && (
+          <DivToolbarItem>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={markupPreview}
+                  onChange={() => setMarkupPreview(!markupPreview)}
+                />
+              }
+              label="プレビュー"
+            />
+          </DivToolbarItem>
+        )}
       </ToolbarNote>
       {preview ? (
         <DivNotePreview note={note} />
@@ -82,9 +98,11 @@ const DivNoteEditor: FunctionComponent<Props> = ({ note: _note }) => {
               setText={text => setNote({ ...note, text })}
               text={note.text}
             />
-            <div className={classes.previewContent}>
-              <DivNotePreviewContent text={note.text} />
-            </div>
+            {markupPreview && (
+              <div className={markupPreview && classes.previewContent}>
+                <DivNotePreviewContent text={note.text} />
+              </div>
+            )}
           </div>
         </DivNoteEditorLayout>
       )}

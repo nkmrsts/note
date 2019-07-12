@@ -22,6 +22,7 @@ const useStyles = makeStyles<Theme>(() => {
       width: '100%',
       height: '100%',
       fontSize: '1rem',
+      wordBreak: 'break-word',
       '& *:first-of-type': {
         marginTop: '0'
       }

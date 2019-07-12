@@ -25,6 +25,7 @@ const ButtonDelete: FunctionComponent<Props> = ({ noteId }) => {
 const useStyles = makeStyles<Theme>(() => {
   return {
     button: {
+      minWidth: 'unset',
       fontSize: '16px',
       fontWeight: 'bold',
       padding: 0,
