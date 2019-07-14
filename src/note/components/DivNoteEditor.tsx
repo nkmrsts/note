@@ -24,7 +24,13 @@ const DivNoteEditor: FunctionComponent<Props> = ({ note: _note }) => {
 
   const [editable, setEditable] = useState(false)
 
-  const [preview, setPreview] = useState<0 | 1 | 2>(0)
+  enum Preview {
+    Input,
+    InputAndPreview,
+    Preview
+  }
+
+  const [preview, setPreview] = useState<Preview>(Preview.Input)
 
   const classes = useStyles()
 
@@ -85,14 +91,16 @@ const DivNoteEditor: FunctionComponent<Props> = ({ note: _note }) => {
             title={note.title}
           />
           <DivMarkdownEditor preview={preview}>
-            {preview <= 1 && (
+            {preview !== Preview.Input && (
               <InputBaseNoteText
                 inProgress={inProgress}
                 setText={text => setNote({ ...note, text })}
                 text={note.text}
               />
             )}
-            {1 <= preview && <DivNotePreviewContent text={note.text} />}
+            {preview !== Preview.Preview && (
+              <DivNotePreviewContent text={note.text} />
+            )}
           </DivMarkdownEditor>
         </DivNoteEditorLayout>
       )}

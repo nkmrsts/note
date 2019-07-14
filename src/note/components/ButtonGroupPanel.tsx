@@ -21,7 +21,7 @@ const ButtonGroupPanel: FunctionComponent<Props> = ({
             setPreview(1)
           }
         }}
-        value={preview === 1 ? 1 : preview === 0 ? 0 : 3}
+        value={preview === 1 || preview === 0 ? preview : 3}
       >
         <CodeIcon />
       </ToggleButton>
@@ -34,7 +34,7 @@ const ButtonGroupPanel: FunctionComponent<Props> = ({
             setPreview(0)
           }
         }}
-        value={preview === 1 ? 1 : preview === 2 ? 2 : 3}
+        value={preview === 1 || preview === 2 ? preview : 3}
       >
         <VisibilityIcon />
       </ToggleButton>
