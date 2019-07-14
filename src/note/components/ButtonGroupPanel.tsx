@@ -2,39 +2,46 @@ import CodeIcon from '@material-ui/icons/Code'
 import VisibilityIcon from '@material-ui/icons/Visibility'
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab'
 import React, { Dispatch, FunctionComponent, SetStateAction } from 'react'
+import { Editor } from '../../shared/enums/editor'
 
-type Props = {
-  previewState: [0 | 1 | 2, Dispatch<SetStateAction<0 | 1 | 2>>]
-}
+type Props = { editorState: [Editor, Dispatch<SetStateAction<Editor>>] }
 
 const ButtonGroupPanel: FunctionComponent<Props> = ({
-  previewState: [preview, setPreview]
+  editorState: [preview, setPreview]
 }) => {
   return (
     <ToggleButtonGroup exclusive value={preview}>
       <ToggleButton
         onClick={() => {
-          if (preview === 1) {
-            setPreview(2)
+          if (preview === Editor.Both) {
+            setPreview(Editor.Preview)
           }
-          if (preview === 2) {
-            setPreview(1)
+          if (preview === Editor.Preview) {
+            setPreview(Editor.Both)
           }
         }}
-        value={preview === 1 || preview === 0 ? preview : 3}
+        value={
+          preview === Editor.Both || preview === Editor.Input
+            ? preview
+            : Editor.Both
+        }
       >
         <CodeIcon />
       </ToggleButton>
       <ToggleButton
         onClick={() => {
-          if (preview === 0) {
-            setPreview(1)
+          if (preview === Editor.Both) {
+            setPreview(Editor.Input)
           }
-          if (preview === 1) {
-            setPreview(0)
+          if (preview === Editor.Input) {
+            setPreview(Editor.Both)
           }
         }}
-        value={preview === 1 || preview === 2 ? preview : 3}
+        value={
+          preview === Editor.Both || preview === Editor.Preview
+            ? preview
+            : Editor.Both
+        }
       >
         <VisibilityIcon />
       </ToggleButton>

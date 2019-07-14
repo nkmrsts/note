@@ -1,5 +1,6 @@
 import { makeStyles, Theme } from '@material-ui/core'
 import React, { FunctionComponent, useEffect, useState } from 'react'
+import { Editor } from '../../shared/enums/editor'
 import { Note } from '../../shared/firestore/types/note'
 import { updateNote } from '../../shared/functions/updateNote'
 import ButtonDelete from './ButtonDelete'
@@ -24,13 +25,7 @@ const DivNoteEditor: FunctionComponent<Props> = ({ note: _note }) => {
 
   const [editable, setEditable] = useState(false)
 
-  enum Preview {
-    Input,
-    InputAndPreview,
-    Preview
-  }
-
-  const [preview, setPreview] = useState<Preview>(Preview.Input)
+  const [editor, setEditor] = useState<Editor>(Editor.Input)
 
   const classes = useStyles()
 
@@ -49,8 +44,6 @@ const DivNoteEditor: FunctionComponent<Props> = ({ note: _note }) => {
     })
     return () => subscription.unsubscribe()
   }, [inProgress, note])
-
-  console.log(preview)
 
   return (
     <div className={classes.root}>
@@ -78,7 +71,7 @@ const DivNoteEditor: FunctionComponent<Props> = ({ note: _note }) => {
         )}
         {editable && (
           <DivToolbarItem>
-            <ButtonGroupPanel previewState={[preview, setPreview]} />
+            <ButtonGroupPanel editorState={[editor, setEditor]} />
           </DivToolbarItem>
         )}
       </ToolbarNote>
@@ -90,15 +83,15 @@ const DivNoteEditor: FunctionComponent<Props> = ({ note: _note }) => {
             setTitle={title => setNote({ ...note, title })}
             title={note.title}
           />
-          <DivMarkdownEditor preview={preview}>
-            {preview !== Preview.Input && (
+          <DivMarkdownEditor preview={editor}>
+            {editor !== Editor.Preview && (
               <InputBaseNoteText
                 inProgress={inProgress}
                 setText={text => setNote({ ...note, text })}
                 text={note.text}
               />
             )}
-            {preview !== Preview.Preview && (
+            {editor !== Editor.Input && (
               <DivNotePreviewContent text={note.text} />
             )}
           </DivMarkdownEditor>
