@@ -1,5 +1,6 @@
-import { InputBase } from '@material-ui/core'
-import React, { FunctionComponent } from 'react'
+import { ContentState, EditorState } from 'draft-js'
+import React, { FunctionComponent, useState } from 'react'
+import Markdown from '../../shared/markdown/Markdown'
 
 type Props = {
   inProgress: boolean
@@ -12,6 +13,13 @@ const InputBaseNoteText: FunctionComponent<Props> = ({
   setText,
   text
 }) => {
+  const [editorState, setEditorState] = useState(
+    EditorState.createWithContent(ContentState.createFromText(text))
+  )
+
+  return <Markdown editorState={editorState} setEditorState={setEditorState} />
+
+  /*
   return (
     <div>
       <InputBase
@@ -25,5 +33,6 @@ const InputBaseNoteText: FunctionComponent<Props> = ({
       />
     </div>
   )
+  */
 }
 export default InputBaseNoteText

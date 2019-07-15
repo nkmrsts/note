@@ -8,12 +8,10 @@ import ButtonGroupPanel from './ButtonGroupPanel'
 import ButtonStatus from './ButtonStatus'
 import ButtonUpdate from './ButtonUpdate'
 import DivMarkdownEditor from './DivMarkdownEditor'
-import DivNoteEditorLayout from './DivNoteEditorLayout'
 import DivNotePreview from './DivNotePreview'
 import DivNotePreviewContent from './DivNotePreviewContent'
 import DivToolbarItem from './DivToolbarItem'
 import InputBaseNoteText from './InputBaseNoteText'
-import TextFieldTitle from './TextFieldTitle'
 import ToolbarNote from './ToolbarNote'
 
 type Props = { note: Note }
@@ -77,25 +75,18 @@ const DivNoteEditor: FunctionComponent<Props> = ({ note: _note }) => {
       </ToolbarNote>
       {!editable && <DivNotePreview note={note} />}
       {editable && (
-        <DivNoteEditorLayout>
-          <TextFieldTitle
-            inProgress={inProgress}
-            setTitle={title => setNote({ ...note, title })}
-            title={note.title}
-          />
-          <DivMarkdownEditor preview={editor}>
-            {editor !== Editor.Preview && (
-              <InputBaseNoteText
-                inProgress={inProgress}
-                setText={text => setNote({ ...note, text })}
-                text={note.text}
-              />
-            )}
-            {editor !== Editor.Input && (
-              <DivNotePreviewContent text={note.text} />
-            )}
-          </DivMarkdownEditor>
-        </DivNoteEditorLayout>
+        <DivMarkdownEditor preview={editor}>
+          {editor !== Editor.Preview && (
+            <InputBaseNoteText
+              inProgress={inProgress}
+              setText={text => setNote({ ...note, text })}
+              text={note.text}
+            />
+          )}
+          {editor !== Editor.Input && (
+            <DivNotePreviewContent text={note.text} />
+          )}
+        </DivMarkdownEditor>
       )}
     </div>
   )
