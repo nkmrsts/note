@@ -22,11 +22,6 @@ const Markdown: FunctionComponent<Props> = ({
     return 'not-handled'
   }
 
-  const onChange = (_editorState: EditorState) => {
-    console.log(_editorState)
-    setEditorState(_editorState)
-  }
-
   return (
     <Editor
       blockRendererFn={blockRendererFn}
@@ -34,7 +29,7 @@ const Markdown: FunctionComponent<Props> = ({
       customStyleMap={customStyleMap}
       editorState={editorState}
       handleKeyCommand={handleKeyCommand}
-      onChange={onChange}
+      onChange={setEditorState}
     />
   )
 }

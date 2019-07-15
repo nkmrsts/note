@@ -16,8 +16,6 @@ const ButtonUpdate: FunctionComponent<Props> = ({
 }) => {
   const classes = useStyles()
 
-  console.log('editable', editable)
-
   if (editable) {
     return (
       <Button
