@@ -4,7 +4,7 @@ import TypographyStrong from '../TypographyStrong'
 export const strongDecorator: DraftDecorator = {
   strategy: (block, callback) => {
     const text = block.getText()
-    if (text.match(/\*.*\*/)) {
+    if (text.match(/\*\*.*\*\*/)) {
       callback(0, text.length)
     }
   },

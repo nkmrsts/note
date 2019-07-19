@@ -1,5 +1,6 @@
 import { ContentState, EditorState } from 'draft-js'
-import React, { FunctionComponent, useState } from 'react'
+import { convertToRaw, convertFromRaw } from 'draft-js'
+import React, { FunctionComponent, useState, useEffect } from 'react'
 import { decorator } from '../../shared/markdown/helpers/decorator'
 import Markdown from '../../shared/markdown/Markdown'
 
@@ -17,6 +18,14 @@ const InputBaseNoteText: FunctionComponent<Props> = ({
   const [editorState, setEditorState] = useState(
     EditorState.createWithContent(ContentState.createFromText(text), decorator)
   )
+
+  useEffect(() => {
+    const currentContent = editorState.getCurrentContent()
+    const text = convertToRaw(currentContent)
+      .blocks.map(value => value.text)
+      .join('\n')
+    setText(text)
+  }, [editorState])
 
   return <Markdown editorState={editorState} setEditorState={setEditorState} />
 
