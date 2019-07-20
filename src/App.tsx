@@ -2,8 +2,7 @@ import {
   CssBaseline,
   makeStyles,
   Theme,
-  useMediaQuery,
-  useTheme
+  useMediaQuery
 } from '@material-ui/core'
 import { StylesProvider, ThemeProvider } from '@material-ui/styles'
 import React, { FunctionComponent } from 'react'
@@ -16,13 +15,13 @@ import { createTheme } from './shared/helpers/createTheme'
 const App: FunctionComponent = () => {
   const classes = useStyles()
 
-  const theme = useTheme<Theme>()
+  const theme = createTheme()
 
   const isDesktop = useMediaQuery(theme.breakpoints.up('sm'))
 
   return (
     <StylesProvider>
-      <ThemeProvider theme={createTheme()}>
+      <ThemeProvider theme={theme}>
         <CssBaseline />
         <BrowserRouter>
           <div className={classes.root}>
