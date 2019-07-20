@@ -1,4 +1,11 @@
-import { ListItem, ListItemText } from '@material-ui/core'
+import {
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  makeStyles,
+  Theme
+} from '@material-ui/core'
+import AddIcon from '@material-ui/icons/Add'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { createNote } from '../../shared/functions/createNote'
 
@@ -7,7 +14,9 @@ type Props = { onCreateNote: (noteId: string) => void }
 const ListItemNoteCreate: FunctionComponent<Props> = ({ onCreateNote }) => {
   const [inProgress, setInProgress] = useState(false)
 
-  // create note
+  const classes = useStyles()
+
+  // create new note
   useEffect(() => {
     if (!inProgress) return
     const subscription = createNote()({}).subscribe(next => {
@@ -18,13 +27,24 @@ const ListItemNoteCreate: FunctionComponent<Props> = ({ onCreateNote }) => {
   }, [inProgress, onCreateNote])
 
   return (
-    <ListItem component={'li'} button onClick={() => setInProgress(true)}>
-      <ListItemText
-        primary={'新しいノート'}
-        secondary={'新しいノートを作成します。'}
-      />
+    <ListItem
+      button
+      className={classes.root}
+      component={'li'}
+      onClick={() => setInProgress(true)}
+    >
+      <ListItemIcon>
+        <AddIcon />
+      </ListItemIcon>
+      <ListItemText primary={'新しいノートをつくる'} />
     </ListItem>
   )
 }
+
+const useStyles = makeStyles<Theme>(({ palette, spacing }) => {
+  return {
+    root: { background: 'rgba(0, 0, 0, 0.04)', padding: spacing(2) }
+  }
+})
 
 export default ListItemNoteCreate

@@ -1,17 +1,22 @@
 import { InputBase, ListItem, makeStyles, Theme } from '@material-ui/core'
 import React, { Dispatch, FunctionComponent, SetStateAction } from 'react'
 import ButtonMenu from '../../shared/components/ButtonMenu'
+import { useAuthUser } from '../../shared/firebase/useAuthUser'
 
 type Props = {
   isMineState: [boolean, Dispatch<SetStateAction<boolean>>]
   searchState: [string, Dispatch<SetStateAction<string>>]
 }
 
-const ListItemSearch: FunctionComponent<Props> = ({
+const ListItemHeader: FunctionComponent<Props> = ({
   isMineState: [isMine, setIsMine],
   searchState: [search, setSearch]
 }) => {
+  const [, authLoading] = useAuthUser()
+
   const classes = useStyles()
+
+  if (authLoading) return null
 
   return (
     <ListItem className={classes.listItem}>
@@ -39,4 +44,4 @@ const useStyles = makeStyles<Theme>(({ palette, spacing }) => {
     }
   }
 })
-export default ListItemSearch
+export default ListItemHeader

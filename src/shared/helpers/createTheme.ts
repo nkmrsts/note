@@ -2,7 +2,7 @@ import { createMuiTheme } from '@material-ui/core'
 import { blueGrey, deepOrange } from '@material-ui/core/colors'
 
 export const createTheme = () => {
-  const { palette } = createMuiTheme()
+  const { palette, spacing } = createMuiTheme()
 
   const elevation = { boxShadow: 'none' }
 
@@ -19,7 +19,8 @@ export const createTheme = () => {
           '&:hover': { backgroundColor: palette.grey[200] }
         }
       },
-      MuiDrawer: { paperAnchorDockedLeft: { borderRight: 0 } }
+      MuiDrawer: { paperAnchorDockedLeft: { borderRight: 0 } },
+      MuiListItemIcon: { root: { minWidth: spacing(4) } }
     },
     palette: {
       background: { default: '#fff' },

@@ -22,6 +22,7 @@ const ListItemNote: FunctionComponent<Props> = ({
       <ListItemText
         className={classes.listItemText}
         primary={note.title || '新しいノート'}
+        primaryTypographyProps={{ className: classes.primary }}
         secondaryTypographyProps={{ component: 'div' }}
         secondary={
           <div className={classes.secondary}>
@@ -37,6 +38,7 @@ const ListItemNote: FunctionComponent<Props> = ({
 const useStyles = makeStyles<Theme>(({ palette, spacing }) => {
   return {
     listItemText: { display: 'grid', gridGap: spacing(1) },
+    primary: { fontWeight: 'bold' },
     secondary: {
       alignItems: 'center',
       display: 'grid',

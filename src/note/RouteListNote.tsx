@@ -12,7 +12,7 @@ import { Note } from '../shared/firestore/types/note'
 import { watchNotes } from '../shared/firestore/watchNotes'
 import ListItemNote from './components/ListItemNote'
 import ListItemNoteCreate from './components/ListItemNoteCreate'
-import ListItemSearch from './components/ListItemSearch'
+import ListItemHeader from './components/ListItemHeader'
 
 type Props = RouteComponentProps<{ noteId: string }>
 
@@ -56,7 +56,7 @@ const RouteListNote: FunctionComponent<Props> = ({
   return (
     <DrawerDefault>
       <List>
-        <ListItemSearch
+        <ListItemHeader
           isMineState={[isMine, setIsMine]}
           searchState={[search, setSearch]}
         />
