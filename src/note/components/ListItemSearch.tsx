@@ -1,16 +1,22 @@
 import { InputBase, ListItem, makeStyles, Theme } from '@material-ui/core'
 import React, { Dispatch, FunctionComponent, SetStateAction } from 'react'
+import ButtonMenu from '../../shared/components/ButtonMenu'
 
-type Props = { searchState: [string, Dispatch<SetStateAction<string>>] }
+type Props = {
+  isMineState: [boolean, Dispatch<SetStateAction<boolean>>]
+  searchState: [string, Dispatch<SetStateAction<string>>]
+}
 
 const ListItemSearch: FunctionComponent<Props> = ({
+  isMineState: [isMine, setIsMine],
   searchState: [search, setSearch]
 }) => {
   const classes = useStyles()
 
   return (
     <ListItem className={classes.listItem}>
-      <div className={classes.search}>
+      <ButtonMenu isMineState={[isMine, setIsMine]} />
+      {isMine && (
         <InputBase
           fullWidth
           inputProps={{ 'aria-label': 'Search' }}
@@ -18,19 +24,18 @@ const ListItemSearch: FunctionComponent<Props> = ({
           placeholder={'ノートを検索する'}
           value={search}
         />
-      </div>
+      )}
     </ListItem>
   )
 }
 
 const useStyles = makeStyles<Theme>(({ palette, spacing }) => {
   return {
-    listItem: { padding: 0 },
-    search: {
-      padding: spacing(2),
-      position: 'relative',
-      width: '100%',
-      '&:hover': { backgroundColor: palette.divider }
+    listItem: {
+      display: 'grid',
+      gridGap: spacing(2),
+      gridTemplateColumns: 'auto 1fr',
+      padding: spacing(2)
     }
   }
 })

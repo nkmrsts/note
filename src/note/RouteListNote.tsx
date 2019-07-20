@@ -8,7 +8,6 @@ import React, {
 import { RouteComponentProps, withRouter } from 'react-router'
 import DivProgress from '../shared/components/DivProgress'
 import DrawerDefault from '../shared/components/DrawerDefault'
-import DrawerHeader from '../shared/components/DrawerHeader'
 import { Note } from '../shared/firestore/types/note'
 import { watchNotes } from '../shared/firestore/watchNotes'
 import ListItemNote from './components/ListItemNote'
@@ -56,9 +55,11 @@ const RouteListNote: FunctionComponent<Props> = ({
 
   return (
     <DrawerDefault>
-      <DrawerHeader isMineState={[isMine, setIsMine]} noteId={noteId} />
       <List>
-        {isMine && <ListItemSearch searchState={[search, setSearch]} />}
+        <ListItemSearch
+          isMineState={[isMine, setIsMine]}
+          searchState={[search, setSearch]}
+        />
         {isMine && <ListItemNoteCreate onCreateNote={onCreateNote} />}
         {loading && <DivProgress />}
         {notes
