@@ -1,6 +1,10 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { RouteComponentProps } from 'react-router'
-import MainNoteQuery from './components/MainNoteQuery'
+import { useAuthUser } from '../shared/firebase/useAuthUser'
+import { Note } from '../shared/firestore/types/note'
+import { watchNote } from '../shared/firestore/watchNote'
+import MainNote from './components/MainNote'
+import MainNoteEditor from './components/MainNoteEditor'
 
 type Props = RouteComponentProps<{ noteId: string }>
 
@@ -10,7 +14,40 @@ const RouteNote: FunctionComponent<Props> = ({
     params: { noteId }
   }
 }) => {
-  return <MainNoteQuery key={noteId || '_'} currentNoteId={noteId} />
+  const [authUser, authLoading] = useAuthUser()
+
+  const [note, setNote] = useState<Note | null>(null)
+
+  const [loading, setLoading] = useState(true)
+
+  // watch note
+  useEffect(() => {
+    if (noteId === null) return
+    const subscription = watchNote(noteId).subscribe(
+      _note => {
+        setNote(_note)
+        setLoading(false)
+      },
+      () => {
+        setLoading(false)
+      }
+    )
+    return () => subscription.unsubscribe()
+  }, [noteId])
+
+  if (authLoading) return null
+
+  if (loading) return null
+
+  if (!note) {
+    return <div>{'Data Not Found'}</div>
+  }
+
+  if (authUser && authUser.uid === note.ownerId) {
+    return <MainNoteEditor key={note.id || '_'} note={note} />
+  }
+
+  return <MainNote key={note.id || '_'} note={note} />
 }
 
 export default RouteNote

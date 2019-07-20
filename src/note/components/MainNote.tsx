@@ -1,6 +1,7 @@
 import { makeStyles, Theme } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
 import { Note } from '../../shared/firestore/types/note'
+import TypographyNote from './TypographyNote'
 
 type Props = { note: Note }
 
@@ -9,7 +10,7 @@ const MainNote: FunctionComponent<Props> = ({ note }) => {
 
   return (
     <main className={classes.root}>
-      <MainNote note={note} />
+      <TypographyNote note={note} />
     </main>
   )
 }

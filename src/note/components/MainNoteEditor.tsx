@@ -17,6 +17,8 @@ import TypographyNote from './TypographyNote'
 type Props = { note: Note }
 
 const MainNoteEditor: FunctionComponent<Props> = ({ note }) => {
+  console.log(note.id)
+
   const [editorState, setEditorState] = useState<EditorState>(() =>
     toEditorState(note.contentState)
   )
