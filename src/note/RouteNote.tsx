@@ -1,5 +1,8 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { RouteComponentProps } from 'react-router'
+import DivCenter from '../shared/components/DivCenter'
+import DivProgress from '../shared/components/DivProgress'
+import TypographyNotFound from '../shared/components/TypographyNotFound'
 import { useAuthUser } from '../shared/firebase/useAuthUser'
 import { Note } from '../shared/firestore/types/note'
 import { watchNote } from '../shared/firestore/watchNote'
@@ -35,12 +38,19 @@ const RouteNote: FunctionComponent<Props> = ({
     return () => subscription.unsubscribe()
   }, [noteId])
 
-  if (authLoading) return null
-
-  if (loading) return null
+  if (authLoading || loading)
+    return (
+      <DivCenter>
+        <DivProgress />
+      </DivCenter>
+    )
 
   if (!note) {
-    return <div>{'Data Not Found'}</div>
+    return (
+      <DivCenter>
+        <TypographyNotFound />
+      </DivCenter>
+    )
   }
 
   if (authUser && authUser.uid === note.ownerId) {
