@@ -11,7 +11,6 @@ import React, {
 import { RouteComponentProps, withRouter } from 'react-router'
 import { signIn } from '../firebase/signIn'
 import { signOut } from '../firebase/signOut'
-import { useAuthLoading } from '../firebase/useAuthLoading'
 import { useAuthUser } from '../firebase/useAuthUser'
 
 type Props = RouteComponentProps & {
@@ -22,9 +21,7 @@ const ButtonMenu: FunctionComponent<Props> = ({
   history,
   isMineState: [isMine, setIsMine]
 }) => {
-  const [authLoading] = useAuthLoading()
-
-  const [authUser] = useAuthUser()
+  const [authUser, authLoading] = useAuthUser()
 
   const [anchorEl, setAnchorEl] = React.useState(null)
 

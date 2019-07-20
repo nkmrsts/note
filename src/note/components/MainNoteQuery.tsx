@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
-import { useAuthLoading } from '../../shared/firebase/useAuthLoading'
 import { useAuthUser } from '../../shared/firebase/useAuthUser'
 import { Note } from '../../shared/firestore/types/note'
 import { watchNote } from '../../shared/firestore/watchNote'
@@ -9,9 +8,7 @@ import MainNoteEditor from './MainNoteEditor'
 type Props = { currentNoteId: string }
 
 const MainNoteQuery: FunctionComponent<Props> = ({ currentNoteId }) => {
-  const [authUser] = useAuthUser()
-
-  const [authLoading] = useAuthLoading()
+  const [authUser, authLoading] = useAuthUser()
 
   const [note, setNote] = useState<Note | null>(null)
 

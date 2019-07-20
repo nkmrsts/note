@@ -2,7 +2,6 @@ import { Avatar, CircularProgress, IconButton } from '@material-ui/core'
 import PublicIcon from '@material-ui/icons/Public'
 import React, { Dispatch, FunctionComponent, SetStateAction } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import { useAuthLoading } from '../firebase/useAuthLoading'
 import { useAuthUser } from '../firebase/useAuthUser'
 
 type Props = RouteComponentProps & {
@@ -15,9 +14,7 @@ const ButtonNoteFilter: FunctionComponent<Props> = ({
   noteId = '',
   isMineState: [isMine, setIsMine]
 }) => {
-  const [authUser] = useAuthUser()
-
-  const [authLoading] = useAuthLoading()
+  const [authUser, authLoading] = useAuthUser()
 
   if (authLoading) {
     return (
