@@ -1,7 +1,7 @@
 import { Typography, Box } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
 
-const TypographyStrong: FunctionComponent = ({ children }) => {
+const TextStrong: FunctionComponent = ({ children }) => {
   return (
     <Typography component="div">
       <Box fontWeight="fontWeightBold">{children}</Box>
@@ -9,4 +9,4 @@ const TypographyStrong: FunctionComponent = ({ children }) => {
   )
 }
 
-export default TypographyStrong
+export default TextStrong

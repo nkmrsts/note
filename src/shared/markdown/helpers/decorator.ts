@@ -1,8 +1,12 @@
 import { CompositeDecorator } from 'draft-js'
-import { heddingDecorator } from './headingDecorator'
-import { strongDecorator } from './strongDecorator'
+import { decoratorHeadingOne } from './decoratorHeadingOne'
+import { decoratorHeadingThree } from './decoratorHeadingThree'
+import { decoratorHeadingTwo } from './decoratorHeadingTwo'
+import { decoratorStrong } from './decoratorStrong'
 
 export const decorator = new CompositeDecorator([
-  heddingDecorator,
-  strongDecorator
+  decoratorHeadingOne,
+  decoratorHeadingTwo,
+  decoratorHeadingThree,
+  decoratorStrong
 ])

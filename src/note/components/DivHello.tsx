@@ -5,9 +5,9 @@ const DivHello: FunctionComponent = () => {
   const classes = useStyles()
 
   return (
-    <div className={classes.root}>
+    <main className={classes.root}>
       <Typography>{'Hello,world!'}</Typography>
-    </div>
+    </main>
   )
 }
 

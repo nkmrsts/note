@@ -18,7 +18,7 @@ const ListItemNote: FunctionComponent<Props> = ({
   const classes = useStyles()
 
   return (
-    <ListItem button divider onClick={onUpdateNote} selected={selected}>
+    <ListItem button onClick={onUpdateNote} selected={selected}>
       <ListItemText
         className={classes.listItemText}
         primary={note.title || '新しいノート'}

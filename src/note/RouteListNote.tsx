@@ -1,4 +1,4 @@
-import { Divider, List } from '@material-ui/core'
+import { List } from '@material-ui/core'
 import React, {
   FunctionComponent,
   useCallback,
@@ -13,7 +13,7 @@ import { Note } from '../shared/firestore/types/note'
 import { watchNotes } from '../shared/firestore/watchNotes'
 import ListItemNote from './components/ListItemNote'
 import ListItemNoteCreate from './components/ListItemNoteCreate'
-import ListSearch from './components/ListSearch'
+import ListItemSearch from './components/ListItemSearch'
 
 type Props = RouteComponentProps<{ noteId: string }>
 
@@ -54,24 +54,23 @@ const RouteListNote: FunctionComponent<Props> = ({
     return () => subscription.unsubscribe()
   }, [isMine])
 
-  const _notes = notes.filter(note => note.title.includes(search))
-
   return (
     <DrawerDefault>
-      <DrawerHeader isMine={isMine} setIsMine={setIsMine} noteId={noteId} />
-      <Divider />
-      {isMine && <ListSearch searchState={[search, setSearch]} />}
+      <DrawerHeader isMineState={[isMine, setIsMine]} noteId={noteId} />
       <List>
+        {isMine && <ListItemSearch searchState={[search, setSearch]} />}
         {isMine && <ListItemNoteCreate onCreateNote={onCreateNote} />}
         {loading && <DivProgress />}
-        {_notes.map(note => (
-          <ListItemNote
-            key={note.id}
-            note={note}
-            onUpdateNote={() => onUpdateNote(note.id)}
-            selected={noteId === note.id}
-          />
-        ))}
+        {notes
+          .filter(note => note.title.includes(search))
+          .map(note => (
+            <ListItemNote
+              key={note.id}
+              note={note}
+              onUpdateNote={() => onUpdateNote(note.id)}
+              selected={noteId === note.id}
+            />
+          ))}
       </List>
     </DrawerDefault>
   )

@@ -1,14 +1,8 @@
-import {
-  Container,
-  makeStyles,
-  Theme,
-  useMediaQuery,
-  useTheme
-} from '@material-ui/core'
+import { Theme, useMediaQuery, useTheme } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
 import { RouteComponentProps } from 'react-router'
 import DivHello from './components/DivHello'
-import DivNote from './components/DivNote'
+import MainNoteQuery from './components/MainNoteQuery'
 import ListNotes from './components/ListNotes'
 
 type Props = RouteComponentProps<{ noteId: string }>
@@ -19,39 +13,23 @@ const RouteNote: FunctionComponent<Props> = ({
     params: { noteId }
   }
 }) => {
-  const classes = useStyles()
+  const { breakpoints } = useTheme<Theme>()
 
-  const theme = useTheme<Theme>()
-
-  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'))
+  const isDesktop = useMediaQuery(breakpoints.up('sm'))
 
   if (isDesktop) {
-    return (
-      <main className={classes.main}>
-        <Container maxWidth={'lg'}>
-          {noteId ? (
-            <DivNote key={noteId || '_'} currentNoteId={noteId} />
-          ) : (
-            <DivHello />
-          )}
-        </Container>
-      </main>
+    return noteId ? (
+      <MainNoteQuery key={noteId || '_'} currentNoteId={noteId} />
+    ) : (
+      <DivHello />
     )
   }
 
-  return (
-    <main className={classes.main}>
-      {noteId ? (
-        <DivNote key={noteId || '_'} currentNoteId={noteId} />
-      ) : (
-        <ListNotes noteId={noteId} />
-      )}
-    </main>
+  return noteId ? (
+    <MainNoteQuery key={noteId || '_'} currentNoteId={noteId} />
+  ) : (
+    <ListNotes noteId={noteId} />
   )
 }
-
-const useStyles = makeStyles<Theme>(({ breakpoints, spacing }) => {
-  return { main: { display: 'grid', gridGap: spacing(2) } }
-})
 
 export default RouteNote

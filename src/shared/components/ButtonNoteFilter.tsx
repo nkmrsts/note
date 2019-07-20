@@ -1,21 +1,19 @@
 import { Avatar, CircularProgress, IconButton } from '@material-ui/core'
 import PublicIcon from '@material-ui/icons/Public'
-import React, { FunctionComponent } from 'react'
+import React, { Dispatch, FunctionComponent, SetStateAction } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { useAuthLoading } from '../firebase/useAuthLoading'
 import { useAuthUser } from '../firebase/useAuthUser'
 
 type Props = RouteComponentProps & {
   noteId: string
-  isMine: boolean
-  setIsMine: (isMine: boolean) => void
+  isMineState: [boolean, Dispatch<SetStateAction<boolean>>]
 }
 
 const ButtonNoteFilter: FunctionComponent<Props> = ({
   match: { path },
   noteId = '',
-  isMine,
-  setIsMine
+  isMineState: [isMine, setIsMine]
 }) => {
   const [authUser] = useAuthUser()
 
@@ -40,14 +38,17 @@ const ButtonNoteFilter: FunctionComponent<Props> = ({
   if (isMine) {
     return (
       <IconButton onClick={() => setIsMine(false)}>
-        <PublicIcon />
+        <Avatar
+          src={authUser.photoURL || ''}
+          style={{ height: 24, width: 24 }}
+        />
       </IconButton>
     )
   }
 
   return (
     <IconButton onClick={() => setIsMine(true)}>
-      <Avatar src={authUser.photoURL || ''} style={{ height: 24, width: 24 }} />
+      <PublicIcon />
     </IconButton>
   )
 }

@@ -13,7 +13,12 @@ export const createTheme = () => {
         elevation1: elevation,
         elevation2: elevation
       },
-      MuiIconButton: { root: { backgroundColor: palette.grey[200] } },
+      MuiIconButton: {
+        root: {
+          backgroundColor: palette.grey[100],
+          '&:hover': { backgroundColor: palette.grey[200] }
+        }
+      },
       MuiDrawer: { paperAnchorDockedLeft: { borderRight: 0 } }
     },
     palette: {

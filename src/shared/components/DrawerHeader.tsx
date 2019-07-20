@@ -1,35 +1,19 @@
 import { makeStyles, Theme } from '@material-ui/core'
-import React, { FunctionComponent } from 'react'
-import { RouteComponentProps, withRouter } from 'react-router'
+import React, { Dispatch, FunctionComponent, SetStateAction } from 'react'
 import ButtonMenu from './ButtonMenu'
-import ButtonNoteFilter from './ButtonNoteFilter'
 
-type Props = RouteComponentProps & {
+type Props = {
   noteId: string
-  isMine: boolean
-  setIsMine: (isMine: boolean) => void
+  isMineState: [boolean, Dispatch<SetStateAction<boolean>>]
 }
 
-const DrawerHeader: FunctionComponent<Props> = ({
-  noteId,
-  isMine,
-  setIsMine
-}) => {
+const DrawerHeader: FunctionComponent<Props> = ({ noteId, isMineState }) => {
   const classes = useStyles()
 
   return (
-    <ul className={classes.root}>
-      <li>
-        <ButtonNoteFilter
-          isMine={isMine}
-          setIsMine={setIsMine}
-          noteId={noteId}
-        />
-      </li>
-      <li>
-        <ButtonMenu />
-      </li>
-    </ul>
+    <div className={classes.root}>
+      <ButtonMenu isMineState={isMineState} />
+    </div>
   )
 }
 
@@ -40,10 +24,10 @@ const useStyles = makeStyles<Theme>(({ spacing }) => {
       gridAutoColumns: 'max-content',
       gridAutoFlow: 'column',
       gridGap: spacing(2),
-      justifyContent: 'space-between',
-      padding: spacing(1)
+      justifyContent: 'flex-end',
+      padding: spacing(2)
     }
   }
 })
 
-export default withRouter(DrawerHeader)
+export default DrawerHeader
