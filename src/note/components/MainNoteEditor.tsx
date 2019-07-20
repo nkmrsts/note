@@ -1,9 +1,9 @@
 import { makeStyles, Theme } from '@material-ui/core'
-import { convertToRaw, EditorState } from 'draft-js'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { Editor } from '../../shared/enums/editor'
 import { Note } from '../../shared/firestore/types/note'
 import { updateNote } from '../../shared/functions/updateNote'
+import { toContentState } from '../../shared/markdown/helpers/toContentState'
 import { toEditorState } from '../../shared/markdown/helpers/toEditorState'
 import DivColumnTwo from './DivColumnTwo'
 import DivNoteEditor from './DivNoteEditor'
@@ -17,11 +17,9 @@ import TypographyNote from './TypographyNote'
 type Props = { note: Note }
 
 const MainNoteEditor: FunctionComponent<Props> = ({ note }) => {
-  console.log(note.id)
-
-  const [editorState, setEditorState] = useState<EditorState>(() =>
-    toEditorState(note.contentState)
-  )
+  const [editorState, setEditorState] = useState(() => {
+    return toEditorState(note.contentState)
+  })
 
   const [inProgress, setInProgress] = useState(false)
 
@@ -34,16 +32,15 @@ const MainNoteEditor: FunctionComponent<Props> = ({ note }) => {
   // update note
   useEffect(() => {
     if (!inProgress) return
-    if (!note) return
     setEditable(false)
     const subscription = updateNote()({
       noteId: note.id,
-      contentState: convertToRaw(editorState.getCurrentContent())
+      contentState: toContentState(editorState)
     }).subscribe(() => {
       setInProgress(false)
     })
     return () => subscription.unsubscribe()
-  }, [editorState, inProgress, note])
+  }, [editorState, inProgress, note.id])
 
   return (
     <main className={classes.root}>
