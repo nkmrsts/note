@@ -1,19 +1,19 @@
 import { ListItem, ListItemText, makeStyles, Theme } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
-import DivOwner from '../../shared/components/DivOwner'
-import TypographyDate from '../../shared/components/TypographyDate'
-import { Note } from '../../shared/firestore/types/note'
+import DivOwner from './DivOwner'
+import TypographyDate from './TypographyDate'
+import { Note } from '../firestore/types/note'
 
 type Props = {
   note: Note
   onUpdateNote: () => void
-  selected: boolean
+  selected?: boolean
 }
 
 const ListItemNote: FunctionComponent<Props> = ({
   note,
   onUpdateNote,
-  selected
+  selected = false
 }) => {
   const classes = useStyles()
 

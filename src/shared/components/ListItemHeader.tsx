@@ -1,7 +1,7 @@
 import { InputBase, ListItem, makeStyles, Theme } from '@material-ui/core'
 import React, { Dispatch, FunctionComponent, SetStateAction } from 'react'
-import ButtonMenu from '../../shared/components/ButtonMenu'
-import { useAuthUser } from '../../shared/firebase/useAuthUser'
+import ButtonMenu from './ButtonMenu'
+import { useAuthUser } from '../firebase/useAuthUser'
 
 type Props = {
   isMineState: [boolean, Dispatch<SetStateAction<boolean>>]

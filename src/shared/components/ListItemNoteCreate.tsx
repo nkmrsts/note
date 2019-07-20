@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import React, { FunctionComponent, useEffect, useState } from 'react'
-import { createNote } from '../../shared/functions/createNote'
+import { createNote } from '../functions/createNote'
 
 type Props = { onCreateNote: (noteId: string) => void }
 

@@ -10,13 +10,13 @@ import DivProgress from '../shared/components/DivProgress'
 import DrawerDefault from '../shared/components/DrawerDefault'
 import { Note } from '../shared/firestore/types/note'
 import { watchNotes } from '../shared/firestore/watchNotes'
-import ListItemNote from './components/ListItemNote'
-import ListItemNoteCreate from './components/ListItemNoteCreate'
-import ListItemHeader from './components/ListItemHeader'
+import ListItemNote from '../shared/components/ListItemNote'
+import ListItemNoteCreate from '../shared/components/ListItemNoteCreate'
+import ListItemHeader from '../shared/components/ListItemHeader'
 
 type Props = RouteComponentProps<{ noteId: string }>
 
-const RouteListNote: FunctionComponent<Props> = ({
+const RouteNoteSide: FunctionComponent<Props> = ({
   history,
   match: {
     params: { noteId }
@@ -77,4 +77,4 @@ const RouteListNote: FunctionComponent<Props> = ({
   )
 }
 
-export default withRouter(RouteListNote)
+export default withRouter(RouteNoteSide)
