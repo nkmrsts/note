@@ -11,11 +11,15 @@ const ToolbarNote: FunctionComponent = ({ children }) => {
 const useStyles = makeStyles<Theme>(({ spacing }) => {
   return {
     root: {
-      padding: 0,
+      display: 'grid',
+      gridAutoColumns: 'min-content',
+      gridAutoFlow: 'column',
+      gridGap: spacing(2),
+      justifyContent: 'flex-end',
       minHeight: 'auto',
-      paddingTop: spacing(2),
+      padding: 0,
       paddingBottom: spacing(2),
-      borderBottom: '1px solid rgba(0,0,0,0.12)'
+      paddingTop: spacing(2)
     }
   }
 })

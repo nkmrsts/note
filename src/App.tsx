@@ -1,58 +1,35 @@
-import {
-  CssBaseline,
-  makeStyles,
-  Theme,
-  useMediaQuery,
-  useTheme
-} from '@material-ui/core'
+import { CssBaseline, Hidden } from '@material-ui/core'
 import { StylesProvider, ThemeProvider } from '@material-ui/styles'
 import React, { FunctionComponent } from 'react'
 import { Route, Switch } from 'react-router'
 import { BrowserRouter } from 'react-router-dom'
-import RouteListNote from './note/RouteListNote'
+import RouteHello from './hello/RouteHello'
 import RouteNote from './note/RouteNote'
+import RouteNoteSide from './note/RouteNoteSide'
 import { createTheme } from './shared/helpers/createTheme'
 
 const App: FunctionComponent = () => {
-  const classes = useStyles()
-
-  const theme = useTheme<Theme>()
-
-  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'))
+  const theme = createTheme()
 
   return (
     <StylesProvider>
-      <ThemeProvider theme={createTheme()}>
+      <ThemeProvider theme={theme}>
         <CssBaseline />
         <BrowserRouter>
-          <div className={classes.root}>
-            {isDesktop && (
-              <Switch>
-                <Route component={RouteListNote} exact path={'/'} />
-                <Route component={RouteListNote} path={'/:noteId'} />
-              </Switch>
-            )}
+          <Hidden xsDown>
             <Switch>
-              <Route component={RouteNote} exact path={'/'} />
-              <Route component={RouteNote} path={'/:noteId'} />
+              <Route component={RouteNoteSide} exact path={'/'} />
+              <Route component={RouteNoteSide} path={'/:noteId'} />
             </Switch>
-          </div>
+          </Hidden>
+          <Switch>
+            <Route component={RouteHello} exact path={'/'} />
+            <Route component={RouteNote} path={'/:noteId'} />
+          </Switch>
         </BrowserRouter>
       </ThemeProvider>
     </StylesProvider>
   )
 }
-
-const useStyles = makeStyles<Theme>(({ breakpoints, spacing }) => {
-  return {
-    root: {
-      display: 'grid',
-      gridGap: spacing(2),
-      gridTemplateColumns: 'auto 1fr',
-      [breakpoints.down('xs')]: { gridTemplateColumns: '1fr' }
-    },
-    main: { display: 'grid', gridGap: spacing(2) }
-  }
-})
 
 export default App

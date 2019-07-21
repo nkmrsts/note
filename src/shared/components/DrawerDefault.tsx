@@ -16,12 +16,12 @@ const DrawerDefault: FunctionComponent = ({ children }) => {
   )
 }
 
-const useStyles = makeStyles<Theme>(({ spacing }) => {
+const useStyles = makeStyles<Theme>(({ palette, spacing }) => {
   return {
     paper: {
       position: 'fixed',
       width: spacing(40),
-      boxShadow: '0px 9px 18px rgba(0, 0, 0, 0.18)'
+      background: palette.grey[50]
     },
     root: { width: spacing(40) }
   }

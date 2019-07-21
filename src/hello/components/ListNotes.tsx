@@ -1,4 +1,4 @@
-import { List, Typography } from '@material-ui/core'
+import { List } from '@material-ui/core'
 import React, {
   FunctionComponent,
   useCallback,
@@ -6,14 +6,15 @@ import React, {
   useState
 } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
+import DivProgress from '../../shared/components/DivProgress'
+import ListItemNote from '../../shared/components/ListItemNote'
+import ListItemNoteCreate from '../../shared/components/ListItemNoteCreate'
 import { Note } from '../../shared/firestore/types/note'
 import { watchNotes } from '../../shared/firestore/watchNotes'
-import ListItemNote from './ListItemNote'
-import ListItemNoteCreate from './ListItemNoteCreate'
 
-type Props = RouteComponentProps & { noteId: string | null }
+type Props = RouteComponentProps
 
-const ListNotes: FunctionComponent<Props> = ({ history, noteId }) => {
+const ListNotes: FunctionComponent<Props> = ({ history }) => {
   const [isMine] = useState(true)
 
   const [loading, setLoading] = useState(true)
@@ -46,13 +47,12 @@ const ListNotes: FunctionComponent<Props> = ({ history, noteId }) => {
   return (
     <List>
       {isMine && <ListItemNoteCreate onCreateNote={onCreateNote} />}
-      {loading && <Typography>{'読み込み中...'}</Typography>}
+      {loading && <DivProgress />}
       {notes.map(note => (
         <ListItemNote
           key={note.id}
           note={note}
           onUpdateNote={() => onUpdateNote(note.id)}
-          selected={noteId === note.id}
         />
       ))}
     </List>

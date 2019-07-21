@@ -1,7 +1,7 @@
 import { makeStyles, Theme } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
 
-const DivNoteEditorLayout: FunctionComponent = ({ children }) => {
+const DivCenter: FunctionComponent = ({ children }) => {
   const classes = useStyles()
 
   return <div className={classes.root}>{children}</div>
@@ -10,10 +10,13 @@ const DivNoteEditorLayout: FunctionComponent = ({ children }) => {
 const useStyles = makeStyles<Theme>(({ spacing }) => {
   return {
     root: {
+      alignItems: 'center',
       display: 'grid',
-      gridAutoRows: 'min-content auto',
-      gridGap: spacing(2)
+      height: '100vh',
+      justifyContent: 'center',
+      padding: spacing(2)
     }
   }
 })
-export default DivNoteEditorLayout
+
+export default DivCenter

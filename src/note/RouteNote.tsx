@@ -1,15 +1,13 @@
-import {
-  Container,
-  makeStyles,
-  Theme,
-  useMediaQuery,
-  useTheme
-} from '@material-ui/core'
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { RouteComponentProps } from 'react-router'
-import DivHello from './components/DivHello'
-import DivNote from './components/DivNote'
-import ListNotes from './components/ListNotes'
+import DivCenter from '../shared/components/DivCenter'
+import DivProgress from '../shared/components/DivProgress'
+import TypographyNotFound from '../shared/components/TypographyNotFound'
+import { useAuthUser } from '../shared/firebase/useAuthUser'
+import { Note } from '../shared/firestore/types/note'
+import { watchNote } from '../shared/firestore/watchNote'
+import MainNote from './components/MainNote'
+import MainNoteEditor from './components/MainNoteEditor'
 
 type Props = RouteComponentProps<{ noteId: string }>
 
@@ -19,39 +17,47 @@ const RouteNote: FunctionComponent<Props> = ({
     params: { noteId }
   }
 }) => {
-  const classes = useStyles()
+  const [authUser, authLoading] = useAuthUser()
 
-  const theme = useTheme<Theme>()
+  const [note, setNote] = useState<Note | null>(null)
 
-  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'))
+  const [loading, setLoading] = useState(true)
 
-  if (isDesktop) {
+  // watch note
+  useEffect(() => {
+    if (noteId === null) return
+    const subscription = watchNote(noteId).subscribe(
+      _note => {
+        setNote(_note)
+        setLoading(false)
+      },
+      () => {
+        setLoading(false)
+      }
+    )
+    return () => subscription.unsubscribe()
+  }, [noteId])
+
+  if (authLoading || loading)
     return (
-      <main className={classes.main}>
-        <Container maxWidth={'lg'}>
-          {noteId ? (
-            <DivNote key={noteId || '_'} currentNoteId={noteId} />
-          ) : (
-            <DivHello />
-          )}
-        </Container>
-      </main>
+      <DivCenter>
+        <DivProgress />
+      </DivCenter>
+    )
+
+  if (!note) {
+    return (
+      <DivCenter>
+        <TypographyNotFound />
+      </DivCenter>
     )
   }
 
-  return (
-    <main className={classes.main}>
-      {noteId ? (
-        <DivNote key={noteId || '_'} currentNoteId={noteId} />
-      ) : (
-        <ListNotes noteId={noteId} />
-      )}
-    </main>
-  )
-}
+  if (authUser && authUser.uid === note.ownerId) {
+    return <MainNoteEditor key={note.id || '_'} note={note} />
+  }
 
-const useStyles = makeStyles<Theme>(({ breakpoints, spacing }) => {
-  return { main: { display: 'grid', gridGap: spacing(2) } }
-})
+  return <MainNote key={note.id || '_'} note={note} />
+}
 
 export default RouteNote

@@ -1,27 +1,28 @@
 import { ListItem, ListItemText, makeStyles, Theme } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
-import DivOwner from '../../shared/components/DivOwner'
-import TypographyDate from '../../shared/components/TypographyDate'
-import { Note } from '../../shared/firestore/types/note'
+import DivOwner from './DivOwner'
+import TypographyDate from './TypographyDate'
+import { Note } from '../firestore/types/note'
 
 type Props = {
   note: Note
   onUpdateNote: () => void
-  selected: boolean
+  selected?: boolean
 }
 
 const ListItemNote: FunctionComponent<Props> = ({
   note,
   onUpdateNote,
-  selected
+  selected = false
 }) => {
   const classes = useStyles()
 
   return (
-    <ListItem button divider onClick={onUpdateNote} selected={selected}>
+    <ListItem button onClick={onUpdateNote} selected={selected}>
       <ListItemText
         className={classes.listItemText}
         primary={note.title || '新しいノート'}
+        primaryTypographyProps={{ className: classes.primary }}
         secondaryTypographyProps={{ component: 'div' }}
         secondary={
           <div className={classes.secondary}>
@@ -37,6 +38,7 @@ const ListItemNote: FunctionComponent<Props> = ({
 const useStyles = makeStyles<Theme>(({ palette, spacing }) => {
   return {
     listItemText: { display: 'grid', gridGap: spacing(1) },
+    primary: { fontWeight: 'bold' },
     secondary: {
       alignItems: 'center',
       display: 'grid',
