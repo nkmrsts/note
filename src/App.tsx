@@ -4,6 +4,7 @@ import React, { FunctionComponent } from 'react'
 import { Route, Switch } from 'react-router'
 import { BrowserRouter } from 'react-router-dom'
 import RouteHello from './hello/RouteHello'
+import RouteTerm from './term/RouteTerm'
 import RouteNote from './note/RouteNote'
 import RouteNoteSide from './note/RouteNoteSide'
 import { createTheme } from './shared/helpers/createTheme'
@@ -24,6 +25,7 @@ const App: FunctionComponent = () => {
           </Hidden>
           <Switch>
             <Route component={RouteHello} exact path={'/'} />
+            <Route component={RouteTerm} path={'/term'} />
             <Route component={RouteNote} path={'/:noteId'} />
           </Switch>
         </BrowserRouter>
