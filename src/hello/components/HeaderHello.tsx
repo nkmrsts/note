@@ -1,15 +1,15 @@
 import { makeStyles, Theme, Typography } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
 
-const DivHeaderHello: FunctionComponent = () => {
+const HeaderHello: FunctionComponent = () => {
   const classes = useStyles()
 
   return (
-    <main className={classes.root}>
+    <header className={classes.root}>
       <Typography className={classes.title} component={'h1'} variant={'h4'}>
         {'Noat'}
       </Typography>
-    </main>
+    </header>
   )
 }
 
@@ -25,4 +25,4 @@ const useStyles = makeStyles<Theme>(({ spacing }) => {
   }
 })
 
-export default DivHeaderHello
+export default HeaderHello
