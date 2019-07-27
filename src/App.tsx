@@ -9,7 +9,7 @@ import RouteAccountUsername from './account/RouteAccountUsername'
 import RouteHello from './hello/RouteHello'
 import RouteNote from './note/RouteNote'
 import RouteNoteSide from './note/RouteNoteSide'
-import { createTheme } from './shared/helpers/createTheme'
+import { createTheme } from './shared/mui/createTheme'
 import RouteTerm from './term/RouteTerm'
 
 const App: FunctionComponent = () => {

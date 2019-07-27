@@ -31,7 +31,10 @@ export const createTheme = () => {
       MuiButtonBase: { disableRipple: true },
       MuiList: { style: { padding: 0 } }
     },
-    typography: { fontFamily: ['Noto Sans JP', 'Roboto'].join(',') }
+    typography: {
+      fontFamily: ['Noto Sans JP', 'Roboto'].join(','),
+      body1: { lineHeight: 1.7 }
+    }
   })
 }
 
