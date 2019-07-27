@@ -5,7 +5,7 @@ import { Note } from '../../shared/firestore/types/note'
 import { updateNote } from '../../shared/functions/updateNote'
 import { toContentState } from '../../shared/markdown/helpers/toContentState'
 import { toEditorState } from '../../shared/markdown/helpers/toEditorState'
-import DivColumnTwo from './DivColumnTwo'
+import DivColumnNote from '../../shared/components/DivColumnNote'
 import DivNoteEditor from './DivNoteEditor'
 import IconButtonDelete from './IconButtonDelete'
 import IconButtonPreview from './IconButtonPreview'
@@ -56,7 +56,7 @@ const MainNoteEditor: FunctionComponent<Props> = ({ note }) => {
           onUpdate={() => setInProgress(true)}
         />
       </ToolbarNote>
-      <DivColumnTwo editable={editable} preview={editor}>
+      <DivColumnNote editable={editable} preview={editor}>
         {(!editable || editor !== Editor.Input) && (
           <TypographyNote note={note} editorState={editorState} />
         )}
@@ -67,7 +67,7 @@ const MainNoteEditor: FunctionComponent<Props> = ({ note }) => {
             editorState={editorState}
           />
         )}
-      </DivColumnTwo>
+      </DivColumnNote>
     </main>
   )
 }

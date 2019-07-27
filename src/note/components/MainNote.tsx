@@ -3,7 +3,7 @@ import React, { FunctionComponent } from 'react'
 import ToolbarNote from '../../shared/components/ToolbarNote'
 import { Editor } from '../../shared/enums/editor'
 import { Note } from '../../shared/firestore/types/note'
-import DivColumnTwo from './DivColumnTwo'
+import DivColumnNote from '../../shared/components/DivColumnNote'
 import TypographyNote from './TypographyNote'
 
 type Props = { note: Note }
@@ -14,9 +14,9 @@ const MainNote: FunctionComponent<Props> = ({ note }) => {
   return (
     <main className={classes.root}>
       <ToolbarNote />
-      <DivColumnTwo editable={false} preview={Editor.Preview}>
+      <DivColumnNote editable={false} preview={Editor.Preview}>
         <TypographyNote note={note} />
-      </DivColumnTwo>
+      </DivColumnNote>
     </main>
   )
 }

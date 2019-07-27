@@ -1,6 +1,6 @@
 import { Hidden, makeStyles, Theme } from '@material-ui/core'
 import React, { Fragment, FunctionComponent } from 'react'
-import DivColumnTwo from '../note/components/DivColumnTwo'
+import DivColumnNote from '../shared/components/DivColumnNote'
 import HeaderSimple from '../shared/components/HeaderSimple'
 import ToolbarNote from '../shared/components/ToolbarNote'
 import { Editor } from '../shared/enums/editor'
@@ -18,9 +18,9 @@ const RouteTerm: FunctionComponent = () => {
         <Hidden xsDown>
           <ToolbarNote />
         </Hidden>
-        <DivColumnTwo editable={false} preview={Editor.Preview}>
+        <DivColumnNote editable={false} preview={Editor.Preview}>
           <DivTerm />
-        </DivColumnTwo>
+        </DivColumnNote>
       </main>
     </Fragment>
   )
