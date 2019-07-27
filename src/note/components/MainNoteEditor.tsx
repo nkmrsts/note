@@ -11,7 +11,7 @@ import IconButtonDelete from './IconButtonDelete'
 import IconButtonPreview from './IconButtonPreview'
 import IconButtonStatus from './IconButtonStatus'
 import IconButtonUpdate from './IconButtonUpdate'
-import ToolbarNote from './ToolbarNote'
+import ToolbarNote from '../../shared/components/ToolbarNote'
 import TypographyNote from './TypographyNote'
 
 type Props = { note: Note }

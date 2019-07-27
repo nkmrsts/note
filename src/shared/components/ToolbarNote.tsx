@@ -1,6 +1,5 @@
 import { makeStyles, Theme, Toolbar } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
-import { withRouter } from 'react-router'
 
 const ToolbarNote: FunctionComponent = ({ children }) => {
   const classes = useStyles()
@@ -16,7 +15,7 @@ const useStyles = makeStyles<Theme>(({ spacing }) => {
       gridAutoFlow: 'column',
       gridGap: spacing(2),
       justifyContent: 'flex-end',
-      minHeight: 'auto',
+      minHeight: 80,
       padding: 0,
       paddingBottom: spacing(2),
       paddingTop: spacing(2)
@@ -24,4 +23,4 @@ const useStyles = makeStyles<Theme>(({ spacing }) => {
   }
 })
 
-export default withRouter(ToolbarNote)
+export default ToolbarNote
