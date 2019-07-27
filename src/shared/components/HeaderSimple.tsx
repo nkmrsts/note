@@ -15,7 +15,9 @@ const HeaderSimple: FunctionComponent<Props> = ({ title }) => {
       <IconButtonMenu anchorElState={anchorElState}>
         <MenuSimple anchorElState={anchorElState} />
       </IconButtonMenu>
-      <Typography className={classes.title}>{title}</Typography>
+      <Typography className={classes.title} component={'h4'} variant={'h5'}>
+        {title}
+      </Typography>
     </header>
   )
 }
