@@ -7,11 +7,13 @@ import {
   Typography
 } from '@material-ui/core'
 import React, { Fragment, FunctionComponent, useEffect, useState } from 'react'
+import { combineLatest } from 'rxjs'
 import DivCenter from '../shared/components/DivCenter'
 import DivProgress from '../shared/components/DivProgress'
 import HeaderSimple from '../shared/components/HeaderSimple'
 import { updateProfile } from '../shared/firebase/updateProfile'
 import { useAuthUser } from '../shared/firebase/useAuthUser'
+import { updateUser } from '../shared/functions/updateUser'
 
 const RouteAccountUsername: FunctionComponent = () => {
   const classes = useStyles()
@@ -24,7 +26,10 @@ const RouteAccountUsername: FunctionComponent = () => {
 
   useEffect(() => {
     if (!inProgress) return
-    const subscription = updateProfile({ displayName }).subscribe(() => {
+    const subscription = combineLatest([
+      updateProfile({ displayName }),
+      updateUser()({ displayName })
+    ]).subscribe(() => {
       setInProgress(false)
     })
     return () => subscription.unsubscribe()
