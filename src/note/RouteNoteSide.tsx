@@ -8,11 +8,12 @@ import React, {
 import { RouteComponentProps, withRouter } from 'react-router'
 import DivProgress from '../shared/components/DivProgress'
 import DrawerDefault from '../shared/components/DrawerDefault'
-import { Note } from '../shared/firestore/types/note'
-import { watchNotes } from '../shared/firestore/watchNotes'
+import ListItemHeader from '../shared/components/ListItemHeader'
 import ListItemNote from '../shared/components/ListItemNote'
 import ListItemNoteCreate from '../shared/components/ListItemNoteCreate'
-import ListItemHeader from '../shared/components/ListItemHeader'
+import { Note } from '../shared/firestore/types/note'
+import { watchNotes } from '../shared/firestore/watchNotes'
+import ListItemNoteOwn from './components/ListItemNoteOwn'
 
 type Props = RouteComponentProps<{ noteId: string }>
 
@@ -46,13 +47,40 @@ const RouteNoteSide: FunctionComponent<Props> = ({
 
   // watch notes
   useEffect(() => {
-    const subscription = watchNotes({ isMine }).subscribe(_notes => {
+    const subscription = watchNotes({ isMine: isMine }).subscribe(_notes => {
       setNotes(_notes)
       setLoading(false)
     })
     return () => subscription.unsubscribe()
   }, [isMine])
 
+  // user's notes
+  if (isMine) {
+    return (
+      <DrawerDefault>
+        <List>
+          <ListItemHeader
+            isMineState={[isMine, setIsMine]}
+            searchState={[search, setSearch]}
+          />
+          <ListItemNoteCreate onCreateNote={onCreateNote} />
+          {loading && <DivProgress />}
+          {notes
+            .filter(note => note.title.includes(search))
+            .map(note => (
+              <ListItemNoteOwn
+                key={note.id}
+                note={note}
+                onUpdateNote={() => onUpdateNote(note.id)}
+                selected={noteId === note.id}
+              />
+            ))}
+        </List>
+      </DrawerDefault>
+    )
+  }
+
+  // all user's notes
   return (
     <DrawerDefault>
       <List>
@@ -60,18 +88,15 @@ const RouteNoteSide: FunctionComponent<Props> = ({
           isMineState={[isMine, setIsMine]}
           searchState={[search, setSearch]}
         />
-        {isMine && <ListItemNoteCreate onCreateNote={onCreateNote} />}
         {loading && <DivProgress />}
-        {notes
-          .filter(note => note.title.includes(search))
-          .map(note => (
-            <ListItemNote
-              key={note.id}
-              note={note}
-              onUpdateNote={() => onUpdateNote(note.id)}
-              selected={noteId === note.id}
-            />
-          ))}
+        {notes.map(note => (
+          <ListItemNote
+            key={note.id}
+            note={note}
+            onUpdateNote={() => onUpdateNote(note.id)}
+            selected={noteId === note.id}
+          />
+        ))}
       </List>
     </DrawerDefault>
   )
