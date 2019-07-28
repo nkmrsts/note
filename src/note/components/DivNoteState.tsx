@@ -14,7 +14,7 @@ const DivNoteStatus: FunctionComponent<Props> = ({ note }) => {
   return (
     <div className={classes.root}>
       {note.isPublic ? (
-        <PublicIcon style={{ color: palette.secondary.main }} />
+        <PublicIcon style={{ color: palette.primary.main }} />
       ) : (
         <VpnLockIcon />
       )}
