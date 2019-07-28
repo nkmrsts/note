@@ -14,6 +14,7 @@ import ListItemNoteCreate from '../shared/components/ListItemNoteCreate'
 import { Note } from '../shared/firestore/types/note'
 import { watchNotes } from '../shared/firestore/watchNotes'
 import ListItemNoteOwn from './components/ListItemNoteOwn'
+import { useAuthUser } from '../shared/firebase/useAuthUser'
 
 type Props = RouteComponentProps<{ noteId: string }>
 
@@ -30,6 +31,8 @@ const RouteNoteSide: FunctionComponent<Props> = ({
   const [notes, setNotes] = useState<Note[]>([])
 
   const [search, setSearch] = useState('')
+
+  const [authUser] = useAuthUser()
 
   const onCreateNote = useCallback(
     (_noteId: string) => {
@@ -55,7 +58,7 @@ const RouteNoteSide: FunctionComponent<Props> = ({
   }, [isMine])
 
   // user's notes
-  if (isMine) {
+  if (authUser && isMine) {
     return (
       <DrawerDefault>
         <List>
@@ -89,14 +92,18 @@ const RouteNoteSide: FunctionComponent<Props> = ({
           searchState={[search, setSearch]}
         />
         {loading && <DivProgress />}
-        {notes.map(note => (
-          <ListItemNote
-            key={note.id}
-            note={note}
-            onUpdateNote={() => onUpdateNote(note.id)}
-            selected={noteId === note.id}
-          />
-        ))}
+        {notes
+          .filter(
+            note => note.ownerId === (authUser && authUser.uid) || note.isPublic
+          )
+          .map(note => (
+            <ListItemNote
+              key={note.id}
+              note={note}
+              onUpdateNote={() => onUpdateNote(note.id)}
+              selected={noteId === note.id}
+            />
+          ))}
       </List>
     </DrawerDefault>
   )

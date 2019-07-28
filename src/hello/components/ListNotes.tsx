@@ -53,13 +53,17 @@ const ListNotes: FunctionComponent<Props> = ({ history }) => {
         <ListItemNoteCreate onCreateNote={onCreateNote} />
       )}
       {loading && <DivProgress />}
-      {notes.map(note => (
-        <ListItemNote
-          key={note.id}
-          note={note}
-          onUpdateNote={() => onUpdateNote(note.id)}
-        />
-      ))}
+      {notes
+        .filter(
+          note => note.ownerId === (authUser && authUser.uid) || note.isPublic
+        )
+        .map(note => (
+          <ListItemNote
+            key={note.id}
+            note={note}
+            onUpdateNote={() => onUpdateNote(note.id)}
+          />
+        ))}
     </List>
   )
 }
