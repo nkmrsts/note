@@ -45,7 +45,10 @@ const RouteNote: FunctionComponent<Props> = ({
       </DivCenter>
     )
 
-  if (!note) {
+  if (
+    !note ||
+    !(note.isPublic || note.ownerId === (authUser && authUser.uid))
+  ) {
     return (
       <DivCenter>
         <TypographyNotFound />
