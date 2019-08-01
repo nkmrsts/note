@@ -11,10 +11,10 @@ import DrawerDefault from '../shared/components/DrawerDefault'
 import ListItemHeader from '../shared/components/ListItemHeader'
 import ListItemNote from '../shared/components/ListItemNote'
 import ListItemNoteCreate from '../shared/components/ListItemNoteCreate'
+import { useAuthUser } from '../shared/firebase/useAuthUser'
 import { Note } from '../shared/firestore/types/note'
 import { watchNotes } from '../shared/firestore/watchNotes'
 import ListItemNoteOwn from './components/ListItemNoteOwn'
-import { useAuthUser } from '../shared/firebase/useAuthUser'
 
 type Props = RouteComponentProps<{ noteId: string }>
 
@@ -32,7 +32,7 @@ const RouteNoteSide: FunctionComponent<Props> = ({
 
   const [search, setSearch] = useState('')
 
-  const [authUser] = useAuthUser()
+  const [authUser, authLoading] = useAuthUser()
 
   const onCreateNote = useCallback(
     (_noteId: string) => {
@@ -50,12 +50,15 @@ const RouteNoteSide: FunctionComponent<Props> = ({
 
   // watch notes
   useEffect(() => {
-    const subscription = watchNotes({ isMine: isMine }).subscribe(_notes => {
+    if (authLoading) return
+    const subscription = watchNotes({
+      isMine: authUser == null ? false : isMine
+    }).subscribe(_notes => {
       setNotes(_notes)
       setLoading(false)
     })
     return () => subscription.unsubscribe()
-  }, [isMine])
+  }, [authLoading, authUser, isMine])
 
   // user's notes
   if (authUser && isMine) {
