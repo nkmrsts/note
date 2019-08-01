@@ -1,6 +1,7 @@
 import { Hidden, makeStyles, Theme } from '@material-ui/core'
 import React, { Fragment, FunctionComponent } from 'react'
 import DivColumnNote from '../shared/components/DivColumnNote'
+import FragmentHead from '../shared/components/FragmentHead'
 import HeaderSimple from '../shared/components/HeaderSimple'
 import ToolbarNote from '../shared/components/ToolbarNote'
 import { Editor } from '../shared/enums/editor'
@@ -11,6 +12,7 @@ const RouteTerm: FunctionComponent = () => {
 
   return (
     <Fragment>
+      <FragmentHead title={'利用規約'} />
       <Hidden smUp>
         <HeaderSimple title={'利用規約'} />
       </Hidden>

@@ -10,6 +10,7 @@ import React, { Fragment, FunctionComponent, useEffect, useState } from 'react'
 import { combineLatest } from 'rxjs'
 import DivCenter from '../shared/components/DivCenter'
 import DivProgress from '../shared/components/DivProgress'
+import FragmentHead from '../shared/components/FragmentHead'
 import HeaderSimple from '../shared/components/HeaderSimple'
 import { updateProfile } from '../shared/firebase/updateProfile'
 import { useAuthUser } from '../shared/firebase/useAuthUser'
@@ -37,22 +38,29 @@ const RouteAccountUsername: FunctionComponent = () => {
 
   if (loading) {
     return (
-      <DivCenter>
-        <DivProgress />
-      </DivCenter>
+      <Fragment>
+        <FragmentHead title={'読み込み中..'} />
+        <DivCenter>
+          <DivProgress />
+        </DivCenter>
+      </Fragment>
     )
   }
 
   if (!authUser) {
     return (
-      <DivCenter>
-        <Typography>{'ERROR'}</Typography>
-      </DivCenter>
+      <Fragment>
+        <FragmentHead title={'エラー'} />
+        <DivCenter>
+          <Typography>{'エラーが発生しました。'}</Typography>
+        </DivCenter>
+      </Fragment>
     )
   }
 
   return (
     <Fragment>
+      <FragmentHead title={'名前の変更'} />
       <Hidden smUp>
         <HeaderSimple title={'名前の変更'} />
       </Hidden>
