@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 import RouteAccount from './account/RouteAccount'
 import RouteAccountSide from './account/RouteAccountSide'
 import RouteAccountUsername from './account/RouteAccountUsername'
+import RouteAccountUsericon from './account/RouteAccountUsericon'
 import RouteHello from './hello/RouteHello'
 import RouteNote from './note/RouteNote'
 import RouteNoteSide from './note/RouteNoteSide'
@@ -33,6 +34,10 @@ const App: FunctionComponent = () => {
             <Route
               component={RouteAccountUsername}
               path={'/account/username'}
+            />
+            <Route
+              component={RouteAccountUsericon}
+              path={'/account/usericon'}
             />
             <Route component={RouteTerm} path={'/term'} />
             <Route component={RouteNote} path={'/:noteId'} />

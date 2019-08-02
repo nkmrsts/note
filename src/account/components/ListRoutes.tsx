@@ -14,7 +14,10 @@ const ListRoutes: FunctionComponent<Props> = ({ history }) => {
         />
       </ListItem>
       <ListItem button>
-        <ListItemText primary={'アイコンの変更'} />
+        <ListItemText
+          onClick={() => history.push('/account/usericon')}
+          primary={'アイコンの変更'}
+        />
       </ListItem>
       <ListItem button>
         <ListItemText
