@@ -1,7 +1,8 @@
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { Fragment, FunctionComponent, useEffect, useState } from 'react'
 import { RouteComponentProps } from 'react-router'
 import DivCenter from '../shared/components/DivCenter'
 import DivProgress from '../shared/components/DivProgress'
+import FragmentHead from '../shared/components/FragmentHead'
 import TypographyNotFound from '../shared/components/TypographyNotFound'
 import { useAuthUser } from '../shared/firebase/useAuthUser'
 import { Note } from '../shared/firestore/types/note'
@@ -40,24 +41,43 @@ const RouteNote: FunctionComponent<Props> = ({
 
   if (authLoading || loading)
     return (
-      <DivCenter>
-        <DivProgress />
-      </DivCenter>
+      <Fragment>
+        <FragmentHead title={'読み込み中..'} />
+        <DivCenter>
+          <DivProgress />
+        </DivCenter>
+      </Fragment>
     )
 
-  if (!note) {
+  if (
+    !note ||
+    !(note.isPublic || note.ownerId === (authUser && authUser.uid))
+  ) {
     return (
-      <DivCenter>
-        <TypographyNotFound />
-      </DivCenter>
+      <Fragment>
+        <FragmentHead title={'エラー'} />
+        <DivCenter>
+          <TypographyNotFound />
+        </DivCenter>
+      </Fragment>
     )
   }
 
   if (authUser && authUser.uid === note.ownerId) {
-    return <MainNoteEditor key={note.id || '_'} note={note} />
+    return (
+      <Fragment>
+        <FragmentHead title={note.title} />
+        <MainNoteEditor key={note.id || '_'} note={note} />
+      </Fragment>
+    )
   }
 
-  return <MainNote key={note.id || '_'} note={note} />
+  return (
+    <Fragment>
+      <FragmentHead title={note.title} />
+      <MainNote key={note.id || '_'} note={note} />
+    </Fragment>
+  )
 }
 
 export default RouteNote

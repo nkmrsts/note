@@ -1,13 +1,13 @@
 import { makeStyles, Theme, useTheme } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
-import { Editor } from '../../shared/enums/editor'
+import { Editor } from '../enums/editor'
 
 type Props = {
   editable: boolean
   preview: Editor
 }
 
-const DivColumnTwo: FunctionComponent<Props> = ({
+const DivColumnNote: FunctionComponent<Props> = ({
   children,
   editable,
   preview
@@ -49,4 +49,4 @@ const useStyles = makeStyles<Theme>(({ breakpoints, spacing }) => {
     }
   }
 })
-export default DivColumnTwo
+export default DivColumnNote

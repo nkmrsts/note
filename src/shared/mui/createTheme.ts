@@ -1,8 +1,8 @@
 import { createMuiTheme } from '@material-ui/core'
-import { blueGrey, deepOrange } from '@material-ui/core/colors'
+import { indigo, blueGrey, deepOrange, grey } from '@material-ui/core/colors'
 
 export const createTheme = () => {
-  const { palette, spacing } = createMuiTheme()
+  const { spacing } = createMuiTheme()
 
   const elevation = { boxShadow: 'none' }
 
@@ -15,8 +15,8 @@ export const createTheme = () => {
       },
       MuiIconButton: {
         root: {
-          backgroundColor: palette.grey[100],
-          '&:hover': { backgroundColor: palette.grey[200] }
+          backgroundColor: grey[100],
+          '&:hover': { backgroundColor: grey[200] }
         }
       },
       MuiDrawer: { paperAnchorDockedLeft: { borderRight: 0 } },
@@ -24,14 +24,18 @@ export const createTheme = () => {
     },
     palette: {
       background: { default: '#fff' },
-      primary: blueGrey,
+      primary: indigo,
       secondary: deepOrange
     },
     props: {
       MuiButtonBase: { disableRipple: true },
       MuiList: { style: { padding: 0 } }
     },
-    typography: { fontFamily: ['Noto Sans JP', 'Roboto'].join(',') }
+    typography: {
+      allVariants: { color: blueGrey[900] },
+      fontFamily: ['Noto Sans JP', 'Roboto'].join(','),
+      body1: { lineHeight: 1.7 }
+    }
   })
 }
 

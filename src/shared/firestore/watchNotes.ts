@@ -1,6 +1,7 @@
 import { auth, firestore } from 'firebase/app'
 import { authState } from 'rxfire/auth'
 import { collectionData } from 'rxfire/firestore'
+import { throwError } from 'rxjs'
 import { mergeMap } from 'rxjs/operators'
 import { NOTES } from './constants/collection'
 import { DESC } from './constants/order'
@@ -10,13 +11,7 @@ export const watchNotes = ({ isMine }: { isMine: boolean }) => {
   if (isMine) {
     return authState(auth()).pipe(
       mergeMap(state => {
-        if (!state) {
-          return collectionData<Note>(
-            firestore()
-              .collection(NOTES)
-              .orderBy('updatedAt', DESC)
-          )
-        }
+        if (!state) return throwError('user not authenticated')
         return collectionData<Note>(
           firestore()
             .collection(NOTES)
@@ -30,6 +25,7 @@ export const watchNotes = ({ isMine }: { isMine: boolean }) => {
   return collectionData<Note>(
     firestore()
       .collection(NOTES)
+      .where('isPublic', '==', true)
       .orderBy('updatedAt', DESC)
   )
 }

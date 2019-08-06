@@ -36,7 +36,7 @@ const ListItemNoteCreate: FunctionComponent<Props> = ({ onCreateNote }) => {
       <ListItemIcon>
         <AddIcon />
       </ListItemIcon>
-      <ListItemText primary={'新しいノートをつくる'} />
+      <ListItemText primary={'新しいノート'} />
     </ListItem>
   )
 }

@@ -9,7 +9,7 @@ type Props = RouteComponentProps & {
   isMineState: [boolean, Dispatch<SetStateAction<boolean>>]
 }
 
-const ButtonNoteFilter: FunctionComponent<Props> = ({
+const IconButtonNoteFilter: FunctionComponent<Props> = ({
   match: { path },
   noteId = '',
   isMineState: [isMine, setIsMine]
@@ -50,4 +50,4 @@ const ButtonNoteFilter: FunctionComponent<Props> = ({
   )
 }
 
-export default withRouter(ButtonNoteFilter)
+export default withRouter(IconButtonNoteFilter)

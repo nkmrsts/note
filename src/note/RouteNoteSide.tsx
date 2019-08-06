@@ -8,11 +8,13 @@ import React, {
 import { RouteComponentProps, withRouter } from 'react-router'
 import DivProgress from '../shared/components/DivProgress'
 import DrawerDefault from '../shared/components/DrawerDefault'
-import { Note } from '../shared/firestore/types/note'
-import { watchNotes } from '../shared/firestore/watchNotes'
+import ListItemHeader from '../shared/components/ListItemHeader'
 import ListItemNote from '../shared/components/ListItemNote'
 import ListItemNoteCreate from '../shared/components/ListItemNoteCreate'
-import ListItemHeader from '../shared/components/ListItemHeader'
+import { useAuthUser } from '../shared/firebase/useAuthUser'
+import { Note } from '../shared/firestore/types/note'
+import { watchNotes } from '../shared/firestore/watchNotes'
+import ListItemNoteOwn from './components/ListItemNoteOwn'
 
 type Props = RouteComponentProps<{ noteId: string }>
 
@@ -30,6 +32,8 @@ const RouteNoteSide: FunctionComponent<Props> = ({
 
   const [search, setSearch] = useState('')
 
+  const [authUser, authLoading] = useAuthUser()
+
   const onCreateNote = useCallback(
     (_noteId: string) => {
       history.push(`/${_noteId}`)
@@ -46,13 +50,43 @@ const RouteNoteSide: FunctionComponent<Props> = ({
 
   // watch notes
   useEffect(() => {
-    const subscription = watchNotes({ isMine }).subscribe(_notes => {
+    if (authLoading) return
+    const subscription = watchNotes({
+      isMine: authUser == null ? false : isMine
+    }).subscribe(_notes => {
       setNotes(_notes)
       setLoading(false)
     })
     return () => subscription.unsubscribe()
-  }, [isMine])
+  }, [authLoading, authUser, isMine])
 
+  // user's notes
+  if (authUser && isMine) {
+    return (
+      <DrawerDefault>
+        <List>
+          <ListItemHeader
+            isMineState={[isMine, setIsMine]}
+            searchState={[search, setSearch]}
+          />
+          <ListItemNoteCreate onCreateNote={onCreateNote} />
+          {loading && <DivProgress />}
+          {notes
+            .filter(note => note.title.includes(search))
+            .map(note => (
+              <ListItemNoteOwn
+                key={note.id}
+                note={note}
+                onUpdateNote={() => onUpdateNote(note.id)}
+                selected={noteId === note.id}
+              />
+            ))}
+        </List>
+      </DrawerDefault>
+    )
+  }
+
+  // all user's notes
   return (
     <DrawerDefault>
       <List>
@@ -60,10 +94,11 @@ const RouteNoteSide: FunctionComponent<Props> = ({
           isMineState={[isMine, setIsMine]}
           searchState={[search, setSearch]}
         />
-        {isMine && <ListItemNoteCreate onCreateNote={onCreateNote} />}
         {loading && <DivProgress />}
         {notes
-          .filter(note => note.title.includes(search))
+          .filter(
+            note => note.ownerId === (authUser && authUser.uid) || note.isPublic
+          )
           .map(note => (
             <ListItemNote
               key={note.id}

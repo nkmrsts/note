@@ -9,12 +9,15 @@ import { RouteComponentProps, withRouter } from 'react-router'
 import DivProgress from '../../shared/components/DivProgress'
 import ListItemNote from '../../shared/components/ListItemNote'
 import ListItemNoteCreate from '../../shared/components/ListItemNoteCreate'
+import { useAuthUser } from '../../shared/firebase/useAuthUser'
 import { Note } from '../../shared/firestore/types/note'
 import { watchNotes } from '../../shared/firestore/watchNotes'
 
 type Props = RouteComponentProps
 
 const ListNotes: FunctionComponent<Props> = ({ history }) => {
+  const [authUser] = useAuthUser()
+
   const [isMine] = useState(true)
 
   const [loading, setLoading] = useState(true)
@@ -46,15 +49,21 @@ const ListNotes: FunctionComponent<Props> = ({ history }) => {
 
   return (
     <List>
-      {isMine && <ListItemNoteCreate onCreateNote={onCreateNote} />}
+      {Boolean(authUser) && isMine && (
+        <ListItemNoteCreate onCreateNote={onCreateNote} />
+      )}
       {loading && <DivProgress />}
-      {notes.map(note => (
-        <ListItemNote
-          key={note.id}
-          note={note}
-          onUpdateNote={() => onUpdateNote(note.id)}
-        />
-      ))}
+      {notes
+        .filter(
+          note => note.ownerId === (authUser && authUser.uid) || note.isPublic
+        )
+        .map(note => (
+          <ListItemNote
+            key={note.id}
+            note={note}
+            onUpdateNote={() => onUpdateNote(note.id)}
+          />
+        ))}
     </List>
   )
 }

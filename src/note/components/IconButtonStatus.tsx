@@ -1,4 +1,4 @@
-import { IconButton } from '@material-ui/core'
+import { IconButton, Theme, useTheme } from '@material-ui/core'
 import PublicIcon from '@material-ui/icons/Public'
 import VpnLockIcon from '@material-ui/icons/VpnLock'
 import React, { FunctionComponent, useEffect, useState } from 'react'
@@ -9,6 +9,8 @@ type Props = { note: Note }
 
 const IconButtonStatus: FunctionComponent<Props> = ({ note }) => {
   const [inProgress, setInProgress] = useState(false)
+
+  const { palette } = useTheme<Theme>()
 
   useEffect(() => {
     if (!inProgress) return
@@ -24,7 +26,7 @@ const IconButtonStatus: FunctionComponent<Props> = ({ note }) => {
   if (note.isPublic) {
     return (
       <IconButton disabled={inProgress} onClick={() => setInProgress(true)}>
-        <PublicIcon />
+        <PublicIcon style={{ color: palette.primary.main }} />
       </IconButton>
     )
   }
