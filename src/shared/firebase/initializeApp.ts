@@ -12,7 +12,7 @@ initializeApp({
   databaseURL: 'https://wxvxwfwpguig.firebaseio.com',
   messagingSenderId: '308577319545',
   projectId: 'wxvxwfwpguig',
-  storageBucket: ''
+  storageBucket: 'gs://wxvxwfwpguig.appspot.com/'
 })
 
 firestore()

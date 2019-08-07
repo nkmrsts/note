@@ -8,13 +8,14 @@ import {
 } from '@material-ui/core'
 import ControlPoint from '@material-ui/icons/ControlPoint'
 import React, { Fragment, FunctionComponent, useEffect, useState } from 'react'
-import { combineLatest } from 'rxjs'
+import { from, combineLatest } from 'rxjs'
 import DivCenter from '../shared/components/DivCenter'
 import DivProgress from '../shared/components/DivProgress'
 import FragmentHead from '../shared/components/FragmentHead'
 import HeaderSimple from '../shared/components/HeaderSimple'
 import { updateProfile } from '../shared/firebase/updateProfile'
 import { useAuthUser } from '../shared/firebase/useAuthUser'
+import { uploadImage } from '../shared/firebase/uploadImage'
 import { updateUser } from '../shared/functions/updateUser'
 
 const RouteAccountUsername: FunctionComponent = () => {
@@ -24,7 +25,18 @@ const RouteAccountUsername: FunctionComponent = () => {
 
   const [photoURL, setPhotoURL] = useState('')
 
+  const [file, setFile] = useState()
+
   const [inProgress, setInProgress] = useState(false)
+
+  useEffect(() => {
+    if (!file) return
+    const url = uploadImage(file)
+    const subscription = from(url).subscribe(next => {
+      setPhotoURL(next)
+    })
+    return () => subscription.unsubscribe()
+  }, [file])
 
   useEffect(() => {
     if (!inProgress) return
@@ -80,8 +92,7 @@ const RouteAccountUsername: FunctionComponent = () => {
             onChange={event => {
               const files = event.target.files
               if (files) {
-                const url = URL.createObjectURL(files[0])
-                setPhotoURL(url)
+                setFile(files[0])
               }
             }}
           />
@@ -90,7 +101,7 @@ const RouteAccountUsername: FunctionComponent = () => {
             <div className={classes.layer} />
             <Avatar
               className={classes.avatar}
-              src={photoURL || authUser.photoURL || ''}
+              src={file ? URL.createObjectURL(file) : authUser.photoURL || ''}
             ></Avatar>
           </label>
         </div>
