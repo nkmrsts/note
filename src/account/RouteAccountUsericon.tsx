@@ -23,31 +23,28 @@ const RouteAccountUsername: FunctionComponent = () => {
 
   const [authUser, loading] = useAuthUser()
 
-  const [photoURL, setPhotoURL] = useState('')
-
   const [file, setFile] = useState()
 
   const [inProgress, setInProgress] = useState(false)
 
   useEffect(() => {
-    if (!file) return
-    const url = uploadImage(file)
-    const subscription = from(url).subscribe(next => {
-      setPhotoURL(next)
-    })
-    return () => subscription.unsubscribe()
-  }, [file])
-
-  useEffect(() => {
-    if (!inProgress) return
-    const subscription = combineLatest([
-      updateProfile({ photoURL }),
-      updateUser()({ photoURL })
-    ]).subscribe(() => {
+    if (!file) {
       setInProgress(false)
+      return
+    }
+    if (!inProgress) return
+    const url = uploadImage(file)
+    const subscription = from(url).subscribe(photoURL => {
+      const subscription = combineLatest([
+        updateProfile({ photoURL }),
+        updateUser()({ photoURL })
+      ]).subscribe(() => {
+        setInProgress(false)
+      })
+      return () => subscription.unsubscribe()
     })
     return () => subscription.unsubscribe()
-  }, [photoURL, inProgress])
+  }, [inProgress])
 
   if (loading) {
     return (
