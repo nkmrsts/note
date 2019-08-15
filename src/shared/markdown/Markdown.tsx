@@ -1,7 +1,7 @@
 import React, { Dispatch, FunctionComponent, SetStateAction } from 'react'
 import { Value } from 'slate'
 import { Editor, OnChangeFn } from 'slate-react'
-import { onKeyDown } from './helpers/onKeyDown'
+import { plugins } from './helpers/plugins'
 import { renderBlock } from './helpers/renderBlock'
 import { renderMark } from './helpers/renderMark'
 
@@ -17,8 +17,8 @@ const Markdown: FunctionComponent<Props> = ({ value, setValue }) => {
 
   return (
     <Editor
+      plugins={plugins}
       onChange={onChange}
-      onKeyDown={onKeyDown}
       renderBlock={renderBlock}
       renderMark={renderMark}
       value={value}
