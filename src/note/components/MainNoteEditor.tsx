@@ -1,25 +1,28 @@
 import { makeStyles, Theme } from '@material-ui/core'
 import React, { FunctionComponent, useEffect, useState } from 'react'
+import DivColumnNote from '../../shared/components/DivColumnNote'
+import ToolbarNote from '../../shared/components/ToolbarNote'
 import { Editor } from '../../shared/enums/editor'
 import { Note } from '../../shared/firestore/types/note'
 import { updateNote } from '../../shared/functions/updateNote'
+import { createinitialValue } from '../../shared/markdown/helpers/createInitialValue'
 import { toContentState } from '../../shared/markdown/helpers/toContentState'
 import { toEditorState } from '../../shared/markdown/helpers/toEditorState'
-import DivColumnNote from '../../shared/components/DivColumnNote'
 import DivNoteEditor from './DivNoteEditor'
 import IconButtonDelete from './IconButtonDelete'
 import IconButtonPreview from './IconButtonPreview'
 import IconButtonStatus from './IconButtonStatus'
 import IconButtonUpdate from './IconButtonUpdate'
-import ToolbarNote from '../../shared/components/ToolbarNote'
 import TypographyNote from './TypographyNote'
 
 type Props = { note: Note }
 
 const MainNoteEditor: FunctionComponent<Props> = ({ note }) => {
-  const [editorState, setEditorState] = useState(() => {
+  const [editorState] = useState(() => {
     return toEditorState(note.contentState)
   })
+
+  const [value, setValue] = useState(() => createinitialValue())
 
   const [inProgress, setInProgress] = useState(false)
 
@@ -63,8 +66,8 @@ const MainNoteEditor: FunctionComponent<Props> = ({ note }) => {
         {editable && editor !== Editor.Preview && (
           <DivNoteEditor
             inProgress={inProgress}
-            setEditorState={setEditorState}
-            editorState={editorState}
+            setValue={setValue}
+            value={value}
           />
         )}
       </DivColumnNote>
