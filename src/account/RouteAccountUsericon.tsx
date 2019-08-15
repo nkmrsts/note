@@ -1,14 +1,22 @@
 import {
-  Button,
+  Avatar,
   Hidden,
   makeStyles,
   Theme,
-  Typography,
-  Avatar
+  Typography
 } from '@material-ui/core'
 import ControlPoint from '@material-ui/icons/ControlPoint'
-import React, { Fragment, FunctionComponent, useEffect, useState } from 'react'
+import React, {
+  ChangeEvent,
+  Fragment,
+  FunctionComponent,
+  useEffect,
+  useState
+} from 'react'
 import { combineLatest } from 'rxjs'
+import { mergeMap } from 'rxjs/operators'
+import { getPhotoURL } from 'shared/storage/getPhotoURL'
+import ButtonFile from '../shared/components/ButtonFile'
 import DivCenter from '../shared/components/DivCenter'
 import DivProgress from '../shared/components/DivProgress'
 import FragmentHead from '../shared/components/FragmentHead'
@@ -22,20 +30,29 @@ const RouteAccountUsername: FunctionComponent = () => {
 
   const [authUser, loading] = useAuthUser()
 
-  const [photoURL, setPhotoURL] = useState('')
+  const [file, setFile] = useState<File | null>(null)
 
   const [inProgress, setInProgress] = useState(false)
 
   useEffect(() => {
     if (!inProgress) return
-    const subscription = combineLatest([
-      updateProfile({ photoURL }),
-      updateUser()({ photoURL })
-    ]).subscribe(() => {
-      setInProgress(false)
-    })
+    if (file === null) return
+    const subscription = getPhotoURL(file)
+      .pipe(
+        mergeMap(photoURL => {
+          console.log(photoURL)
+          return combineLatest([
+            updateProfile({ photoURL }),
+            updateUser()({ photoURL })
+          ])
+        })
+      )
+      .subscribe(() => {
+        setInProgress(false)
+        setFile(null)
+      })
     return () => subscription.unsubscribe()
-  }, [photoURL, inProgress])
+  }, [file, inProgress])
 
   if (loading) {
     return (
@@ -59,6 +76,17 @@ const RouteAccountUsername: FunctionComponent = () => {
     )
   }
 
+  const onChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    // guard: files is null
+    if (target.files === null) return
+    // convert FileList (Iterable) to Array
+    const [file] = Array.from(target.files)
+    // guard: file is undefined
+    if (!file) return
+    setFile(file)
+    setInProgress(true)
+  }
+
   return (
     <Fragment>
       <FragmentHead title={'アイコンの変更'} />
@@ -72,36 +100,19 @@ const RouteAccountUsername: FunctionComponent = () => {
           </Typography>
         </Hidden>
         <div className={classes.avatarRoot}>
-          <input
-            accept="image/*"
-            className={classes.input}
-            id="input-button"
-            type="file"
-            onChange={event => {
-              const files = event.target.files
-              if (files) {
-                const url = URL.createObjectURL(files[0])
-                setPhotoURL(url)
-              }
-            }}
-          />
           <label className={classes.label} htmlFor="input-button">
             <ControlPoint fontSize="large" className={classes.labelIcon} />
             <div className={classes.layer} />
             <Avatar
               className={classes.avatar}
-              src={photoURL || authUser.photoURL || ''}
+              src={file ? URL.createObjectURL(file) : authUser.photoURL || ''}
             ></Avatar>
           </label>
         </div>
         <div>
-          <Button
-            disabled={inProgress}
-            onClick={() => setInProgress(true)}
-            variant={'outlined'}
-          >
-            {'変更する'}
-          </Button>
+          <ButtonFile onChange={onChange} variant={'outlined'}>
+            {'ファイルを選択する'}
+          </ButtonFile>
         </div>
       </main>
     </Fragment>
