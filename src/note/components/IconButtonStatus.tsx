@@ -3,7 +3,7 @@ import PublicIcon from '@material-ui/icons/Public'
 import VpnLockIcon from '@material-ui/icons/VpnLock'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { Note } from '../../shared/firestore/types/note'
-import { updateNote } from '../../shared/functions/updateNote'
+import { updateNote } from '../../shared/firestore/updateNoteStatus'
 
 type Props = { note: Note }
 
@@ -14,14 +14,21 @@ const IconButtonStatus: FunctionComponent<Props> = ({ note }) => {
 
   useEffect(() => {
     if (!inProgress) return
-    const subscription = updateNote()({
+    const subscription = updateNote({
       noteId: note.id,
       isPublic: !note.isPublic
-    }).subscribe(() => {
-      setInProgress(false)
-    })
+    }).subscribe(
+      () => {
+        setInProgress(false)
+      },
+      err => {
+        console.log(err)
+        setInProgress(false)
+      }
+    )
     return () => subscription.unsubscribe()
-  }, [inProgress, note])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inProgress])
 
   if (note.isPublic) {
     return (

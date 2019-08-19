@@ -1,30 +1,23 @@
 import { makeStyles, Theme } from '@material-ui/core'
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent, useState } from 'react'
+import { Value } from 'slate'
 import DivColumnNote from '../../shared/components/DivColumnNote'
 import ToolbarNote from '../../shared/components/ToolbarNote'
 import { Editor } from '../../shared/enums/editor'
 import { Note } from '../../shared/firestore/types/note'
-import { updateNote } from '../../shared/functions/updateNote'
-import { createinitialValue } from '../../shared/markdown/helpers/createInitialValue'
-import { toContentState } from '../../shared/markdown/helpers/toContentState'
-import { toEditorState } from '../../shared/markdown/helpers/toEditorState'
 import DivNoteEditor from './DivNoteEditor'
+import DivNotePreview from './DivNotePreview'
 import IconButtonDelete from './IconButtonDelete'
 import IconButtonPreview from './IconButtonPreview'
 import IconButtonStatus from './IconButtonStatus'
 import IconButtonUpdate from './IconButtonUpdate'
-import TypographyNote from './TypographyNote'
 
 type Props = { note: Note }
 
 const MainNoteEditor: FunctionComponent<Props> = ({ note }) => {
-  const [editorState] = useState(() => {
-    return toEditorState(note.contentState)
-  })
+  const [value, setValue] = useState(() => Value.fromJSON(note.value))
 
-  const [value, setValue] = useState(() => createinitialValue())
-
-  const [inProgress, setInProgress] = useState(false)
+  const [progress, setProgress] = useState(false)
 
   const [editable, setEditable] = useState(false)
 
@@ -32,40 +25,27 @@ const MainNoteEditor: FunctionComponent<Props> = ({ note }) => {
 
   const classes = useStyles()
 
-  // update note
-  useEffect(() => {
-    if (!inProgress) return
-    setEditable(false)
-    const subscription = updateNote()({
-      noteId: note.id,
-      contentState: toContentState(editorState)
-    }).subscribe(() => {
-      setInProgress(false)
-    })
-    return () => subscription.unsubscribe()
-  }, [editorState, inProgress, note.id])
-
   return (
     <main className={classes.root}>
       <ToolbarNote>
         {!editable && <IconButtonStatus note={note} />}
-        {editable && (
-          <IconButtonDelete disabled={inProgress} noteId={note.id} />
-        )}
+        {editable && <IconButtonDelete disabled={progress} noteId={note.id} />}
         {editable && <IconButtonPreview editorState={[editor, setEditor]} />}
         <IconButtonUpdate
-          disabled={inProgress}
+          disabled={progress}
           editableState={[editable, setEditable]}
-          onUpdate={() => setInProgress(true)}
+          noteId={note.id}
+          progressState={[progress, setProgress]}
+          value={value}
         />
       </ToolbarNote>
       <DivColumnNote editable={editable} preview={editor}>
         {(!editable || editor !== Editor.Input) && (
-          <TypographyNote note={note} editorState={editorState} />
+          <DivNotePreview note={note} value={value} />
         )}
         {editable && editor !== Editor.Preview && (
           <DivNoteEditor
-            inProgress={inProgress}
+            inProgress={progress}
             setValue={setValue}
             value={value}
           />

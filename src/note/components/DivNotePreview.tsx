@@ -1,27 +1,21 @@
 import { makeStyles, Theme, Typography } from '@material-ui/core'
-import { convertToRaw, EditorState } from 'draft-js'
 import React, { FunctionComponent } from 'react'
+import { Value } from 'slate'
 import { Note } from '../../shared/firestore/types/note'
-import { createMarkup } from '../../shared/helpers/createMarkup'
+import MarkdownPreview from '../../shared/markdown/MarkdownPreview'
 
 type Props = {
-  editorState?: EditorState
   note: Note
+  value: Value
 }
 
-const TypographyNote: FunctionComponent<Props> = ({ editorState, note }) => {
+const DivNotePreview: FunctionComponent<Props> = ({ note, value }) => {
   const classes = useStyles()
 
-  const contentState = editorState
-    ? convertToRaw(editorState.getCurrentContent())
-    : note.contentState
-
   return (
-    <Typography
-      component={'div'}
-      className={classes.root}
-      dangerouslySetInnerHTML={createMarkup(contentState)}
-    />
+    <Typography className={classes.root} component={'div'}>
+      <MarkdownPreview value={Value.fromJSON(value)} />
+    </Typography>
   )
 }
 
@@ -38,4 +32,4 @@ const useStyles = makeStyles<Theme>(({ breakpoints, spacing }) => {
   }
 })
 
-export default TypographyNote
+export default DivNotePreview

@@ -40,7 +40,6 @@ const RouteAccountUsername: FunctionComponent = () => {
     const subscription = getPhotoURL(file)
       .pipe(
         mergeMap(photoURL => {
-          console.log(photoURL)
           return combineLatest([
             updateProfile({ photoURL }),
             updateUser()({ photoURL })

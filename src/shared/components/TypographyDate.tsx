@@ -3,12 +3,12 @@ import { firestore } from 'firebase/app'
 import React, { FunctionComponent } from 'react'
 import { toDateText } from '../../shared/helpers/toDateText'
 
-type Props = { timestamp: firestore.Timestamp }
+type Props = { timestamp: firestore.Timestamp | null }
 
 const TypographyDate: FunctionComponent<Props> = ({ timestamp }) => {
   return (
     <Typography component={'span'} variant={'caption'}>
-      {toDateText(timestamp)}
+      {timestamp === null ? '更新中...' : toDateText(timestamp)}
     </Typography>
   )
 }

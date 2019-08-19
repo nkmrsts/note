@@ -1,10 +1,10 @@
 import { makeStyles, Theme } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
+import DivColumnNote from '../../shared/components/DivColumnNote'
 import ToolbarNote from '../../shared/components/ToolbarNote'
 import { Editor } from '../../shared/enums/editor'
 import { Note } from '../../shared/firestore/types/note'
-import DivColumnNote from '../../shared/components/DivColumnNote'
-import TypographyNote from './TypographyNote'
+import DivNotePreview from './DivNotePreview'
 
 type Props = { note: Note }
 
@@ -15,7 +15,7 @@ const MainNote: FunctionComponent<Props> = ({ note }) => {
     <main className={classes.root}>
       <ToolbarNote />
       <DivColumnNote editable={false} preview={Editor.Preview}>
-        <TypographyNote note={note} />
+        <DivNotePreview note={note} value={note.value} />
       </DivColumnNote>
     </main>
   )
