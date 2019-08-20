@@ -17,6 +17,7 @@
     "draft-js": "^0.11.0",
     "firebase": "^6.3.1",
     "immutable": "^4.0.0-rc.12",
+    "is-hotkey": "^0.1.4",
     "marked": "^0.7.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -24,6 +25,8 @@
     "react-scripts": "3.0.1",
     "rxfire": "^3.6.6",
     "rxjs": "^6.5.2",
+    "slate": "^0.47.4",
+    "slate-react": "^0.22.4",
     "typescript": "^3.5.3"
   },
   "scripts": {
@@ -45,6 +48,9 @@
     ]
   },
   "devDependencies": {
+    "@types/is-hotkey": "^0.1.1",
+    "@types/slate": "^0.47.1",
+    "@types/slate-react": "^0.22.5",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
     "@typescript-eslint/typescript-estree": "^1.13.0",

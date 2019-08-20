@@ -1,24 +1,24 @@
 import { makeStyles, Theme, Typography } from '@material-ui/core'
-import { EditorState } from 'draft-js'
 import React, { Dispatch, FunctionComponent, SetStateAction } from 'react'
+import { Value } from 'slate'
 import Markdown from '../../shared/markdown/Markdown'
 
 type Props = {
-  editorState: EditorState
   inProgress: boolean
-  setEditorState: Dispatch<SetStateAction<EditorState>>
+  setValue: Dispatch<SetStateAction<Value>>
+  value: Value
 }
 
 const DivNoteEditor: FunctionComponent<Props> = ({
-  editorState,
   inProgress,
-  setEditorState
+  setValue,
+  value
 }) => {
   const classes = useStyles()
 
   return (
     <Typography className={classes.root} component={'div'}>
-      <Markdown editorState={editorState} setEditorState={setEditorState} />
+      <Markdown value={value} setValue={setValue} />
     </Typography>
   )
 }

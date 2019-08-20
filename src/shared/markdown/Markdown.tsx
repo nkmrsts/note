@@ -1,25 +1,27 @@
-import { Editor, EditorState } from 'draft-js'
 import React, { Dispatch, FunctionComponent, SetStateAction } from 'react'
-import { blockRendererFn } from './helpers/blockRendererFn'
-import { blockRenderMap } from './helpers/blockRenderMap'
-import { customStyleMap } from './helpers/customStyleMap'
+import { Value } from 'slate'
+import { Editor, OnChangeFn } from 'slate-react'
+import { plugins } from './helpers/plugins'
+import { renderBlock } from './helpers/renderBlock'
+import { renderMark } from './helpers/renderMark'
 
 type Props = {
-  editorState: EditorState
-  setEditorState: Dispatch<SetStateAction<EditorState>>
+  value: Value
+  setValue: Dispatch<SetStateAction<Value>>
 }
 
-const Markdown: FunctionComponent<Props> = ({
-  editorState,
-  setEditorState
-}) => {
+const Markdown: FunctionComponent<Props> = ({ value, setValue }) => {
+  const onChange: OnChangeFn = change => {
+    setValue(change.value)
+  }
+
   return (
     <Editor
-      blockRendererFn={blockRendererFn}
-      blockRenderMap={blockRenderMap}
-      customStyleMap={customStyleMap}
-      editorState={editorState}
-      onChange={setEditorState}
+      plugins={plugins}
+      onChange={onChange}
+      renderBlock={renderBlock}
+      renderMark={renderMark}
+      value={value}
     />
   )
 }
