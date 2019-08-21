@@ -79,7 +79,7 @@ const RouteAccountUsername: FunctionComponent = () => {
         />
         <div>
           <Button
-            disabled={inProgress}
+            disabled={inProgress || displayName.trim() === ''}
             onClick={() => setInProgress(true)}
             variant={'outlined'}
           >
