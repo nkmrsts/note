@@ -34,7 +34,12 @@ export const createTheme = () => {
     typography: {
       allVariants: { color: blueGrey[900] },
       fontFamily: ['Noto Sans JP', 'Roboto'].join(','),
-      body1: { lineHeight: 1.7 }
+      body1: { lineHeight: 1.7 },
+      h1: { fontSize: '4rem' },
+      h2: { fontSize: '3rem' },
+      h3: { fontSize: '3rem' },
+      h4: { fontSize: '2rem' },
+      h5: { fontSize: '1.5rem' }
     }
   })
 }

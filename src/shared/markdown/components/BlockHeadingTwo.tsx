@@ -11,7 +11,12 @@ export const BlockHeadingTwo: FunctionComponent<Props> = ({
   const classes = useStyles()
 
   return (
-    <Typography component={'h2'} className={classes.root} {...attributes}>
+    <Typography
+      component={'h2'}
+      className={classes.root}
+      variant={'h2'}
+      {...attributes}
+    >
       {children}
     </Typography>
   )

@@ -1,24 +1,29 @@
-import { makeStyles, Theme } from '@material-ui/core'
+import { makeStyles, Theme, Typography } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
 import { RenderBlockProps } from 'slate-react'
 
 type Props = RenderBlockProps
 
-export const BlockListItem: FunctionComponent<Props> = ({
+export const BlockHeadingThree: FunctionComponent<Props> = ({
   children,
   attributes
 }) => {
   const classes = useStyles()
 
   return (
-    <li className={classes.root} {...attributes}>
+    <Typography
+      component={'h3'}
+      className={classes.root}
+      variant={'h3'}
+      {...attributes}
+    >
       {children}
-    </li>
+    </Typography>
   )
 }
 
 const useStyles = makeStyles<Theme>(({ breakpoints, spacing }) => {
   return {
-    root: { fontWeight: 'bold' }
+    root: {}
   }
 })

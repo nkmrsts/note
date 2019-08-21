@@ -22,7 +22,7 @@ const IconButtonStatus: FunctionComponent<Props> = ({ note }) => {
         setInProgress(false)
       },
       err => {
-        console.log(err)
+        console.error(err)
         setInProgress(false)
       }
     )

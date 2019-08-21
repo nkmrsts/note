@@ -1,4 +1,4 @@
-import { makeStyles, Theme, Typography } from '@material-ui/core'
+import { makeStyles, Theme } from '@material-ui/core'
 import React, { Dispatch, FunctionComponent, SetStateAction } from 'react'
 import { Value } from 'slate'
 import Markdown from '../../shared/markdown/Markdown'
@@ -17,9 +17,9 @@ const DivNoteEditor: FunctionComponent<Props> = ({
   const classes = useStyles()
 
   return (
-    <Typography className={classes.root} component={'div'}>
+    <div className={classes.root}>
       <Markdown value={value} setValue={setValue} />
-    </Typography>
+    </div>
   )
 }
 const useStyles = makeStyles<Theme>(({ spacing }) => {
@@ -28,7 +28,6 @@ const useStyles = makeStyles<Theme>(({ spacing }) => {
       '& *:first-of-type': { marginTop: '0' },
       background: 'rgba(0,0,0,0.06)',
       borderRadius: spacing(1),
-      fontSize: '1rem',
       padding: spacing(2),
       wordBreak: 'break-word'
     }

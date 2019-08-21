@@ -11,7 +11,12 @@ export const BlockHeadingOne: FunctionComponent<Props> = ({
   const classes = useStyles()
 
   return (
-    <Typography component={'h1'} className={classes.root} {...attributes}>
+    <Typography
+      component={'h1'}
+      className={classes.root}
+      variant={'h1'}
+      {...attributes}
+    >
       {children}
     </Typography>
   )
