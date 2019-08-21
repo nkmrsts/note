@@ -23,7 +23,5 @@ export const BlockHeadingFour: FunctionComponent<Props> = ({
 }
 
 const useStyles = makeStyles<Theme>(({ breakpoints, spacing }) => {
-  return {
-    root: {}
-  }
+  return { root: { marginTop: spacing(4), marginBottom: spacing(4) } }
 })

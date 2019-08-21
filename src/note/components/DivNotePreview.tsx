@@ -19,14 +19,16 @@ const DivNotePreview: FunctionComponent<Props> = ({ note, value }) => {
   )
 }
 
-const useStyles = makeStyles<Theme>(({ breakpoints, spacing }) => {
+const useStyles = makeStyles<Theme>(({ spacing, typography }) => {
   return {
     root: {
-      width: '100%',
+      fontFamily: typography.fontFamily,
+      fontSize: '1rem',
       height: '100%',
-      wordBreak: 'break-word',
-      '& *:first-of-type': { marginTop: '0' },
-      padding: spacing(2)
+      lineHeight: typography.body2.lineHeight,
+      padding: spacing(2),
+      width: '100%',
+      wordBreak: 'break-word'
     }
   }
 })

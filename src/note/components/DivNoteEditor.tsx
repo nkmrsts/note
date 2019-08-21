@@ -22,12 +22,14 @@ const DivNoteEditor: FunctionComponent<Props> = ({
     </div>
   )
 }
-const useStyles = makeStyles<Theme>(({ spacing }) => {
+const useStyles = makeStyles<Theme>(({ spacing, typography }) => {
   return {
     root: {
-      '& *:first-of-type': { marginTop: '0' },
       background: 'rgba(0,0,0,0.06)',
       borderRadius: spacing(1),
+      fontFamily: typography.fontFamily,
+      fontSize: '1rem',
+      lineHeight: typography.body2.lineHeight,
       padding: spacing(2),
       wordBreak: 'break-word'
     }
