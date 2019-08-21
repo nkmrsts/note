@@ -10,6 +10,7 @@ import { BlockHeadingThree } from './BlockHeadingThree'
 import { BlockHeadingTwo } from './BlockHeadingTwo'
 import { BlockListDisc } from './BlockListDisc'
 import { BlockListItem } from './BlockListItem'
+import { BlockParagraph } from './BlockParagraph'
 
 export const renderBlock = (
   props: RenderBlockProps,
@@ -36,6 +37,6 @@ export const renderBlock = (
     case 'list-item':
       return <BlockListItem {...props} />
     default:
-      return next()
+      return <BlockParagraph {...props} />
   }
 }

@@ -28,8 +28,7 @@ const useStyles = makeStyles<Theme>(({ spacing, typography }) => {
       background: 'rgba(0,0,0,0.06)',
       borderRadius: spacing(1),
       fontFamily: typography.fontFamily,
-      fontSize: '1rem',
-      lineHeight: typography.body2.lineHeight,
+      fontSize: '1.1rem',
       padding: spacing(2),
       wordBreak: 'break-word'
     }

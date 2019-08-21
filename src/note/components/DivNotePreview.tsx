@@ -23,9 +23,8 @@ const useStyles = makeStyles<Theme>(({ spacing, typography }) => {
   return {
     root: {
       fontFamily: typography.fontFamily,
-      fontSize: '1rem',
+      fontSize: '1.1rem',
       height: '100%',
-      lineHeight: typography.body2.lineHeight,
       padding: spacing(2),
       width: '100%',
       wordBreak: 'break-word'
