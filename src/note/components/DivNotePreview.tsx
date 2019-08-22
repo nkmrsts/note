@@ -1,4 +1,4 @@
-import { makeStyles, Theme, Typography } from '@material-ui/core'
+import { makeStyles, Theme } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
 import { Value } from 'slate'
 import { Note } from '../../shared/firestore/types/note'
@@ -13,21 +13,21 @@ const DivNotePreview: FunctionComponent<Props> = ({ note, value }) => {
   const classes = useStyles()
 
   return (
-    <Typography className={classes.root} component={'div'}>
+    <div className={classes.root}>
       <MarkdownPreview value={Value.fromJSON(value)} />
-    </Typography>
+    </div>
   )
 }
 
-const useStyles = makeStyles<Theme>(({ breakpoints, spacing }) => {
+const useStyles = makeStyles<Theme>(({ spacing, typography }) => {
   return {
     root: {
-      width: '100%',
+      fontFamily: typography.fontFamily,
+      fontSize: '1.1rem',
       height: '100%',
-      fontSize: '1rem',
-      wordBreak: 'break-word',
-      '& *:first-of-type': { marginTop: '0' },
-      padding: spacing(2)
+      padding: spacing(2),
+      width: '100%',
+      wordBreak: 'break-word'
     }
   }
 })

@@ -19,6 +19,6 @@ export const BlockListItem: FunctionComponent<Props> = ({
 
 const useStyles = makeStyles<Theme>(({ breakpoints, spacing }) => {
   return {
-    root: {}
+    root: { fontWeight: 'bold' }
   }
 })

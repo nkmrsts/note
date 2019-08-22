@@ -11,14 +11,17 @@ export const BlockHeadingTwo: FunctionComponent<Props> = ({
   const classes = useStyles()
 
   return (
-    <Typography component={'h2'} className={classes.root} {...attributes}>
+    <Typography
+      component={'h2'}
+      className={classes.root}
+      variant={'h2'}
+      {...attributes}
+    >
       {children}
     </Typography>
   )
 }
 
 const useStyles = makeStyles<Theme>(({ breakpoints, spacing }) => {
-  return {
-    root: {}
-  }
+  return { root: { marginTop: spacing(4), marginBottom: spacing(4) } }
 })

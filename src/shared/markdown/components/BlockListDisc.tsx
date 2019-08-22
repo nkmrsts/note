@@ -4,21 +4,19 @@ import { RenderBlockProps } from 'slate-react'
 
 type Props = RenderBlockProps
 
-export const BlockNumberedList: FunctionComponent<Props> = ({
+export const BlockListDisc: FunctionComponent<Props> = ({
   children,
   attributes
 }) => {
   const classes = useStyles()
 
   return (
-    <ol className={classes.root} {...attributes}>
+    <ul className={classes.root} {...attributes}>
       {children}
-    </ol>
+    </ul>
   )
 }
 
-const useStyles = makeStyles<Theme>(({ breakpoints, spacing }) => {
-  return {
-    root: {}
-  }
+const useStyles = makeStyles<Theme>(({ spacing }) => {
+  return { root: { paddingLeft: spacing(1) } }
 })

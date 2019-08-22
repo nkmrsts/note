@@ -4,7 +4,7 @@ import { RenderBlockProps } from 'slate-react'
 
 type Props = RenderBlockProps
 
-export const BlockHeadingOne: FunctionComponent<Props> = ({
+export const BlockHeadingFive: FunctionComponent<Props> = ({
   children,
   attributes
 }) => {
@@ -12,9 +12,9 @@ export const BlockHeadingOne: FunctionComponent<Props> = ({
 
   return (
     <Typography
-      component={'h1'}
+      component={'h5'}
       className={classes.root}
-      variant={'h1'}
+      variant={'h5'}
       {...attributes}
     >
       {children}

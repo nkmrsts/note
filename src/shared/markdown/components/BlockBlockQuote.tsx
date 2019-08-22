@@ -19,9 +19,16 @@ export const BlockBlockQuote: FunctionComponent<Props> = ({
   )
 }
 
-const useStyles = makeStyles<Theme>(({ breakpoints, spacing }) => {
+const useStyles = makeStyles<Theme>(({ palette, spacing }) => {
   return {
-    root: {},
+    root: {
+      background: 'rgba(0, 0, 0, 0.08)',
+      margin: 0,
+      paddingBottom: spacing(2),
+      paddingLeft: spacing(2),
+      paddingTop: spacing(2),
+      borderRadius: 16
+    },
     typography: {}
   }
 })

@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react'
 import { Value } from 'slate'
 import { Editor } from 'slate-react'
+import { renderBlock } from './components/renderBlock'
+import { renderMark } from './components/renderMark'
 import { plugins } from './helpers/plugins'
-import { renderBlock } from './helpers/renderBlock'
-import { renderMark } from './helpers/renderMark'
 
 type Props = { value: Value }
 
