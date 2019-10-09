@@ -1,7 +1,7 @@
 import { ListItem, makeStyles, Theme, Typography } from '@material-ui/core'
 import React, { FunctionComponent, useState } from 'react'
-import IconButtonMenu from '../../shared/components/IconButtonMenu'
-import MenuSimple from '../../shared/components/MenuSimple'
+import IconButtonMenu from '../../components/IconButtonMenu'
+import MenuSimple from '../../components/MenuSimple'
 
 const ListItemHeader: FunctionComponent = () => {
   const anchorElState = useState<Element | null>(null)

@@ -1,5 +1,5 @@
 import { createMuiTheme } from '@material-ui/core'
-import { indigo, blueGrey, deepOrange, grey } from '@material-ui/core/colors'
+import { blueGrey, deepOrange, grey, indigo } from '@material-ui/core/colors'
 
 export const createTheme = () => {
   const { spacing } = createMuiTheme()

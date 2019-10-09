@@ -1,16 +1,14 @@
 import { Avatar, CircularProgress, IconButton } from '@material-ui/core'
 import PublicIcon from '@material-ui/icons/Public'
 import React, { Dispatch, FunctionComponent, SetStateAction } from 'react'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
-import { useAuthUser } from '../firebase/useAuthUser'
+import { useAuthUser } from '../auth/useAuthUser'
 
-type Props = RouteComponentProps & {
+type Props = {
   noteId: string
   isMineState: [boolean, Dispatch<SetStateAction<boolean>>]
 }
 
 const IconButtonNoteFilter: FunctionComponent<Props> = ({
-  match: { path },
   noteId = '',
   isMineState: [isMine, setIsMine]
 }) => {
@@ -50,4 +48,4 @@ const IconButtonNoteFilter: FunctionComponent<Props> = ({
   )
 }
 
-export default withRouter(IconButtonNoteFilter)
+export default IconButtonNoteFilter

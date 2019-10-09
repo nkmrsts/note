@@ -1,7 +1,7 @@
 import { Typography } from '@material-ui/core'
 import { firestore } from 'firebase/app'
 import React, { FunctionComponent } from 'react'
-import { toDateText } from '../../shared/helpers/toDateText'
+import { toDateText } from '../helpers/toDateText'
 
 type Props = { timestamp: firestore.Timestamp | null }
 

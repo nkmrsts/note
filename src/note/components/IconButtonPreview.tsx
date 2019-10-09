@@ -3,7 +3,7 @@ import CodeIcon from '@material-ui/icons/Code'
 import VerticalSplitIcon from '@material-ui/icons/VerticalSplit'
 import VisibilityIcon from '@material-ui/icons/Visibility'
 import React, { Dispatch, FunctionComponent, SetStateAction } from 'react'
-import { Editor } from '../../shared/enums/editor'
+import { Editor } from '../../markdown/enums/editor'
 
 type Props = { editorState: [Editor, Dispatch<SetStateAction<Editor>>] }
 

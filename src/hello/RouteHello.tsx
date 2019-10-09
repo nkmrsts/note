@@ -1,7 +1,7 @@
 import { Hidden } from '@material-ui/core'
 import React, { Fragment, FunctionComponent } from 'react'
-import FragmentHead from '../shared/components/FragmentHead'
-import HeaderSimple from '../shared/components/HeaderSimple'
+import FragmentHead from '../components/FragmentHead'
+import HeaderSimple from '../components/HeaderSimple'
 import DivHello from './components/DivHello'
 import ListNotes from './components/ListNotes'
 

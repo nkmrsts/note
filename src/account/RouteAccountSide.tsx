@@ -1,12 +1,12 @@
 import { List, ListItem, ListItemText } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
-import { RouteComponentProps, withRouter } from 'react-router'
-import DrawerDefault from '../shared/components/DrawerDefault'
+import { useHistory } from 'react-router-dom'
+import DrawerDefault from '../components/DrawerDefault'
 import ListItemHeader from './components/ListItemHeader'
 
-type Props = RouteComponentProps
+const RouteAccountSide: FunctionComponent = () => {
+  const history = useHistory()
 
-const RouteAccountSide: FunctionComponent<Props> = ({ history }) => {
   return (
     <DrawerDefault>
       <List>
@@ -34,4 +34,4 @@ const RouteAccountSide: FunctionComponent<Props> = ({ history }) => {
   )
 }
 
-export default withRouter(RouteAccountSide)
+export default RouteAccountSide

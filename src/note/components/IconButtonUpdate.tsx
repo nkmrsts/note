@@ -1,13 +1,13 @@
 import { IconButton } from '@material-ui/core'
 import DoneIcon from '@material-ui/icons/Done'
 import EditIcon from '@material-ui/icons/Edit'
+import { updateNote } from 'firestore/updateNote'
 import React, {
   Dispatch,
   FunctionComponent,
   SetStateAction,
   useEffect
 } from 'react'
-import { updateNote } from 'shared/firestore/updateNote'
 import { Value } from 'slate'
 
 type Props = {

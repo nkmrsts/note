@@ -1,10 +1,10 @@
 import { List, ListItem, ListItemText } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
-import { RouteComponentProps, withRouter } from 'react-router'
+import { useHistory } from 'react-router-dom'
 
-type Props = RouteComponentProps
+const ListRoutes: FunctionComponent = () => {
+  const history = useHistory()
 
-const ListRoutes: FunctionComponent<Props> = ({ history }) => {
   return (
     <List>
       <ListItem button>
@@ -29,4 +29,4 @@ const ListRoutes: FunctionComponent<Props> = ({ history }) => {
   )
 }
 
-export default withRouter(ListRoutes)
+export default ListRoutes

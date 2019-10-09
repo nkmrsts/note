@@ -1,7 +1,7 @@
 import { ListItem, ListItemText, makeStyles, Theme } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
-import TypographyDate from '../../shared/components/TypographyDate'
-import { Note } from '../../shared/firestore/types/note'
+import TypographyDate from '../../components/TypographyDate'
+import { Note } from '../../firestore/types/note'
 import DivNoteStatus from './DivNoteState'
 
 type Props = {

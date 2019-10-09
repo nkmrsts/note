@@ -1,8 +1,8 @@
 import { makeStyles, Theme } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
 import { Value } from 'slate'
-import { Note } from '../../shared/firestore/types/note'
-import MarkdownPreview from '../../shared/markdown/MarkdownPreview'
+import { Note } from '../../firestore/types/note'
+import MarkdownPreview from '../../markdown/MarkdownPreview'
 
 type Props = {
   note: Note

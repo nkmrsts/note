@@ -1,7 +1,7 @@
 import { makeStyles, Theme } from '@material-ui/core'
 import React, { Dispatch, FunctionComponent, SetStateAction } from 'react'
 import { Value } from 'slate'
-import Markdown from '../../shared/markdown/Markdown'
+import Markdown from '../../markdown/Markdown'
 
 type Props = {
   inProgress: boolean

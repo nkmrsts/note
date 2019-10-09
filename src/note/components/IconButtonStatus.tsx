@@ -2,8 +2,8 @@ import { IconButton, Theme, useTheme } from '@material-ui/core'
 import PublicIcon from '@material-ui/icons/Public'
 import VpnLockIcon from '@material-ui/icons/VpnLock'
 import React, { FunctionComponent, useEffect, useState } from 'react'
-import { Note } from '../../shared/firestore/types/note'
-import { updateNote } from '../../shared/firestore/updateNoteStatus'
+import { Note } from '../../firestore/types/note'
+import { updateNote } from '../../firestore/updateNoteStatus'
 
 type Props = { note: Note }
 

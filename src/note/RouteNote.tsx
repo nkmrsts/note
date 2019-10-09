@@ -1,23 +1,20 @@
 import React, { Fragment, FunctionComponent, useEffect, useState } from 'react'
-import { RouteComponentProps } from 'react-router'
-import DivCenter from '../shared/components/DivCenter'
-import DivProgress from '../shared/components/DivProgress'
-import FragmentHead from '../shared/components/FragmentHead'
-import TypographyNotFound from '../shared/components/TypographyNotFound'
-import { useAuthUser } from '../shared/firebase/useAuthUser'
-import { Note } from '../shared/firestore/types/note'
-import { watchNote } from '../shared/firestore/watchNote'
+import { useParams } from 'react-router-dom'
+import { useAuthUser } from '../auth/useAuthUser'
+import DivCenter from '../components/DivCenter'
+import DivProgress from '../components/DivProgress'
+import FragmentHead from '../components/FragmentHead'
+import TypographyNotFound from '../components/TypographyNotFound'
+import { Note } from '../firestore/types/note'
+import { watchNote } from '../firestore/watchNote'
 import MainNote from './components/MainNote'
 import MainNoteEditor from './components/MainNoteEditor'
 
-type Props = RouteComponentProps<{ noteId: string }>
+type Props = {}
 
-const RouteNote: FunctionComponent<Props> = ({
-  history,
-  match: {
-    params: { noteId }
-  }
-}) => {
+const RouteNote: FunctionComponent<Props> = () => {
+  const { noteId } = useParams<{ noteId: string }>()
+
   const [authUser, authLoading] = useAuthUser()
 
   const [note, setNote] = useState<Note | null>(null)
@@ -39,7 +36,7 @@ const RouteNote: FunctionComponent<Props> = ({
     return () => subscription.unsubscribe()
   }, [noteId])
 
-  if (authLoading || loading)
+  if (authLoading || loading) {
     return (
       <Fragment>
         <FragmentHead title={'読み込み中..'} />
@@ -48,6 +45,7 @@ const RouteNote: FunctionComponent<Props> = ({
         </DivCenter>
       </Fragment>
     )
+  }
 
   if (
     !note ||

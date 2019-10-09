@@ -1,9 +1,9 @@
 import { makeStyles, Theme } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
-import DivColumnNote from '../../shared/components/DivColumnNote'
-import ToolbarNote from '../../shared/components/ToolbarNote'
-import { Editor } from '../../shared/enums/editor'
-import { Note } from '../../shared/firestore/types/note'
+import DivColumnNote from '../../components/DivColumnNote'
+import ToolbarNote from '../../components/ToolbarNote'
+import { Note } from '../../firestore/types/note'
+import { Editor } from '../../markdown/enums/editor'
 import DivNotePreview from './DivNotePreview'
 
 type Props = { note: Note }

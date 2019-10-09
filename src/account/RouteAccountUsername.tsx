@@ -8,13 +8,13 @@ import {
 } from '@material-ui/core'
 import React, { Fragment, FunctionComponent, useEffect, useState } from 'react'
 import { combineLatest } from 'rxjs'
-import DivCenter from '../shared/components/DivCenter'
-import DivProgress from '../shared/components/DivProgress'
-import FragmentHead from '../shared/components/FragmentHead'
-import HeaderSimple from '../shared/components/HeaderSimple'
-import { updateProfile } from '../shared/firebase/updateProfile'
-import { useAuthUser } from '../shared/firebase/useAuthUser'
-import { updateUser } from '../shared/functions/updateUser'
+import { updateProfile } from '../auth/updateProfile'
+import { useAuthUser } from '../auth/useAuthUser'
+import DivCenter from '../components/DivCenter'
+import DivProgress from '../components/DivProgress'
+import FragmentHead from '../components/FragmentHead'
+import HeaderSimple from '../components/HeaderSimple'
+import { updateUser } from '../functions/updateUser'
 
 const RouteAccountUsername: FunctionComponent = () => {
   const classes = useStyles()

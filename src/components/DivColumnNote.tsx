@@ -1,6 +1,6 @@
 import { makeStyles, Theme, useTheme } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
-import { Editor } from '../enums/editor'
+import { Editor } from '../markdown/enums/editor'
 
 type Props = {
   editable: boolean

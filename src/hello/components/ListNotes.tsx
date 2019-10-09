@@ -5,17 +5,17 @@ import React, {
   useEffect,
   useState
 } from 'react'
-import { RouteComponentProps, withRouter } from 'react-router'
-import DivProgress from '../../shared/components/DivProgress'
-import ListItemNote from '../../shared/components/ListItemNote'
-import ListItemNoteCreate from '../../shared/components/ListItemNoteCreate'
-import { useAuthUser } from '../../shared/firebase/useAuthUser'
-import { Note } from '../../shared/firestore/types/note'
-import { watchNotes } from '../../shared/firestore/watchNotes'
+import { useHistory } from 'react-router-dom'
+import { useAuthUser } from '../../auth/useAuthUser'
+import DivProgress from '../../components/DivProgress'
+import ListItemNote from '../../components/ListItemNote'
+import ListItemNoteCreate from '../../components/ListItemNoteCreate'
+import { Note } from '../../firestore/types/note'
+import { watchNotes } from '../../firestore/watchNotes'
 
-type Props = RouteComponentProps
+const ListNotes: FunctionComponent = () => {
+  const history = useHistory()
 
-const ListNotes: FunctionComponent<Props> = ({ history }) => {
   const [authUser] = useAuthUser()
 
   const [isMine] = useState(true)
@@ -68,4 +68,4 @@ const ListNotes: FunctionComponent<Props> = ({ history }) => {
   )
 }
 
-export default withRouter(ListNotes)
+export default ListNotes

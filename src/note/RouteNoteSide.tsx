@@ -5,25 +5,24 @@ import React, {
   useEffect,
   useState
 } from 'react'
-import { RouteComponentProps, withRouter } from 'react-router'
-import DivProgress from '../shared/components/DivProgress'
-import DrawerDefault from '../shared/components/DrawerDefault'
-import ListItemHeader from '../shared/components/ListItemHeader'
-import ListItemNote from '../shared/components/ListItemNote'
-import ListItemNoteCreate from '../shared/components/ListItemNoteCreate'
-import { useAuthUser } from '../shared/firebase/useAuthUser'
-import { Note } from '../shared/firestore/types/note'
-import { watchNotes } from '../shared/firestore/watchNotes'
+import { useHistory, useParams } from 'react-router-dom'
+import { useAuthUser } from '../auth/useAuthUser'
+import DivProgress from '../components/DivProgress'
+import DrawerDefault from '../components/DrawerDefault'
+import ListItemHeader from '../components/ListItemHeader'
+import ListItemNote from '../components/ListItemNote'
+import ListItemNoteCreate from '../components/ListItemNoteCreate'
+import { Note } from '../firestore/types/note'
+import { watchNotes } from '../firestore/watchNotes'
 import ListItemNoteOwn from './components/ListItemNoteOwn'
 
-type Props = RouteComponentProps<{ noteId: string }>
+type Props = {}
 
-const RouteNoteSide: FunctionComponent<Props> = ({
-  history,
-  match: {
-    params: { noteId }
-  }
-}) => {
+const RouteNoteSide: FunctionComponent<Props> = () => {
+  const history = useHistory()
+
+  const { noteId } = useParams<{ noteId: string }>()
+
   const [isMine, setIsMine] = useState(true)
 
   const [loading, setLoading] = useState(true)
@@ -112,4 +111,4 @@ const RouteNoteSide: FunctionComponent<Props> = ({
   )
 }
 
-export default withRouter(RouteNoteSide)
+export default RouteNoteSide

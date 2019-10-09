@@ -1,19 +1,17 @@
 import { IconButton } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import React, { FunctionComponent } from 'react'
-import { RouteComponentProps, withRouter } from 'react-router'
-import { deleteNote } from '../../shared/firestore/deleteNote'
+import { useHistory } from 'react-router-dom'
+import { deleteNote } from '../../firestore/deleteNote'
 
-type Props = RouteComponentProps & {
+type Props = {
   disabled: boolean
   noteId: string
 }
 
-const IconButtonDelete: FunctionComponent<Props> = ({
-  history,
-  disabled,
-  noteId
-}) => {
+const IconButtonDelete: FunctionComponent<Props> = ({ disabled, noteId }) => {
+  const history = useHistory()
+
   return (
     <IconButton
       disabled={disabled}
@@ -27,4 +25,4 @@ const IconButtonDelete: FunctionComponent<Props> = ({
   )
 }
 
-export default withRouter(IconButtonDelete)
+export default IconButtonDelete

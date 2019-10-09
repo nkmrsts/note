@@ -1,19 +1,20 @@
 import { Menu, MenuItem } from '@material-ui/core'
 import Fade from '@material-ui/core/Fade'
 import React, { Dispatch, FunctionComponent, SetStateAction } from 'react'
-import { RouteComponentProps, withRouter } from 'react-router'
-import { signIn } from '../firebase/signIn'
-import { signOut } from '../firebase/signOut'
-import { useAuthUser } from '../firebase/useAuthUser'
+import { useHistory } from 'react-router-dom'
+import { signIn } from '../auth/signIn'
+import { signOut } from '../auth/signOut'
+import { useAuthUser } from '../auth/useAuthUser'
 
-type Props = RouteComponentProps & {
+type Props = {
   anchorElState: [Element | null, Dispatch<SetStateAction<Element | null>>]
 }
 
 const MenuSimple: FunctionComponent<Props> = ({
-  history,
   anchorElState: [anchorEl, setAnchorEl]
 }) => {
+  const history = useHistory()
+
   const [authUser] = useAuthUser()
 
   const open = Boolean(anchorEl)
@@ -42,4 +43,4 @@ const MenuSimple: FunctionComponent<Props> = ({
   )
 }
 
-export default withRouter(MenuSimple)
+export default MenuSimple

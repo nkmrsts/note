@@ -1,10 +1,10 @@
 import { Hidden, makeStyles, Theme } from '@material-ui/core'
 import React, { Fragment, FunctionComponent } from 'react'
-import DivColumnNote from '../shared/components/DivColumnNote'
-import FragmentHead from '../shared/components/FragmentHead'
-import HeaderSimple from '../shared/components/HeaderSimple'
-import ToolbarNote from '../shared/components/ToolbarNote'
-import { Editor } from '../shared/enums/editor'
+import DivColumnNote from '../components/DivColumnNote'
+import FragmentHead from '../components/FragmentHead'
+import HeaderSimple from '../components/HeaderSimple'
+import ToolbarNote from '../components/ToolbarNote'
+import { Editor } from '../markdown/enums/editor'
 import DivTerm from './components/DivTerm'
 
 const RouteTerm: FunctionComponent = () => {

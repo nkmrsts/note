@@ -2,7 +2,7 @@ import { makeStyles, Theme, Typography, useTheme } from '@material-ui/core'
 import PublicIcon from '@material-ui/icons/Public'
 import VpnLockIcon from '@material-ui/icons/VpnLock'
 import React, { FunctionComponent } from 'react'
-import { Note } from '../../shared/firestore/types/note'
+import { Note } from '../../firestore/types/note'
 
 type Props = { note: Note }
 
