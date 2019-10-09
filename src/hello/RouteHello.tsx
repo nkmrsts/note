@@ -1,8 +1,8 @@
 import { Hidden } from '@material-ui/core'
 import React, { Fragment, FunctionComponent } from 'react'
 import FragmentHead from '../components/FragmentHead'
-import HeaderSimple from '../components/HeaderSimple'
 import DivHello from './components/DivHello'
+import HeaderHello from './components/HeaderHello'
 import ListNotes from './components/ListNotes'
 
 const RouteHello: FunctionComponent = () => {
@@ -13,7 +13,7 @@ const RouteHello: FunctionComponent = () => {
         <DivHello />
       </Hidden>
       <Hidden smUp>
-        <HeaderSimple title={'Noat'} />
+        <HeaderHello />
         <ListNotes />
       </Hidden>
     </Fragment>

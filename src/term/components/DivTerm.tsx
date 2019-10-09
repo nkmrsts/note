@@ -6,13 +6,6 @@ const DivTerm: FunctionComponent = () => {
 
   return (
     <Fragment>
-      <Typography
-        className={classes.headingTitle}
-        component={'h1'}
-        variant={'h4'}
-      >
-        {'利用規約'}
-      </Typography>
       <Typography className={classes.headingText} component={'p'}>
         {
           '本利用規約（以下、本規約）には、本サービスの提供条件及び当サービスの運営チームと登録ユーザーの皆様との間の権利義務関係が定められています。本サービスの利用に際しては、本規約の全文をお読みいただいた上で、本規約に同意いただく必要があります。'

@@ -22,8 +22,7 @@ const useStyles = makeStyles<Theme>(({ breakpoints, spacing, typography }) => {
     root: {
       marginTop: spacing(1),
       marginBottom: spacing(1),
-      lineHeight: typography.body2.lineHeight,
-      fontSize: '1.1rem'
+      lineHeight: typography.body2.lineHeight
     }
   }
 })

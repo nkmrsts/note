@@ -6,12 +6,12 @@ import {
   useScrollTrigger
 } from '@material-ui/core'
 import React, { FunctionComponent, useState } from 'react'
-import IconButtonMenu from './IconButtonMenu'
-import MenuSimple from './MenuSimple'
+import IconButtonMenu from '../../components/IconButtonMenu'
+import MenuSimple from '../../components/MenuSimple'
 
 type Props = { title: string }
 
-const HeaderSimple: FunctionComponent<Props> = ({ title }) => {
+const HeaderNote: FunctionComponent<Props> = ({ title }) => {
   const classes = useStyles()
 
   const anchorElState = useState<Element | null>(null)
@@ -40,11 +40,9 @@ const useStyles = makeStyles<Theme>(({ spacing }) => {
       display: 'grid',
       gridGap: spacing(2),
       gridTemplateColumns: 'auto 1fr',
-      height: spacing(10),
-      paddingLeft: spacing(2),
-      paddingRight: spacing(2)
+      height: spacing(10)
     }
   }
 })
 
-export default HeaderSimple
+export default HeaderNote

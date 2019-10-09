@@ -16,7 +16,8 @@ const useStyles = makeStyles<Theme>(({ spacing }) => {
       gridGap: spacing(2),
       justifyContent: 'flex-end',
       minHeight: 80,
-      padding: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
       paddingBottom: spacing(2),
       paddingTop: spacing(2)
     }

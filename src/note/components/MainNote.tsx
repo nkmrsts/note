@@ -1,10 +1,11 @@
-import { makeStyles, Theme } from '@material-ui/core'
+import { Hidden, makeStyles, Theme } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
 import DivColumnNote from '../../components/DivColumnNote'
 import ToolbarNote from '../../components/ToolbarNote'
 import { Note } from '../../firestore/types/note'
 import { Editor } from '../../markdown/enums/editor'
 import DivNotePreview from './DivNotePreview'
+import HeaderNote from './HeaderNote'
 
 type Props = { note: Note }
 
@@ -13,7 +14,12 @@ const MainNote: FunctionComponent<Props> = ({ note }) => {
 
   return (
     <main className={classes.root}>
-      <ToolbarNote />
+      <Hidden smUp>
+        <HeaderNote title={'Noat'} />
+      </Hidden>
+      <Hidden xsDown>
+        <ToolbarNote />
+      </Hidden>
       <DivColumnNote editable={false} preview={Editor.Preview}>
         <DivNotePreview note={note} value={note.value} />
       </DivColumnNote>

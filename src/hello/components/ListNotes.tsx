@@ -49,13 +49,15 @@ const ListNotes: FunctionComponent = () => {
 
   return (
     <List>
-      {Boolean(authUser) && isMine && (
+      {authUser !== null && isMine && (
         <ListItemNoteCreate onCreateNote={onCreateNote} />
       )}
       {loading && <DivProgress />}
       {notes
         .filter(
-          note => note.ownerId === (authUser && authUser.uid) || note.isPublic
+          note =>
+            note.isPublic ||
+            note.ownerId === (authUser !== null && authUser.uid)
         )
         .map(note => (
           <ListItemNote

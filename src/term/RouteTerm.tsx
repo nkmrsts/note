@@ -32,7 +32,6 @@ const useStyles = makeStyles<Theme>(({ spacing }) => {
   return {
     root: {
       paddingBottom: spacing(4),
-      paddingTop: spacing(2),
       paddingLeft: spacing(2),
       paddingRight: spacing(2)
     }
