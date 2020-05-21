@@ -1,12 +1,12 @@
 import { makeStyles, Theme, Typography } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
-import { RenderBlockProps } from 'slate-react'
+import { RenderElementProps } from 'slate-react'
 
-type Props = RenderBlockProps
+type Props = RenderElementProps
 
 export const BlockBlockQuote: FunctionComponent<Props> = ({
   children,
-  attributes
+  attributes,
 }) => {
   const classes = useStyles()
 
@@ -27,8 +27,8 @@ const useStyles = makeStyles<Theme>(({ palette, spacing }) => {
       paddingBottom: spacing(2),
       paddingLeft: spacing(2),
       paddingTop: spacing(2),
-      borderRadius: 16
+      borderRadius: 16,
     },
-    typography: {}
+    typography: {},
   }
 })

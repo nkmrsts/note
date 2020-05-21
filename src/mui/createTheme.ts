@@ -11,25 +11,25 @@ export const createTheme = () => {
       MuiPaper: {
         elevation0: elevation,
         elevation1: elevation,
-        elevation2: elevation
+        elevation2: elevation,
       },
       MuiIconButton: {
         root: {
           backgroundColor: grey[100],
-          '&:hover': { backgroundColor: grey[200] }
-        }
+          '&:hover': { backgroundColor: grey[200] },
+        },
       },
       MuiDrawer: { paperAnchorDockedLeft: { borderRight: 0 } },
-      MuiListItemIcon: { root: { minWidth: spacing(4) } }
+      MuiListItemIcon: { root: { minWidth: spacing(4) } },
     },
     palette: {
       background: { default: '#fff' },
       primary: indigo,
-      secondary: deepOrange
+      secondary: deepOrange,
     },
     props: {
       MuiButtonBase: { disableRipple: true },
-      MuiList: { style: { padding: 0 } }
+      MuiList: { style: { padding: 0 } },
     },
     typography: {
       allVariants: { color: blueGrey[900] },
@@ -39,8 +39,8 @@ export const createTheme = () => {
       h2: { fontSize: '3rem' },
       h3: { fontSize: '3rem' },
       h4: { fontSize: '2rem' },
-      h5: { fontSize: '1.5rem' }
-    }
+      h5: { fontSize: '1.5rem' },
+    },
   })
 }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Editor as CoreEditor } from 'slate'
-import { RenderBlockProps } from 'slate-react'
+import { RenderElementProps } from 'slate-react'
 import { BlockBlockQuote } from './BlockBlockQuote'
 import { BlockCode } from './BlockCode'
 import { BlockHeadingFive } from './BlockHeadingFive'
@@ -13,11 +13,11 @@ import { BlockListItem } from './BlockListItem'
 import { BlockParagraph } from './BlockParagraph'
 
 export const renderBlock = (
-  props: RenderBlockProps,
+  props: RenderElementProps,
   editor: CoreEditor,
   next: () => any
 ) => {
-  switch (props.node.type) {
+  switch (props.element.type) {
     case 'block-quote':
       return <BlockBlockQuote {...props} />
     case 'code':

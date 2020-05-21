@@ -1,6 +1,5 @@
 import { makeStyles, Theme } from '@material-ui/core'
 import React, { FunctionComponent, useState } from 'react'
-import { Value } from 'slate'
 import DivColumnNote from '../../components/DivColumnNote'
 import ToolbarNote from '../../components/ToolbarNote'
 import { Note } from '../../firestore/types/note'
@@ -15,7 +14,7 @@ import IconButtonUpdate from './IconButtonUpdate'
 type Props = { note: Note }
 
 const MainNoteEditor: FunctionComponent<Props> = ({ note }) => {
-  const [value, setValue] = useState(() => Value.fromJSON(note.value))
+  const [value, setValue] = useState(() => note.value)
 
   const [progress, setProgress] = useState(false)
 
@@ -60,17 +59,17 @@ const useStyles = makeStyles<Theme>(({ spacing }) => {
     root: {
       paddingBottom: spacing(4),
       paddingLeft: spacing(2),
-      paddingRight: spacing(2)
+      paddingRight: spacing(2),
     },
     inputContainer: {
       display: 'grid',
       gridTemplateColumns: '1fr 1fr',
-      gridGap: spacing(2)
+      gridGap: spacing(2),
     },
     previewContent: {
       borderLeft: '1px solid rgba(0,0,0,0.12)',
-      paddingLeft: spacing(2)
-    }
+      paddingLeft: spacing(2),
+    },
   }
 })
 

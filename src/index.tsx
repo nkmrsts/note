@@ -5,7 +5,12 @@ import './firebase/initializeApp'
 import './index.css'
 import { register } from './serviceWorker'
 
-render(<App />, document.getElementById('root'))
+render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+)
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
@@ -16,7 +21,7 @@ register({
 
     const listener = (
       event: Event & {
-        target: Partial<ServiceWorker> & EventTarget | null
+        target: (Partial<ServiceWorker> & EventTarget) | null
       }
     ) => {
       if (!event.target || event.target.state !== 'activated') return
@@ -26,7 +31,7 @@ register({
     registration.waiting.addEventListener('statechange', listener)
 
     registration.waiting.postMessage({ type: 'SKIP_WAITING' })
-  }
+  },
 })
 
 if (module.hot) {

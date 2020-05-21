@@ -1,5 +1,5 @@
 import { CssBaseline, Hidden } from '@material-ui/core'
-import { StylesProvider, ThemeProvider } from '@material-ui/styles'
+import { ThemeProvider } from '@material-ui/styles'
 import React, { FunctionComponent } from 'react'
 import { Route, Switch } from 'react-router'
 import { BrowserRouter } from 'react-router-dom'
@@ -17,46 +17,44 @@ const App: FunctionComponent = () => {
   const theme = createTheme()
 
   return (
-    <StylesProvider>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <BrowserRouter>
-          <Hidden xsDown>
-            <Switch>
-              <Route exact path={'/'}>
-                <RouteNoteSide />
-              </Route>
-              <Route path={'/account'}>
-                <RouteAccountSide />
-              </Route>
-              <Route path={'/:noteId'}>
-                <RouteNoteSide />
-              </Route>
-            </Switch>
-          </Hidden>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <BrowserRouter>
+        <Hidden xsDown>
           <Switch>
             <Route exact path={'/'}>
-              <RouteHello />
+              <RouteNoteSide />
             </Route>
-            <Route exact path={'/account'}>
-              <RouteAccount />
-            </Route>
-            <Route path={'/account/username'}>
-              <RouteAccountUsername />
-            </Route>
-            <Route path={'/account/usericon'}>
-              <RouteAccountUsericon />
-            </Route>
-            <Route path={'/term'}>
-              <RouteTerm />
+            <Route path={'/account'}>
+              <RouteAccountSide />
             </Route>
             <Route path={'/:noteId'}>
-              <RouteNote />
+              <RouteNoteSide />
             </Route>
           </Switch>
-        </BrowserRouter>
-      </ThemeProvider>
-    </StylesProvider>
+        </Hidden>
+        <Switch>
+          <Route exact path={'/'}>
+            <RouteHello />
+          </Route>
+          <Route exact path={'/account'}>
+            <RouteAccount />
+          </Route>
+          <Route path={'/account/username'}>
+            <RouteAccountUsername />
+          </Route>
+          <Route path={'/account/usericon'}>
+            <RouteAccountUsericon />
+          </Route>
+          <Route path={'/term'}>
+            <RouteTerm />
+          </Route>
+          <Route path={'/:noteId'}>
+            <RouteNote />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    </ThemeProvider>
   )
 }
 

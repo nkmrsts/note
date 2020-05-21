@@ -25,7 +25,7 @@ const RouteNote: FunctionComponent<Props> = () => {
   useEffect(() => {
     if (noteId === null) return
     const subscription = watchNote(noteId).subscribe(
-      _note => {
+      (_note) => {
         setNote(_note)
         setLoading(false)
       },

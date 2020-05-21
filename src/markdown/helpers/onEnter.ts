@@ -1,7 +1,6 @@
-import { EventHook } from 'slate-react'
 import { onBackspace } from './onBackspace'
 
-export const onEnter: EventHook = (event, editor, next) => {
+export const onEnter: any = (event: any, editor: any) => {
   const { value } = editor
 
   const { selection, startBlock } = value
@@ -9,15 +8,15 @@ export const onEnter: EventHook = (event, editor, next) => {
   const { start, end, isExpanded } = selection
 
   if (isExpanded) {
-    return next()
+    return
   }
 
   if (start.offset === 0 && startBlock.text.length === 0) {
-    return onBackspace(event, editor, next)
+    return onBackspace(event, editor)
   }
 
   if (end.offset !== startBlock.text.length) {
-    return next()
+    return
   }
 
   if (
@@ -29,7 +28,7 @@ export const onEnter: EventHook = (event, editor, next) => {
     startBlock.type !== 'heading-six' &&
     startBlock.type !== 'block-quote'
   ) {
-    return next()
+    return
   }
 
   event.preventDefault()

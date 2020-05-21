@@ -1,19 +1,18 @@
 import { isKeyHotkey } from 'is-hotkey'
-import { EventHook } from 'slate-react'
 
 export const createPluginMark = (
   key: string,
   type: string
 ): {
-  onKeyDown: EventHook
+  onKeyDown: any
 } => {
   return {
-    onKeyDown: (event: any, editor, next) => {
+    onKeyDown: (event: any, editor: any, next: any) => {
       if (!isKeyHotkey(key)(event)) return next()
 
       event.preventDefault()
 
       editor.toggleMark(type)
-    }
+    },
   }
 }

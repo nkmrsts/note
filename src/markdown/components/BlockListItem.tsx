@@ -1,12 +1,12 @@
 import { makeStyles, Theme } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
-import { RenderBlockProps } from 'slate-react'
+import { RenderElementProps } from 'slate-react'
 
-type Props = RenderBlockProps
+type Props = RenderElementProps
 
 export const BlockListItem: FunctionComponent<Props> = ({
   children,
-  attributes
+  attributes,
 }) => {
   const classes = useStyles()
 
@@ -19,6 +19,6 @@ export const BlockListItem: FunctionComponent<Props> = ({
 
 const useStyles = makeStyles<Theme>(({ breakpoints, spacing }) => {
   return {
-    root: { fontWeight: 'bold' }
+    root: { fontWeight: 'bold' },
   }
 })

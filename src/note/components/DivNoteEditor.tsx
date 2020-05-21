@@ -1,24 +1,37 @@
 import { makeStyles, Theme } from '@material-ui/core'
-import React, { Dispatch, FunctionComponent, SetStateAction } from 'react'
-import { Value } from 'slate'
-import Markdown from '../../markdown/Markdown'
+import React, {
+  Dispatch,
+  FunctionComponent,
+  SetStateAction,
+  useMemo,
+} from 'react'
+import { createEditor, Node } from 'slate'
+import { Editable, Slate, withReact } from 'slate-react'
 
 type Props = {
   inProgress: boolean
-  setValue: Dispatch<SetStateAction<Value>>
-  value: Value
+  setValue: Dispatch<SetStateAction<Node[]>>
+  value: Node[]
 }
 
 const DivNoteEditor: FunctionComponent<Props> = ({
   inProgress,
   setValue,
-  value
+  value,
 }) => {
   const classes = useStyles()
 
+  const editor = useMemo(() => withReact(createEditor()), [])
+
   return (
     <div className={classes.root}>
-      <Markdown value={value} setValue={setValue} />
+      <Slate
+        editor={editor}
+        onChange={(_value) => setValue(_value)}
+        value={value}
+      >
+        <Editable />
+      </Slate>
     </div>
   )
 }
@@ -30,8 +43,8 @@ const useStyles = makeStyles<Theme>(({ spacing, typography }) => {
       fontFamily: typography.fontFamily,
       fontSize: '1.1rem',
       padding: spacing(2),
-      wordBreak: 'break-word'
-    }
+      wordBreak: 'break-word',
+    },
   }
 })
 

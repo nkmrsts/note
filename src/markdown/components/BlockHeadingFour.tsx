@@ -1,12 +1,12 @@
 import { makeStyles, Theme, Typography } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
-import { RenderBlockProps } from 'slate-react'
+import { RenderElementProps } from 'slate-react'
 
-type Props = RenderBlockProps
+type Props = RenderElementProps
 
 export const BlockHeadingFour: FunctionComponent<Props> = ({
   children,
-  attributes
+  attributes,
 }) => {
   const classes = useStyles()
 

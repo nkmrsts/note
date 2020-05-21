@@ -6,16 +6,16 @@ import React, {
   Dispatch,
   FunctionComponent,
   SetStateAction,
-  useEffect
+  useEffect,
 } from 'react'
-import { Value } from 'slate'
+import { Node } from 'slate'
 
 type Props = {
   disabled: boolean
   editableState: [boolean, Dispatch<SetStateAction<boolean>>]
   progressState: [boolean, Dispatch<SetStateAction<boolean>>]
   noteId: string
-  value: Value
+  value: Node[]
 }
 
 const IconButtonUpdate: FunctionComponent<Props> = ({
@@ -23,7 +23,7 @@ const IconButtonUpdate: FunctionComponent<Props> = ({
   editableState: [editable, setEditable],
   progressState: [progress, setProgress],
   noteId,
-  value
+  value,
 }) => {
   // update note
   useEffect(() => {
@@ -33,7 +33,7 @@ const IconButtonUpdate: FunctionComponent<Props> = ({
       () => {
         setProgress(false)
       },
-      err => {
+      (err) => {
         console.error(err)
       }
     )

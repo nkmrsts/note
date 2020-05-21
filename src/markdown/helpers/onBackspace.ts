@@ -1,20 +1,18 @@
-import { EventHook } from 'slate-react'
-
-export const onBackspace: EventHook = (event, editor, next) => {
+export const onBackspace: any = (event: any, editor: any) => {
   const { value } = editor
 
   const { selection, startBlock } = value
 
   if (selection.isExpanded) {
-    return next()
+    return
   }
 
   if (selection.start.offset !== 0) {
-    return next()
+    return
   }
 
   if (startBlock.type === 'paragraph') {
-    return next()
+    return
   }
 
   event.preventDefault()

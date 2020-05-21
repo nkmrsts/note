@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react'
-import { RenderMarkProps } from 'slate-react'
+import { RenderLeafProps } from 'slate-react'
 
-type Props = RenderMarkProps
+type Props = RenderLeafProps
 
 export const MarkItalic: FunctionComponent<Props> = ({ children }) => {
   return <em>{children}</em>

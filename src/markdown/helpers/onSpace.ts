@@ -1,19 +1,18 @@
-import { EventHook } from 'slate-react'
 import { getBlockType } from './getBlockType'
 
-export const onSpace: EventHook = (event, editor, next) => {
+export const onSpace = (event: any, editor: any) => {
   const { value } = editor
 
   const { selection, startBlock } = value
 
   if (selection.isExpanded) {
-    return next()
+    return
   }
 
   const blockType = getBlockType(startBlock.text)
 
   if (blockType === 'list-item' && startBlock.type === 'list-item') {
-    return next()
+    return
   }
 
   if (blockType === 'list-item') {

@@ -1,12 +1,12 @@
 import { makeStyles, Theme } from '@material-ui/core'
 import React, { FunctionComponent } from 'react'
-import { RenderMarkProps } from 'slate-react'
+import { RenderLeafProps } from 'slate-react'
 
-type Props = RenderMarkProps
+type Props = RenderLeafProps
 
 export const MarkUnderlined: FunctionComponent<Props> = ({
   children,
-  attributes
+  attributes,
 }) => {
   const classes = useStyles()
 
@@ -19,6 +19,6 @@ export const MarkUnderlined: FunctionComponent<Props> = ({
 
 const useStyles = makeStyles<Theme>(({ spacing }) => {
   return {
-    root: { paddingLeft: spacing(1) }
+    root: { paddingLeft: spacing(1) },
   }
 })
